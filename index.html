@@ -1,598 +1,760 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Barkley Estates &#8212; 13 Residential Acreage Lots, Bamfield BC</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bamfield Sanctuary — 13 Private Lots on Vancouver Island's West Coast</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
   <style>
-    :root { color-scheme: light; }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Georgia', serif; color: #1a1a1a; background: #fafaf7; -webkit-font-smoothing: antialiased; }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    :root{
+      --forest:#2d6648;        /* primary green — bright, not mossy */
+      --sage:#4aaa72;          /* accent green — light and fresh */
+      --light-sage:#7dca9e;    /* lighter green for hover states */
+      --mint:#e8f7ef;          /* very light green — section backgrounds */
+      --mint-mid:#cceedd;      /* slightly deeper mint for borders/dividers */
+      --white:#ffffff;
+      --off-white:#f7fdf9;     /* barely-green white for alternating sections */
+      --gold:#b8842a;
+      --gold-light:#d4a84b;
+      --text-dark:#152a1e;     /* near-black with green tint */
+      --text-mid:#3a5244;      /* dark green-grey for body text */
+      --text-light:#6a8878;    /* medium for captions/labels */
+    }
+    html{scroll-behavior:smooth;}
+    body{font-family:'Georgia',serif;color:var(--text-dark);background:var(--white);overflow-x:hidden;}
 
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 56px; height: 62px;
-      background: rgba(10, 24, 14, 0.92); backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      transition: background 0.3s;
+    /* ── NAV ── */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:1000;
+      padding:1.1rem 3.5rem;
+      display:flex;justify-content:space-between;align-items:center;
+      background:rgba(255,255,255,0.97);backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--mint-mid);
     }
-    .nav-brand { color: #fff; font-family: 'Georgia', serif; font-size: 1rem; font-weight: normal; letter-spacing: 0.12em; }
-    .nav-brand em { color: #8FBE8A; font-style: normal; }
-    .nav-links { display: flex; gap: 36px; list-style: none; }
-    .nav-links a { color: rgba(255,255,255,0.55); text-decoration: none; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; transition: color 0.2s; }
-    .nav-links a:hover { color: #8FBE8A; }
+    .nav-logo{font-size:1rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--forest);}
+    .nav-logo em{font-style:normal;color:var(--sage);}
+    .nav-links{display:flex;gap:2.5rem;list-style:none;}
+    .nav-links a{
+      color:var(--text-mid);text-decoration:none;
+      font-family:Arial,sans-serif;font-size:0.78rem;
+      letter-spacing:0.12em;text-transform:uppercase;transition:color 0.2s;
+    }
+    .nav-links a:hover{color:var(--sage);}
+    .nav-cta{
+      background:var(--forest);color:white;border:none;
+      padding:0.6rem 1.4rem;font-size:0.78rem;letter-spacing:0.12em;
+      text-transform:uppercase;cursor:pointer;font-family:Arial,sans-serif;
+      transition:background 0.2s;
+    }
+    .nav-cta:hover{background:var(--sage);}
 
-    /* HERO — full-bleed forest photo */
-    #hero {
-      height: 100vh; min-height: 640px; position: relative; overflow: hidden;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; padding: 80px 40px 80px;
+    /* ── HERO ── */
+    .hero{
+      height:100vh;min-height:680px;
+      position:relative;overflow:hidden;
+      display:flex;align-items:center;justify-content:center;
     }
-    .hero-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=1800&q=85');
-      background-size: cover; background-position: center 30%;
-      transform: scale(1.05);
-      animation: heroZoom 18s ease-in-out infinite alternate;
+    .hero-bg{
+      position:absolute;inset:0;
+      background:url('https://images.unsplash.com/photo-1476611338391-6f395a0dd82e?auto=format&fit=crop&w=1920&q=85') center/cover no-repeat;
+      animation:heroZoom 25s ease-in-out infinite alternate;
     }
-    @keyframes heroZoom { from { transform: scale(1.05); } to { transform: scale(1.12); } }
-    .hero-overlay {
-      position: absolute; inset: 0; z-index: 1;
-      background: linear-gradient(to bottom, rgba(8,20,10,0.55) 0%, rgba(8,20,10,0.7) 60%, rgba(8,20,10,0.88) 100%);
+    @keyframes heroZoom{from{transform:scale(1);}to{transform:scale(1.08);}}
+    .hero-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(to bottom,rgba(10,28,18,0.55) 0%,rgba(10,28,18,0.25) 50%,rgba(10,28,18,0.72) 100%);
     }
-    .hero-content { position: relative; z-index: 2; }
-    .hero-location {
-      font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.68rem;
-      letter-spacing: 0.32em; text-transform: uppercase; color: #8FBE8A; margin-bottom: 28px;
+    .hero-content{
+      position:relative;z-index:2;text-align:center;color:white;
+      padding:0 2rem;max-width:860px;
     }
-    .hero-title {
-      font-size: clamp(3rem, 7vw, 5.8rem); color: #fff; line-height: 1.0;
-      font-weight: normal; letter-spacing: 0.02em; margin-bottom: 22px;
+    .hero-eyebrow{
+      font-family:Arial,sans-serif;font-size:0.78rem;letter-spacing:0.35em;
+      text-transform:uppercase;color:var(--gold-light);margin-bottom:1.6rem;
+      opacity:0;animation:fadeUp 1s 0.4s forwards;
     }
-    .hero-rule { width: 40px; height: 1px; background: #8FBE8A; margin: 0 auto 26px; }
-    .hero-sub {
-      font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.92rem;
-      color: rgba(255,255,255,0.6); max-width: 500px; line-height: 1.85;
-      margin: 0 auto 52px; letter-spacing: 0.02em;
+    .hero-title{
+      font-size:clamp(2.6rem,5.5vw,4.8rem);font-weight:normal;line-height:1.18;
+      margin-bottom:1.6rem;opacity:0;animation:fadeUp 1s 0.7s forwards;
     }
-    .hero-stats { display: flex; gap: 0; margin-bottom: 52px; flex-wrap: wrap; justify-content: center; }
-    .hero-stat { text-align: center; padding: 0 32px; border-right: 1px solid rgba(255,255,255,0.15); }
-    .hero-stat:last-child { border-right: none; }
-    .hero-stat .num { font-size: 1.8rem; color: #fff; font-weight: normal; display: block; letter-spacing: -0.01em; }
-    .hero-stat .lbl { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.38); margin-top: 6px; display: block; }
-    .hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-    .btn-outline-light {
-      display: inline-block; border: 1px solid rgba(255,255,255,0.4); color: #fff;
-      font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.7rem; letter-spacing: 0.2em;
-      text-transform: uppercase; padding: 14px 36px; text-decoration: none; transition: border-color 0.25s, color 0.25s;
+    .hero-title em{font-style:italic;color:var(--gold-light);}
+    .hero-sub{
+      font-family:Arial,sans-serif;font-size:1.05rem;
+      color:rgba(255,255,255,0.82);line-height:1.75;
+      max-width:560px;margin:0 auto 2.8rem;
+      opacity:0;animation:fadeUp 1s 1s forwards;
     }
-    .btn-outline-light:hover { border-color: #8FBE8A; color: #8FBE8A; }
-    .btn-forest {
-      display: inline-block; background: #2D5A3D; color: #fff;
-      font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.7rem; letter-spacing: 0.2em;
-      text-transform: uppercase; padding: 14px 36px; text-decoration: none; transition: background 0.25s;
+    .hero-cta{
+      display:inline-block;padding:1rem 2.6rem;
+      background:transparent;border:1.5px solid var(--gold-light);
+      color:var(--gold-light);text-decoration:none;
+      font-family:Arial,sans-serif;font-size:0.83rem;
+      letter-spacing:0.18em;text-transform:uppercase;
+      transition:all 0.3s;opacity:0;animation:fadeUp 1s 1.3s forwards;
     }
-    .btn-forest:hover { background: #3A7050; }
-    .scroll-cue {
-      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
-      z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
+    .hero-cta:hover{background:var(--gold);border-color:var(--gold);color:white;}
+    .hero-scroll{
+      position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+      display:flex;flex-direction:column;align-items:center;gap:0.5rem;
+      color:rgba(255,255,255,0.5);font-family:Arial,sans-serif;
+      font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;
+      animation:scrollBounce 2.5s infinite;
     }
-    .scroll-cue span { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(255,255,255,0.25); }
-    .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(143,190,138,0.6), transparent); animation: pulse 2.4s ease-in-out infinite; }
-    @keyframes pulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+    .hero-scroll::after{content:'';width:1px;height:44px;background:rgba(255,255,255,0.35);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes scrollBounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(7px);}}
 
-    /* SECTION COMMON */
-    section { padding: 100px 56px; }
-    .section-inner { max-width: 1080px; margin: 0 auto; }
-    .eyebrow { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: #4A8A5A; margin-bottom: 16px; display: block; }
-    .section-title { font-size: clamp(1.9rem, 3.2vw, 2.7rem); color: #132518; font-weight: normal; letter-spacing: -0.01em; margin-bottom: 20px; }
-    .green-rule { width: 40px; height: 1px; background: #4A8A5A; margin-bottom: 32px; }
-    .body-text { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.95rem; line-height: 1.85; color: #555; max-width: 660px; }
+    /* ── STATS BAR ── */
+    .stats-bar{
+      background:var(--forest);color:var(--cream);
+      padding:2.2rem 3.5rem;
+      display:flex;align-items:center;justify-content:space-around;flex-wrap:wrap;gap:1rem;
+    }
+    .stat{text-align:center;padding:0.5rem 1rem;}
+    .stat-num{font-size:2.2rem;color:var(--gold-light);display:block;margin-bottom:0.25rem;}
+    .stat-label{font-family:Arial,sans-serif;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(245,240,232,0.6);}
+    .stat-div{width:1px;height:50px;background:rgba(255,255,255,0.15);}
 
-    /* PHOTO GALLERY — full width editorial */
-    #gallery { padding: 0; background: #0a180e; }
-    .gallery-strip { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 420px 300px; gap: 3px; }
-    .gallery-cell { overflow: hidden; position: relative; }
-    .gallery-cell img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; display: block; }
-    .gallery-cell:hover img { transform: scale(1.04); }
-    .gallery-cell.tall { grid-row: span 2; }
-    .gallery-caption {
-      position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 18px;
-      background: linear-gradient(to top, rgba(8,20,10,0.75), transparent);
-      font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.68rem;
-      letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.7);
+    /* ── SECTIONS ── */
+    section{padding:5.5rem 3.5rem;}
+    .section-eyebrow{font-family:Arial,sans-serif;font-size:0.75rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:0.9rem;}
+    .section-title{font-size:clamp(1.7rem,3.2vw,2.6rem);font-weight:normal;line-height:1.28;color:var(--forest);margin-bottom:1.4rem;}
+    .section-body{font-family:Arial,sans-serif;font-size:1rem;line-height:1.82;color:var(--text-mid);max-width:620px;}
+
+    /* ── WHY BAMFIELD ── */
+    .why-bamfield{background:var(--warm-white);}
+    .why-header{max-width:1180px;margin:0 auto 3.5rem;}
+    .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;max-width:1180px;margin:0 auto;}
+    .why-card{
+      background:white;padding:2.2rem;border-top:3px solid var(--gold);
+      transition:transform 0.3s,box-shadow 0.3s;
+    }
+    .why-card:hover{transform:translateY(-5px);box-shadow:0 16px 48px rgba(0,0,0,0.09);}
+    .why-icon{font-size:1.9rem;margin-bottom:0.9rem;}
+    .why-card-title{font-size:1.1rem;color:var(--forest);margin-bottom:0.7rem;}
+    .why-card-text{font-family:Arial,sans-serif;font-size:0.9rem;line-height:1.72;color:var(--text-mid);}
+
+    /* ── GALLERY ── */
+    .gallery-strip{padding:0;display:grid;grid-template-columns:repeat(4,1fr);height:360px;}
+    .gallery-item{overflow:hidden;position:relative;cursor:pointer;}
+    .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease;}
+    .gallery-item:hover img{transform:scale(1.07);}
+    .gallery-caption{
+      position:absolute;bottom:0;left:0;right:0;
+      background:linear-gradient(to top,rgba(10,28,18,0.82) 0%,transparent 100%);
+      padding:1.8rem 1rem 0.9rem;
+      color:rgba(255,255,255,0.88);font-family:Arial,sans-serif;
+      font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;
     }
 
-    /* LIFESTYLE */
-    #lifestyle { background: #0f2218; }
-    .lifestyle-intro { max-width: 640px; margin-bottom: 64px; }
-    .lifestyle-intro .eyebrow { color: #8FBE8A; }
-    .lifestyle-intro .section-title { color: #f0f5f0; }
-    .lifestyle-intro .green-rule { background: #8FBE8A; }
-    .lifestyle-intro .body-text { color: rgba(240,245,240,0.6); }
-    .lifestyle-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.06); }
-    .lifestyle-card { background: #0f2218; padding: 40px 34px; transition: background 0.2s; }
-    .lifestyle-card:hover { background: #142c1f; }
-    .lifestyle-num { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.62rem; letter-spacing: 0.22em; color: #4A8A5A; margin-bottom: 20px; display: block; }
-    .lifestyle-card h3 { font-size: 1rem; color: #d8ecd8; margin-bottom: 14px; font-weight: normal; }
-    .lifestyle-card p { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.84rem; line-height: 1.78; color: rgba(200,225,200,0.5); }
-
-    /* LOTS */
-    #lots { background: #fafaf7; }
-    .lots-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; flex-wrap: wrap; gap: 24px; }
-    .tier-key { display: flex; flex-direction: column; gap: 8px; }
-    .tier-key-item { display: flex; align-items: center; gap: 10px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.7rem; color: #777; letter-spacing: 0.05em; }
-    .tier-swatch { width: 20px; height: 1px; }
-    .lots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1px; background: #ddd; }
-    .lot-card { background: #fafaf7; transition: background 0.2s; }
-    .lot-card:hover { background: #eef4ee; }
-    .lot-card-top { padding: 22px 22px 0; display: flex; justify-content: space-between; align-items: flex-start; }
-    .lot-num-label { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: #999; }
-    .lot-tier-dot { width: 7px; height: 7px; border-radius: 50%; margin-top: 2px; }
-    .lot-card-body { padding: 12px 22px 26px; }
-    .lot-price { font-size: 1.5rem; color: #132518; font-weight: normal; margin-bottom: 18px; letter-spacing: -0.01em; }
-    .lot-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #efefef; }
-    .lot-row:last-of-type { border-bottom: none; }
-    .lot-row .key { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.68rem; letter-spacing: 0.1em; color: #999; text-transform: uppercase; }
-    .lot-row .val { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.8rem; color: #2a2a2a; }
-    .lot-status { margin-top: 14px; display: inline-block; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: #3A7050; border: 1px solid rgba(58,112,80,0.3); padding: 4px 10px; }
-
-    /* PORTFOLIO */
-    #portfolio { background: #132518; padding: 80px 56px; }
-    .portfolio-inner { max-width: 1000px; margin: 0 auto; }
-    .portfolio-eyebrow { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: #8FBE8A; margin-bottom: 16px; }
-    .portfolio-title { font-size: clamp(1.6rem, 3vw, 2.3rem); color: #f0f5f0; font-weight: normal; max-width: 540px; line-height: 1.35; margin-bottom: 52px; }
-    .portfolio-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; border: 1px solid rgba(255,255,255,0.08); margin-bottom: 36px; }
-    .p-stat { padding: 32px 28px; border-right: 1px solid rgba(255,255,255,0.08); }
-    .p-stat:last-child { border-right: none; }
-    .p-num { font-size: 2.1rem; color: #8FBE8A; display: block; font-weight: normal; letter-spacing: -0.02em; margin-bottom: 6px; }
-    .p-lbl { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.63rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
-    .portfolio-note { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.85rem; color: rgba(255,255,255,0.35); line-height: 1.7; }
-
-    /* VIDEO SECTION */
-    #video-section { background: #0a180e; padding: 0; }
-    .video-wrap { position: relative; padding-bottom: 42.85%; height: 0; overflow: hidden; }
-    .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-    .video-placeholder {
-      position: relative; height: 480px; background: #0f2218;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; padding: 40px;
-      background-image: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1600&q=80');
-      background-size: cover; background-position: center;
+    /* ── MAP SECTION ── */
+    .map-section{background:var(--cream);padding:5.5rem 3.5rem 0;}
+    .map-header{max-width:1180px;margin:0 auto 2.5rem;}
+    .map-wrapper{
+      position:relative;width:100%;
+      height:580px;overflow:hidden;
     }
-    .video-placeholder::before { content: ''; position: absolute; inset: 0; background: rgba(8,20,10,0.72); }
-    .video-inner { position: relative; z-index: 1; }
-    .play-ring {
-      width: 72px; height: 72px; border-radius: 50%; border: 1.5px solid rgba(143,190,138,0.6);
-      display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;
-      transition: border-color 0.2s; cursor: pointer;
+    #leaflet-map{width:100%;height:100%;}
+
+    /* Leaflet info panel overlay */
+    .map-panel{
+      position:absolute;top:0;left:0;bottom:0;
+      width:300px;z-index:800;
+      background:rgba(20,40,28,0.92);backdrop-filter:blur(8px);
+      color:var(--cream);padding:2rem 1.8rem;
+      display:flex;flex-direction:column;
+      border-right:1px solid rgba(255,255,255,0.08);
     }
-    .play-ring:hover { border-color: #8FBE8A; }
-    .play-ring svg { fill: rgba(143,190,138,0.8); width: 22px; height: 22px; margin-left: 4px; }
-    .video-placeholder h3 { font-size: 1.5rem; color: #f0f5f0; font-weight: normal; margin-bottom: 12px; }
-    .video-placeholder p { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: rgba(255,255,255,0.4); max-width: 420px; line-height: 1.7; }
-    .video-note { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.7rem; letter-spacing: 0.12em; color: #4A8A5A; margin-top: 16px; }
-
-    /* TITLE INFO */
-    #title-info { background: #f2f4f0; }
-    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 56px; }
-    .info-block h3 { font-size: 1.05rem; color: #132518; font-weight: normal; margin-bottom: 22px; padding-bottom: 16px; border-bottom: 1px solid #d0d8d0; }
-    .info-list { list-style: none; }
-    .info-list li { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.86rem; line-height: 1.6; padding: 11px 0; border-bottom: 1px solid #e4e8e4; color: #555; display: flex; gap: 14px; align-items: baseline; }
-    .info-list li::before { content: ''; display: inline-block; width: 4px; height: 4px; background: #4A8A5A; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
-    .covenant-notice { background: #fff; border: 1px solid #d4c89a; border-left: 3px solid #9A7A30; padding: 24px 28px; margin-top: 28px; }
-    .covenant-notice h4 { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.63rem; letter-spacing: 0.22em; text-transform: uppercase; color: #7A5A18; margin-bottom: 12px; }
-    .covenant-notice p { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.83rem; line-height: 1.7; color: #5A4215; }
-    .covenant-notice p + p { margin-top: 8px; }
-
-    /* ZONING */
-    #zoning { background: #fafaf7; }
-    .zoning-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 48px; }
-    .zoning-card { border: 1px solid #dde4dd; padding: 36px; }
-    .zone-designation { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.63rem; letter-spacing: 0.2em; text-transform: uppercase; color: #4A8A5A; margin-bottom: 12px; display: block; }
-    .zoning-card h3 { font-size: 1.05rem; color: #132518; font-weight: normal; margin-bottom: 18px; }
-    .zoning-card p { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.85rem; line-height: 1.75; color: #666; margin-bottom: 18px; }
-    .zoning-uses { list-style: none; }
-    .zoning-uses li { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.83rem; line-height: 1.6; padding: 8px 0; color: #555; border-bottom: 1px solid #eef0ee; display: flex; gap: 12px; align-items: baseline; }
-    .zoning-uses li::before { content: ''; display: inline-block; width: 4px; height: 1px; background: #2D5A3D; flex-shrink: 0; margin-top: 8px; }
-    .servicing-note { margin-top: 40px; padding: 22px 26px; background: #eef4ee; border-left: 3px solid #4A8A5A; }
-    .servicing-note p { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.85rem; line-height: 1.75; color: #4a5a4a; }
-
-    /* CONTACT */
-    #contact { background: #0a180e; padding: 100px 56px; }
-    .contact-inner { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-    .contact-left .eyebrow { color: #8FBE8A; }
-    .contact-left .section-title { color: #f0f5f0; }
-    .contact-left .green-rule { background: #4A8A5A; }
-    .contact-left .body-text { color: rgba(240,245,240,0.45); margin-bottom: 40px; }
-    .contact-detail { display: flex; flex-direction: column; gap: 6px; margin-bottom: 22px; padding-bottom: 22px; border-bottom: 1px solid rgba(255,255,255,0.07); }
-    .contact-detail:last-child { border-bottom: none; }
-    .cd-label { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.28); }
-    .cd-value { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.5; }
-    .cd-value a { color: #8FBE8A; text-decoration: none; }
-    .contact-form-wrap { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); padding: 40px; }
-    .form-group { margin-bottom: 20px; }
-    .form-group label { display: block; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
-    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09); font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.88rem; color: rgba(255,255,255,0.75); outline: none; transition: border-color 0.2s; }
-    .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.18); }
-    .form-group select option { background: #0a180e; }
-    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: #4A8A5A; }
-    .form-group textarea { resize: vertical; min-height: 90px; }
-    .btn-form { width: 100%; background: #2D5A3D; color: #fff; border: none; cursor: pointer; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; padding: 15px 32px; transition: background 0.2s; }
-    .btn-form:hover { background: #3A7050; }
-    .form-success { display: none; text-align: center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #8FBE8A; margin-top: 14px; letter-spacing: 0.06em; }
-
-    /* FOOTER */
-    footer { background: #060e08; color: rgba(255,255,255,0.28); padding: 40px 56px; text-align: center; }
-    footer p { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.77rem; line-height: 1.7; }
-    footer p + p { margin-top: 10px; }
-    footer strong { color: rgba(255,255,255,0.5); }
-    footer a { color: #8FBE8A; text-decoration: none; }
-
-    @media (max-width: 900px) {
-      nav { padding: 0 24px; }
-      .nav-links { display: none; }
-      section { padding: 72px 24px; }
-      #portfolio { padding: 60px 24px; }
-      #contact { padding: 72px 24px; }
-      footer { padding: 36px 24px; }
-      .gallery-strip { grid-template-columns: 1fr 1fr; grid-template-rows: 280px 280px; }
-      .gallery-cell.tall { grid-row: span 1; }
-      .lifestyle-grid { grid-template-columns: 1fr; gap: 1px; }
-      .info-grid { grid-template-columns: 1fr; gap: 40px; }
-      .zoning-grid { grid-template-columns: 1fr; }
-      .contact-inner { grid-template-columns: 1fr; gap: 48px; }
-      .portfolio-stats { grid-template-columns: 1fr 1fr; }
+    .panel-brand{
+      font-size:0.95rem;letter-spacing:0.22em;text-transform:uppercase;
+      color:var(--gold-light);margin-bottom:1.6rem;padding-bottom:1.2rem;
+      border-bottom:1px solid rgba(255,255,255,0.12);
     }
-    @media (max-width: 560px) {
-      .gallery-strip { grid-template-columns: 1fr; grid-template-rows: auto; }
-      .gallery-cell { height: 220px; }
-      .hero-stat { padding: 0 18px; }
-      .lots-grid { grid-template-columns: 1fr; }
-      .portfolio-stats { grid-template-columns: 1fr 1fr; }
+    .panel-prompt{
+      font-family:Arial,sans-serif;font-size:0.88rem;
+      color:rgba(245,240,232,0.55);line-height:1.6;font-style:italic;
+      margin-top:1rem;
+    }
+    .panel-lot-num{font-size:3rem;color:white;line-height:1;margin-bottom:0.2rem;}
+    .panel-lot-label{font-family:Arial,sans-serif;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(245,240,232,0.55);margin-bottom:1.4rem;}
+    .panel-price{font-size:1.9rem;color:var(--gold-light);margin-bottom:0.4rem;}
+    .panel-sqft{font-family:Arial,sans-serif;font-size:0.82rem;color:rgba(245,240,232,0.65);margin-bottom:1.4rem;}
+    .panel-badge{
+      display:inline-block;padding:0.22rem 0.8rem;margin-bottom:1.4rem;
+      font-family:Arial,sans-serif;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;
+      background:rgba(184,132,42,0.22);color:var(--gold-light);border:1px solid rgba(184,132,42,0.4);
+    }
+    .panel-badge.back{background:rgba(100,80,50,0.25);color:#c8a87a;border-color:rgba(100,80,50,0.4);}
+    .panel-features{list-style:none;margin-bottom:1.6rem;}
+    .panel-features li{
+      font-family:Arial,sans-serif;font-size:0.82rem;color:rgba(245,240,232,0.7);
+      padding:0.4rem 0;border-bottom:1px solid rgba(255,255,255,0.07);
+      display:flex;align-items:center;gap:0.5rem;
+    }
+    .panel-features li::before{content:'—';color:var(--gold);font-size:0.75rem;}
+    .panel-inquire{
+      display:block;width:100%;padding:0.85rem;
+      background:var(--gold);color:white;border:none;
+      font-family:Arial,sans-serif;font-size:0.78rem;
+      letter-spacing:0.15em;text-transform:uppercase;
+      cursor:pointer;text-align:center;text-decoration:none;
+      transition:background 0.2s;margin-top:auto;
+    }
+    .panel-inquire:hover{background:var(--gold-light);}
+    .panel-nav{
+      display:flex;gap:0.5rem;margin-top:0.8rem;
+    }
+    .panel-nav button{
+      flex:1;padding:0.5rem;
+      background:rgba(255,255,255,0.08);color:rgba(245,240,232,0.7);
+      border:1px solid rgba(255,255,255,0.12);font-family:Arial,sans-serif;
+      font-size:0.75rem;cursor:pointer;letter-spacing:0.08em;transition:background 0.2s;
+    }
+    .panel-nav button:hover{background:rgba(255,255,255,0.15);color:white;}
+
+    /* Map legend */
+    .map-legend{
+      background:var(--cream);padding:1rem 3.5rem 2rem;
+      display:flex;align-items:center;gap:2rem;flex-wrap:wrap;
+    }
+    .legend-label{font-family:Arial,sans-serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light);margin-right:0.5rem;}
+    .legend-item{display:flex;align-items:center;gap:0.45rem;font-family:Arial,sans-serif;font-size:0.78rem;color:var(--text-mid);}
+    .legend-dot{width:14px;height:14px;border-radius:2px;}
+
+    /* ── GETTING THERE ── */
+    .getting-there{background:var(--forest);color:var(--cream);}
+    .getting-there .section-title{color:var(--cream);}
+    .getting-there .section-eyebrow{color:var(--gold-light);}
+    .routes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.8rem;max-width:1180px;margin:3rem auto 0;}
+    .route-card{border:1px solid rgba(245,240,232,0.12);padding:2rem;}
+    .route-icon{font-size:2rem;margin-bottom:0.9rem;}
+    .route-title{font-size:1.08rem;color:var(--gold-light);margin-bottom:0.7rem;}
+    .route-desc{font-family:Arial,sans-serif;font-size:0.88rem;line-height:1.75;color:rgba(245,240,232,0.7);}
+    .route-time{display:block;margin-top:1rem;padding-top:0.8rem;border-top:1px solid rgba(245,240,232,0.15);font-family:Arial,sans-serif;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-light);}
+
+    /* ── CONTACT ── */
+    .contact-section{background:var(--warm-white);}
+    .contact-inner{max-width:660px;margin:2.5rem auto 0;}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-bottom:1.1rem;}
+    .form-group{display:flex;flex-direction:column;gap:0.35rem;margin-bottom:1.1rem;}
+    .form-group label{font-family:Arial,sans-serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-light);}
+    .form-group input,.form-group select,.form-group textarea{
+      border:1px solid #d4cfc8;padding:0.78rem 1rem;
+      font-family:Arial,sans-serif;font-size:0.95rem;color:var(--text-dark);
+      background:white;outline:none;transition:border 0.2s;
+    }
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--sage);}
+    .form-group textarea{height:110px;resize:vertical;}
+    .form-submit{
+      width:100%;padding:1rem;background:var(--forest);color:var(--cream);
+      border:none;font-family:Arial,sans-serif;font-size:0.83rem;
+      letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;
+      transition:background 0.2s;
+    }
+    .form-submit:hover{background:var(--sage);}
+
+    /* ── FOOTER ── */
+    footer{
+      background:#0e1f16;color:rgba(255,255,255,0.4);
+      padding:2.5rem 3.5rem;text-align:center;
+      font-family:Arial,sans-serif;font-size:0.76rem;line-height:1.9;
+    }
+    .footer-logo{
+      font-family:Georgia,serif;font-size:1.05rem;color:rgba(255,255,255,0.85);
+      letter-spacing:0.22em;text-transform:uppercase;display:block;margin-bottom:0.8rem;
+    }
+    .footer-logo em{font-style:normal;color:var(--gold-light);}
+
+    /* Leaflet overrides */
+    .leaflet-control-attribution{font-size:10px !important;}
+    .leaflet-control-zoom a{
+      background:rgba(20,40,28,0.88) !important;
+      color:white !important;border-color:rgba(255,255,255,0.15) !important;
     }
   </style>
 </head>
 <body>
 
+<!-- ── NAV ── -->
 <nav>
-  <div class="nav-brand">Barkley <em>Estates</em></div>
+  <div class="nav-logo">Bamfield <em>Sanctuary</em></div>
   <ul class="nav-links">
-    <li><a href="#lifestyle">The Area</a></li>
-    <li><a href="#lots">Available Lots</a></li>
-    <li><a href="#title-info">Title &amp; Legal</a></li>
-    <li><a href="#zoning">Zoning</a></li>
-    <li><a href="#contact">Inquire</a></li>
+    <li><a href="#why">Why Bamfield</a></li>
+    <li><a href="#the-lots">The Lots</a></li>
+    <li><a href="#getting-there">Getting There</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Register Interest</button>
 </nav>
 
-<section id="hero">
+<!-- ── HERO ── -->
+<section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-location">South Bamfield Road &nbsp;&middot;&nbsp; Bamfield, British Columbia</div>
-    <h1 class="hero-title">Barkley Estates</h1>
-    <div class="hero-rule"></div>
-    <p class="hero-sub">Thirteen newly titled residential acreage lots at the edge of Barkley Sound. A rare opportunity within Canada&#8217;s Pacific old-growth.</p>
-    <div class="hero-stats">
-      <div class="hero-stat"><span class="num">13</span><span class="lbl">Fee Simple Lots</span></div>
-      <div class="hero-stat"><span class="num">1&#8211;2</span><span class="lbl">Acres Each</span></div>
-      <div class="hero-stat"><span class="num">From $189K</span><span class="lbl">Asking Price</span></div>
-      <div class="hero-stat"><span class="num">Clear</span><span class="lbl">Title, No Mortgage</span></div>
-    </div>
-    <div class="hero-cta">
-      <a href="#lots" class="btn-outline-light">View Lots</a>
-      <a href="#contact" class="btn-forest">Request Package</a>
-    </div>
+    <p class="hero-eyebrow">Vancouver Island · Barkley Sound · British Columbia</p>
+    <h1 class="hero-title">Where the <em>rainforest</em><br>meets the sea</h1>
+    <p class="hero-sub">
+      Thirteen rare freehold lots on the edge of Barkley Sound. Old growth forest. Eagles overhead.
+      Whales in the inlet. A chance to build in one of BC's most extraordinary places — before everyone else arrives.
+    </p>
+    <a href="#the-lots" class="hero-cta">Explore the Lots</a>
   </div>
-  <div class="scroll-cue">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- ── STATS BAR ── -->
+<div class="stats-bar">
+  <div class="stat"><span class="stat-num">13</span><span class="stat-label">Freehold Lots</span></div>
+  <div class="stat-div"></div>
+  <div class="stat"><span class="stat-num">4,020–7,761</span><span class="stat-label">Square Feet</span></div>
+  <div class="stat-div"></div>
+  <div class="stat"><span class="stat-num">From $195k</span><span class="stat-label">Starting Price</span></div>
+  <div class="stat-div"></div>
+  <div class="stat"><span class="stat-num">2023</span><span class="stat-label">Road Paved · Year-Round Access</span></div>
+  <div class="stat-div"></div>
+  <div class="stat"><span class="stat-num">EPP141779</span><span class="stat-label">Registered Title · Barclay District</span></div>
+</div>
+
+<!-- ── WHY BAMFIELD ── -->
+<section class="why-bamfield" id="why">
+  <div class="why-header">
+    <p class="section-eyebrow">Why Here</p>
+    <h2 class="section-title">Bamfield is today what Tofino<br>was twenty years ago</h2>
+    <p class="section-body">
+      For decades, Bamfield was the best-kept secret on Vancouver Island — too remote for most, which kept it pristine.
+      In 2023, the 76-kilometre road from Port Alberni was paved, opening Bamfield to year-round access
+      without diminishing what makes it extraordinary.
+    </p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">🦅</div>
+      <h3 class="why-card-title">Extraordinary Wildlife</h3>
+      <p class="why-card-text">Bald eagles nest overhead. Grey whales, humpbacks, and orca migrate through Barkley Sound. Steller sea lions haul out on nearby rocks. Roosevelt elk move through the forest edges at dawn. Wildlife here is not a highlight — it's daily life.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🌲</div>
+      <h3 class="why-card-title">Old Growth Rainforest</h3>
+      <p class="why-card-text">The West Coast Trail passes nearby, threading through 77 kilometres of ancient Sitka spruce, western red cedar, and Douglas fir. The air smells of salt and cedar. The light filters green through canopies that have stood for centuries.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">📈</div>
+      <h3 class="why-card-title">A Clear Investment Case</h3>
+      <p class="why-card-text">After the road was paved, average Bamfield house prices rose from $472,000 to $728,000. Western Investor named Bamfield one of BC's top five towns for real estate investment. The window to buy ahead of full discovery is narrow.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🌊</div>
+      <h3 class="why-card-title">Barkley Sound</h3>
+      <p class="why-card-text">One of Vancouver Island's great marine environments. Kayaking, sport fishing, diving, and whale-watching are right outside your door. The Broken Group Islands — a world-class paddler's destination — lie minutes away by boat.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🔬</div>
+      <h3 class="why-card-title">Bamfield Marine Sciences Centre</h3>
+      <p class="why-card-text">One of Canada's leading marine research institutions operates here year-round, drawing scientists from universities across the country. It gives Bamfield a uniquely thoughtful, engaged community unlike any other small coastal village.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🔒</div>
+      <h3 class="why-card-title">True Scarcity</h3>
+      <p class="why-card-text">There are exactly 13 lots in Bamfield Sanctuary. There will never be more. Bounded by crown land and protected areas, this subdivision cannot expand. When these lots are sold, this opportunity is permanently closed.</p>
+    </div>
   </div>
 </section>
 
-<!-- PHOTO GALLERY -->
-<div id="gallery">
-  <div class="gallery-strip">
-    <div class="gallery-cell tall">
-      <img src="https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=900&q=82" alt="Old-growth forest, Pacific coast" loading="lazy" />
-      <div class="gallery-caption">Old-growth rainforest</div>
-    </div>
-    <div class="gallery-cell">
-      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=700&q=82" alt="Pacific coastline, BC" loading="lazy" />
-      <div class="gallery-caption">Pacific coastline</div>
-    </div>
-    <div class="gallery-cell">
-      <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=700&q=82" alt="Aerial rainforest" loading="lazy" />
-      <div class="gallery-caption">Aerial canopy view</div>
-    </div>
-    <div class="gallery-cell">
-      <img src="https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=700&q=82" alt="BC mountain waterfall" loading="lazy" />
-      <div class="gallery-caption">West coast watershed</div>
-    </div>
-    <div class="gallery-cell">
-      <img src="https://images.unsplash.com/photo-1510797215324-95aa89f43c33?w=700&q=82" alt="Coastal fog, Pacific Northwest" loading="lazy" />
-      <div class="gallery-caption">Morning inlet fog</div>
-    </div>
+<!-- ── PHOTO GALLERY ── -->
+<div class="gallery-strip">
+  <div class="gallery-item">
+    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80" alt="Barkley Sound coastal vista" loading="lazy">
+    <div class="gallery-caption">Barkley Sound</div>
+  </div>
+  <div class="gallery-item">
+    <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=80" alt="Old growth rainforest" loading="lazy">
+    <div class="gallery-caption">Old Growth Rainforest</div>
+  </div>
+  <div class="gallery-item">
+    <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=600&q=80" alt="Bald eagle in flight" loading="lazy">
+    <div class="gallery-caption">Bald Eagle</div>
+  </div>
+  <div class="gallery-item">
+    <img src="https://images.unsplash.com/photo-1568430462989-44163eb1752f?auto=format&fit=crop&w=600&q=80" alt="Humpback whale tail" loading="lazy">
+    <div class="gallery-caption">Humpback Whale</div>
   </div>
 </div>
 
-<!-- LIFESTYLE -->
-<section id="lifestyle">
-  <div class="section-inner">
-    <div class="lifestyle-intro">
-      <span class="eyebrow">The Bamfield Experience</span>
-      <h2 class="section-title">Life on Canada&#8217;s Wild Pacific Coast</h2>
-      <div class="green-rule" style="background:#8FBE8A"></div>
-      <p class="body-text" style="color:rgba(200,225,200,0.55)">Bamfield is one of Vancouver Island&#8217;s most cherished coastal communities &#8212; remote enough to feel like an escape, vibrant enough to call home. Nestled at the entrance to Barkley Sound, it draws those who prize authentic West Coast living above all else.</p>
-    </div>
-    <div class="lifestyle-grid">
-      <div class="lifestyle-card">
-        <span class="lifestyle-num">01</span>
-        <h3>West Coast Trail</h3>
-        <p>The northern terminus of Canada&#8217;s iconic West Coast Trail sits minutes away &#8212; 75 kilometres of dramatic Pacific coastline through Pacific Rim National Park Reserve.</p>
-      </div>
-      <div class="lifestyle-card">
-        <span class="lifestyle-num">02</span>
-        <h3>World-Class Fishing</h3>
-        <p>Barkley Sound is legendary for chinook salmon, halibut, and lingcod. Whether by charter or your own vessel, the fishing here is exceptional throughout the season.</p>
-      </div>
-      <div class="lifestyle-card">
-        <span class="lifestyle-num">03</span>
-        <h3>Barkley Sound</h3>
-        <p>Kayaking, diving, whale watching, surfing &#8212; the Sound&#8217;s sheltered inlets and open ocean offer endless marine recreation for every skill level and season.</p>
-      </div>
-      <div class="lifestyle-card">
-        <span class="lifestyle-num">04</span>
-        <h3>Marine Sciences Centre</h3>
-        <p>The Bamfield Marine Sciences Centre is a world-renowned ocean research institution, lending the community an intellectual character unique among BC coastal villages.</p>
-      </div>
-      <div class="lifestyle-card">
-        <span class="lifestyle-num">05</span>
-        <h3>Old-Growth Forest</h3>
-        <p>Towering Douglas fir, red cedar, and Sitka spruce surround these lots, offering privacy and natural grandeur that has no equivalent in urban British Columbia.</p>
-      </div>
-      <div class="lifestyle-card">
-        <span class="lifestyle-num">06</span>
-        <h3>A Real Community</h3>
-        <p>A working marina, local services, and a warm village spirit &#8212; Bamfield is a genuine community, not a resort. Those who come here tend to stay.</p>
-      </div>
-    </div>
+<!-- ── INTERACTIVE LOT MAP ── -->
+<section class="map-section" id="the-lots">
+  <div class="map-header">
+    <p class="section-eyebrow">The Lots</p>
+    <h2 class="section-title">Thirteen lots. One chance.</h2>
+    <p class="section-body">Click any lot to view its details, square footage, and pricing. All lots are registered freehold title under Plan EPP141779, Barclay District, with frontage on South Bamfield Road.</p>
   </div>
-</section>
 
-<!-- AVAILABLE LOTS -->
-<section id="lots">
-  <div class="section-inner">
-    <div class="lots-header">
-      <div>
-        <span class="eyebrow">Plan EPP141779</span>
-        <h2 class="section-title">Available Lots</h2>
-        <div class="green-rule"></div>
-        <p class="body-text">All 13 lots are fee simple freehold with no strata fees. Zoned RA1&#47;RA2 Acreage Residential. Available individually or as a complete portfolio.</p>
-      </div>
-      <div class="tier-key">
-        <div class="tier-key-item" style="color:#2D7A50"><div class="tier-swatch" style="background:#2D7A50"></div> Tier 1 &mdash; approx. 1.0 ac</div>
-        <div class="tier-key-item" style="color:#4A6A3A"><div class="tier-swatch" style="background:#4A6A3A"></div> Tier 2 &mdash; approx. 1.05 ac</div>
-        <div class="tier-key-item" style="color:#6A7A2A"><div class="tier-swatch" style="background:#6A7A2A"></div> Tier 3 &mdash; approx. 1.2&#8211;1.4 ac</div>
-        <div class="tier-key-item" style="color:#3A5A6A"><div class="tier-swatch" style="background:#3A5A6A"></div> Tier 4 &mdash; approx. 1.6&#8211;2.0 ac</div>
-      </div>
-    </div>
-    <div class="lots-grid" id="lots-grid"></div>
-  </div>
-</section>
-
-<!-- PORTFOLIO BAND -->
-<section id="portfolio">
-  <div class="portfolio-inner">
-    <div class="portfolio-eyebrow">Portfolio Acquisition</div>
-    <h2 class="portfolio-title">All 13 lots are available as a single portfolio acquisition.</h2>
-    <div class="portfolio-stats">
-      <div class="p-stat"><span class="p-num">13</span><span class="p-lbl">Titled Lots</span></div>
-      <div class="p-stat"><span class="p-num">62,187</span><span class="p-lbl">Total m&#178;</span></div>
-      <div class="p-stat"><span class="p-num">15.4</span><span class="p-lbl">Total Acres</span></div>
-      <div class="p-stat"><span class="p-num">$2.945M</span><span class="p-lbl">Portfolio Ask</span></div>
-    </div>
-    <p class="portfolio-note">Bulk purchase pricing available upon request. Contact us to discuss terms for portfolio acquisition.</p>
-  </div>
-</section>
-
-<!-- VIDEO SECTION -->
-<div id="video-section">
-  <div class="video-placeholder">
-    <div class="video-inner">
-      <div class="play-ring" onclick="alert('Add your YouTube or Vimeo embed URL here.')">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="5,3 19,12 5,21"/></svg>
-      </div>
-      <h3>Explore Barkley Estates</h3>
-      <p>A drone tour of the lots and surrounding old-growth forest will be available shortly. Contact us to arrange a site visit.</p>
-      <div class="video-note">Video coming soon &#8212; site visits available by appointment</div>
-    </div>
-  </div>
-</div>
-
-<!-- TITLE INFO -->
-<section id="title-info">
-  <div class="section-inner">
-    <span class="eyebrow">Due Diligence</span>
-    <h2 class="section-title">Title Status &amp; Legal Overview</h2>
-    <div class="green-rule"></div>
-    <div class="info-grid">
-      <div class="info-block">
-        <h3>Title Summary</h3>
-        <ul class="info-list">
-          <li>All 13 titles issued under Section 98, Land Title Act</li>
-          <li>Victoria Land Title District &#8212; applications entered April 20, 2026</li>
-          <li>Registered to 1326247 B.C. Ltd. (Inc. No. BC1326247)</li>
-          <li>No mortgages, caveats, or financial charges on any parcel</li>
-          <li>No transfers or pending applications outstanding</li>
-          <li>Fee simple freehold &#8212; no strata, no leasehold</li>
-          <li>Taxation Authority: Port Alberni Assessment Area</li>
-        </ul>
-      </div>
-      <div class="info-block">
-        <h3>Registered Encumbrances</h3>
-        <p class="body-text" style="margin-bottom:18px;font-size:0.86rem">Each parcel carries two Section 215 LTA covenants registered against title. These covenants run with the land and transfer to all future owners.</p>
-        <div class="covenant-notice">
-          <h4>Covenant Disclosure</h4>
-          <p><strong>S41363</strong> (registered 1987): Province of BC and Regional District of Alberni-Clayoquot. Section 215 LTA, Inter Alia.</p>
-          <p><strong>EB103193</strong> (registered 1988): Province of British Columbia. Section 215 LTA, Inter Alia.</p>
-          <p>Prospective purchasers must independently obtain and review the full covenant documents from the Victoria Land Title Office prior to completing a purchase. Independent legal advice is strongly recommended.</p>
+  <div class="map-wrapper">
+    <!-- Info panel overlay -->
+    <div class="map-panel" id="map-panel">
+      <div class="panel-brand">Bamfield Sanctuary</div>
+      <div id="panel-prompt" class="panel-prompt">Click any lot on the map to view its details, size, and pricing.</div>
+      <div id="panel-detail" style="display:none;flex:1;display:none;flex-direction:column;">
+        <div class="panel-lot-num" id="p-num">Lot 1</div>
+        <div class="panel-lot-label">Plan EPP141779 · Barclay District</div>
+        <div class="panel-price" id="p-price">$199,000</div>
+        <div class="panel-sqft" id="p-sqft">4,050 sq ft · Road-Front</div>
+        <span class="panel-badge" id="p-badge">Available</span>
+        <ul class="panel-features" id="p-features"></ul>
+        <a href="#contact" class="panel-inquire" id="p-inquire">Inquire About This Lot</a>
+        <div class="panel-nav">
+          <button onclick="navigateLot(-1)">← Prev</button>
+          <button onclick="navigateLot(1)">Next →</button>
         </div>
       </div>
     </div>
+
+    <!-- Leaflet map -->
+    <div id="leaflet-map"></div>
+  </div>
+
+  <!-- Legend -->
+  <div class="map-legend">
+    <span class="legend-label">Legend:</span>
+    <div class="legend-item"><div class="legend-dot" style="background:rgba(90,122,98,0.7);border:2px solid #5a7a62;"></div> Road-Front Lot</div>
+    <div class="legend-item"><div class="legend-dot" style="background:rgba(184,132,42,0.7);border:2px solid #b8842a;"></div> Premium Large Lot</div>
+    <div class="legend-item"><div class="legend-dot" style="background:rgba(120,90,55,0.7);border:2px solid #7a5a37;"></div> Back Lot — Maximum Privacy</div>
+    <div class="legend-item"><div class="legend-dot" style="background:rgba(212,168,75,0.95);border:2px solid #f0c04a;"></div> Selected</div>
   </div>
 </section>
 
-<!-- ZONING -->
-<section id="zoning">
-  <div class="section-inner">
-    <span class="eyebrow">Regional District of Alberni-Clayoquot</span>
-    <h2 class="section-title">Zoning &amp; Permitted Uses</h2>
-    <div class="green-rule"></div>
-    <p class="body-text">All lots are designated under the RDAC Zoning Bylaw for acreage residential use, supporting low-density single-family development in rural settings and preserving the natural character of the area.</p>
-    <div class="zoning-grid">
-      <div class="zoning-card">
-        <span class="zone-designation">RA1 &#8212; Acreage Residential District 1</span>
-        <h3>Single-Family Residential</h3>
-        <p>Provides for single-family residential development on large lots in areas not ultimately intended for intensive urban development.</p>
-        <ul class="zoning-uses">
-          <li>One single-family dwelling (owner-occupied)</li>
-          <li>Home occupations</li>
-          <li>Accessory buildings and uses</li>
-        </ul>
+<!-- ── GETTING THERE ── -->
+<section class="getting-there" id="getting-there">
+  <div style="max-width:1180px;margin:0 auto;">
+    <p class="section-eyebrow">Getting There</p>
+    <h2 class="section-title">Closer than you think</h2>
+    <p class="section-body" style="color:rgba(245,240,232,0.72);">
+      Since the Bamfield Road was paved in 2023, getting here is easy and comfortable — no more
+      white-knuckle logging road. From downtown Vancouver you can be standing in Bamfield in under five hours.
+    </p>
+    <div class="routes-grid">
+      <div class="route-card">
+        <div class="route-icon">🚗</div>
+        <h3 class="route-title">By Road via Port Alberni</h3>
+        <p class="route-desc">Take BC Ferries from Tsawwassen to Nanaimo (Departure Bay), then drive the Island Highway south to Port Alberni. From there, the fully paved 76-kilometre Bamfield Road winds through old growth forest directly into the village. Straightforward and scenic.</p>
+        <span class="route-time">~4.5–5 hours from Vancouver · Year-round access</span>
       </div>
-      <div class="zoning-card">
-        <span class="zone-designation">RA2 &#8212; Acreage Residential District 2</span>
-        <h3>Single-Family Residential</h3>
-        <p>Provides for single-family residential development on large lots in certain types of rural settings &#8212; the quintessential west coast acreage designation.</p>
-        <ul class="zoning-uses">
-          <li>One single-family dwelling (owner-occupied)</li>
-          <li>Home occupations</li>
-          <li>Accessory buildings and uses</li>
-        </ul>
+      <div class="route-card">
+        <div class="route-icon">⛴️</div>
+        <h3 class="route-title">By Ferry from Port Alberni</h3>
+        <p class="route-desc">The MV Frances Barkley runs from Port Alberni to Bamfield through the Alberni Inlet — one of Vancouver Island's most spectacular coastal passages. The journey takes approximately 4.5 hours and is an experience in itself. A memorable way to arrive.</p>
+        <span class="route-time">Seasonal schedule · Check Lady Rose Marine Services</span>
       </div>
-    </div>
-    <div class="servicing-note">
-      <p><strong>Servicing:</strong> Lots require individual septic systems and water wells. Buyers should confirm soil suitability with a registered professional engineer and conduct well feasibility testing prior to purchase. BC Hydro service is available in the area; connection costs to be confirmed. No strata fees apply. Buyers are encouraged to contact the Regional District of Alberni-Clayoquot directly regarding development cost charges and building permit requirements.</p>
+      <div class="route-card">
+        <div class="route-icon">✈️</div>
+        <h3 class="route-title">By Floatplane</h3>
+        <p class="route-desc">Charter floatplane service is available from Vancouver Harbour or Victoria to Barkley Sound, landing directly in Bamfield. The fastest option from the Lower Mainland, and it offers an unforgettable first view of your future property from above the canopy.</p>
+        <span class="route-time">~45 minutes from Vancouver Harbour</span>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section id="contact">
+<!-- ── CONTACT ── -->
+<section class="contact-section" id="contact">
+  <div style="max-width:1180px;margin:0 auto;">
+    <p class="section-eyebrow">Register Interest</p>
+    <h2 class="section-title">Inquire about Bamfield Sanctuary</h2>
+    <p class="section-body">These 13 lots will not last. Complete the form below to receive detailed lot information, pricing, covenant details, and to arrange a site visit at your convenience.</p>
+  </div>
   <div class="contact-inner">
-    <div class="contact-left">
-      <span class="eyebrow">Get In Touch</span>
-      <h2 class="section-title">Inquire About Barkley Estates</h2>
-      <div class="green-rule"></div>
-      <p class="body-text">We are pleased to answer questions, provide the full Property Information Package, and discuss lot-specific details or portfolio acquisition.</p>
-      <div class="contact-detail">
-        <span class="cd-label">Email</span>
-        <span class="cd-value"><a href="mailto:dee.yvette@gmail.com">dee.yvette@gmail.com</a></span>
+    <form onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input type="text" placeholder="First name" required></div>
+        <div class="form-group"><label>Last Name</label><input type="text" placeholder="Last name" required></div>
       </div>
-      <div class="contact-detail">
-        <span class="cd-label">Location</span>
-        <span class="cd-value">South Bamfield Road, Bamfield, BC<br>Section 18, Township 1, Barclay District</span>
+      <div class="form-row">
+        <div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com" required></div>
+        <div class="form-group"><label>Phone</label><input type="tel" placeholder="+1 (604) 000-0000"></div>
       </div>
-      <div class="contact-detail">
-        <span class="cd-label">Plan Reference</span>
-        <span class="cd-value">EPP141779 &#8212; Victoria Land Title District</span>
-      </div>
-      <div class="contact-detail">
-        <span class="cd-label">Vendor</span>
-        <span class="cd-value">1326247 B.C. Ltd. (Inc. No. BC1326247)<br>Vancouver, British Columbia</span>
-      </div>
-    </div>
-    <div class="contact-form-wrap">
-      <form onsubmit="handleSubmit(event)">
-        <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your name" required></div>
-        <div class="form-group"><label>Email Address</label><input type="email" placeholder="your@email.com" required></div>
-        <div class="form-group"><label>Phone (optional)</label><input type="tel" placeholder="+1 (604) 000-0000"></div>
+      <div class="form-row">
         <div class="form-group">
-          <label>Lot(s) of Interest</label>
+          <label>Lot of Interest</label>
           <select>
-            <option value="">Any / All Lots</option>
-            <option>Lot 1 &#8212; 4,050 m&#178; &#8212; $189,000</option>
-            <option>Lot 2 &#8212; 4,050 m&#178; &#8212; $189,000</option>
-            <option>Lot 3 &#8212; 4,256 m&#178; &#8212; $210,000</option>
-            <option>Lot 4 &#8212; 4,275 m&#178; &#8212; $215,000</option>
-            <option>Lot 5 &#8212; 5,575 m&#178; &#8212; $249,000</option>
-            <option>Lot 6 &#8212; 7,951 m&#178; &#8212; $349,000</option>
-            <option>Lot 7 &#8212; 6,485 m&#178; &#8212; $299,000</option>
-            <option>Lot 8 &#8212; 4,930 m&#178; &#8212; $249,000</option>
-            <option>Lot 9 &#8212; 4,155 m&#178; &#8212; $210,000</option>
-            <option>Lot 10 &#8212; 4,310 m&#178; &#8212; $219,000</option>
-            <option>Lot 11 &#8212; 4,050 m&#178; &#8212; $189,000</option>
-            <option>Lot 12 &#8212; 4,050 m&#178; &#8212; $189,000</option>
-            <option>Lot 13 &#8212; 4,050 m&#178; &#8212; $249,000</option>
-            <option>Full Portfolio (13 lots)</option>
+            <option value="">Any / Multiple</option>
+            <option>Lot 1 — $199,000 · 4,050 sq ft · Road-Front</option>
+            <option>Lot 2 — $205,000 · 4,060 sq ft · Road-Front</option>
+            <option>Lot 3 — $299,000 · 6,295 sq ft · Premium Large</option>
+            <option>Lot 4 — $219,000 · 4,275 sq ft · Road-Front</option>
+            <option>Lot 5 — $259,000 · 5,375 sq ft · Road-Front</option>
+            <option>Lot 6 — $245,000 · 7,761 sq ft · Back Lot</option>
+            <option>Lot 7 — $235,000 · 6,485 sq ft · Back Lot</option>
+            <option>Lot 8 — $199,000 · 4,020 sq ft · Road-Front</option>
+            <option>Lot 9 — $289,000 · 6,225 sq ft · Premium Large</option>
+            <option>Lot 10 — $215,000 · 4,310 sq ft · Road-Front</option>
+            <option>Lot 11 — $209,000 · 4,050 sq ft · Road-Front</option>
+            <option>Lot 12 — $209,000 · 4,060 sq ft · Road-Front</option>
+            <option>Lot 13 — $215,000 · 4,220 sq ft · Road-Front</option>
           </select>
         </div>
-        <div class="form-group"><label>Message</label><textarea placeholder="Questions, preferred contact time, or anything else&#8230;"></textarea></div>
-        <button type="submit" class="btn-form">Send Inquiry</button>
-        <p class="form-success" id="form-msg">Thank you &#8212; we will be in touch shortly.</p>
-      </form>
-    </div>
+        <div class="form-group">
+          <label>Timeline</label>
+          <select>
+            <option>Ready to purchase now</option>
+            <option>Within 3 months</option>
+            <option>Within 6 months</option>
+            <option>Exploring options</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label>Message (Optional)</label><textarea placeholder="Tell us about your vision for the lot — we'd love to know what you're imagining for this piece of Bamfield."></textarea></div>
+      <button type="submit" class="form-submit">Submit Inquiry</button>
+    </form>
   </div>
 </section>
 
+<!-- ── FOOTER ── -->
 <footer>
-  <p><strong>Barkley Estates</strong> &nbsp;&middot;&nbsp; Plan EPP141779 &nbsp;&middot;&nbsp; South Bamfield Road, Bamfield, BC</p>
-  <p>Vendor: 1326247 B.C. Ltd. &nbsp;&middot;&nbsp; <a href="mailto:dee.yvette@gmail.com">dee.yvette@gmail.com</a></p>
-  <p style="margin-top:16px;max-width:820px;margin-left:auto;margin-right:auto;">This website is for marketing and informational purposes only and does not constitute an offer to sell. All pricing is in Canadian dollars and subject to change without notice. Prospective purchasers are encouraged to conduct independent due diligence, including review of all title documents, covenants, and applicable zoning regulations, and to obtain independent legal advice prior to completing any purchase. GST and Property Transfer Tax may apply. Photography sourced from Unsplash and is representative of the Pacific Northwest coastal environment.</p>
+  <span class="footer-logo">Bamfield <em>Sanctuary</em></span>
+  <p>Plan EPP141779 · Section 18 · Township 1 · Barclay District, British Columbia</p>
+  <p style="margin-top:0.4rem;">Taxation Authority: Port Alberni Assessment Area · 1326247 B.C. Ltd.</p>
+  <p style="margin-top:0.8rem;opacity:0.6;">All lot sizes and prices are approximate and subject to change without notice. This website is for information purposes only and does not constitute a formal offer to sell. E.&O.E.</p>
+  <p style="margin-top:0.4rem;opacity:0.6;">© 2026 Bamfield Sanctuary. All rights reserved.</p>
 </footer>
 
+<!-- Leaflet JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-  var lots = [
-    {lot:1,  pid:"032-810-369",title:"CB2692528",area:4050, ac:"1.000",price:"$189,000",tier:1},
-    {lot:2,  pid:"032-810-377",title:"CB2692529",area:4050, ac:"1.000",price:"$189,000",tier:1},
-    {lot:3,  pid:"032-810-385",title:"CB2692530",area:4256, ac:"1.051",price:"$210,000",tier:2},
-    {lot:4,  pid:"032-810-393",title:"CB2692531",area:4275, ac:"1.056",price:"$215,000",tier:2},
-    {lot:5,  pid:"032-810-407",title:"CB2692532",area:5575, ac:"1.377",price:"$249,000",tier:3},
-    {lot:6,  pid:"032-810-415",title:"CB2692533",area:7951, ac:"1.964",price:"$349,000",tier:4},
-    {lot:7,  pid:"032-810-423",title:"CB2692534",area:6485, ac:"1.602",price:"$299,000",tier:4},
-    {lot:8,  pid:"032-810-431",title:"CB2692535",area:4930, ac:"1.218",price:"$249,000",tier:3},
-    {lot:9,  pid:"032-810-440",title:"CB2692536",area:4155, ac:"1.027",price:"$210,000",tier:2},
-    {lot:10, pid:"032-810-458",title:"CB2692537",area:4310, ac:"1.065",price:"$219,000",tier:2},
-    {lot:11, pid:"032-810-466",title:"CB2692538",area:4050, ac:"1.000",price:"$189,000",tier:1},
-    {lot:12, pid:"032-810-474",title:"CB2692539",area:4050, ac:"1.000",price:"$189,000",tier:1},
-    {lot:13, pid:"032-810-482",title:"CB2692540",area:4050, ac:"1.000",price:"$189,000",tier:1}
-  ];
+// ── LOT DATA ──
+const LOT_DATA = {
+  1:  { sqft: 4050,  price: 199000, type: 'small',   label: 'Road-Front · Small',            features: ['Direct access — South Bamfield Road','4,050 sq ft registered freehold','Services to lot line','No building deadline','Plan EPP141779 · Barclay District'] },
+  2:  { sqft: 4060,  price: 205000, type: 'small',   label: 'Road-Front · Small',            features: ['Direct access — South Bamfield Road','4,060 sq ft registered freehold','Services to lot line','No building deadline','Plan EPP141779 · Barclay District'] },
+  3:  { sqft: 6295,  price: 299000, type: 'premium', label: 'Road-Front · Premium Large',    features: ['Direct access — South Bamfield Road','6,295 sq ft registered freehold','Largest road-front lot in subdivision','Services to lot line','Plan EPP141779 · Barclay District'] },
+  4:  { sqft: 4275,  price: 219000, type: 'small',   label: 'Road-Front · Small',            features: ['Direct access — South Bamfield Road','4,275 sq ft registered freehold','Services to lot line','No building deadline','Plan EPP141779 · Barclay District'] },
+  5:  { sqft: 5375,  price: 259000, type: 'mid',     label: 'Road-Front · Mid',              features: ['Direct access — South Bamfield Road','5,375 sq ft registered freehold','Services to lot line','No building deadline','Plan EPP141779 · Barclay District'] },
+  6:  { sqft: 7761,  price: 245000, type: 'back',    label: 'Back Lot · Maximum Privacy',    features: ['Largest lot in the subdivision','7,761 sq ft registered freehold','Maximum privacy — natural buffer','Accessed via South Bamfield Road','Plan EPP141779 · Barclay District'] },
+  7:  { sqft: 6485,  price: 235000, type: 'back',    label: 'Back Lot · Maximum Privacy',    features: ['Second largest in the subdivision','6,485 sq ft registered freehold','Maximum privacy — natural buffer','Accessed via South Bamfield Road','Plan EPP141779 · Barclay District'] },
+  8:  { sqft: 4020,  price: 199000, type: 'small',   label: 'Road-Front · Small',            features: ['Direct access — South Bamfield Road','4,020 sq ft registered freehold','Services to lot line','No building deadline','Plan EPP141779 · Barclay District'] },
+  9:  { sqft: 6225,  price: 289000, type: 'premium', label: 'Road-Front · Premium Large',    features: ['Direct access — South Bamfield Road','6,225 sq ft registered freehold','Premium size with road frontage','Services to lot line','Plan EPP141779 · Barclay District'] },
+  10: { sqft: 4310,  price: 215000, type: 'small',   label: 'Road-Front · Small',            features: ['Direct access — South Bamfield Road','4,310 sq ft registered freehold','Services to lot line','No building deadline','Plan EPP141779 · Barclay District'] },
+  11: { sqft: 4050,  price: 209000, type: 'small',   label: 'Road-Front · Small',            features: ['Direct access — South Bamfield Road','4,050 sq ft registered freehold','Services to lot line','No building deadline','Plan EPP141779 · Barclay District'] },
+  12: { sqft: 4060,  price: 209000, type: 'small',   label: 'Road-Front · Small',            features: ['Direct access — South Bamfield Road','4,060 sq ft registered freehold','Services to lot line','No building deadline','Plan EPP141779 · Barclay District'] },
+  13: { sqft: 4220,  price: 215000, type: 'small',   label: 'Road-Front · Small',            features: ['Direct access — South Bamfield Road','4,220 sq ft registered freehold','Services to lot line','No building deadline','Plan EPP141779 · Barclay District'] },
+};
 
-  var tierColors = {1:"#2D7A50",2:"#4A6A3A",3:"#6A7A2A",4:"#3A5A6A"};
-  var grid = document.getElementById("lots-grid");
-  lots.forEach(function(l) {
-    grid.innerHTML += '<div class="lot-card">' +
-      '<div class="lot-card-top"><span class="lot-num-label">Lot ' + l.lot + '</span>' +
-      '<div class="lot-tier-dot" style="background:' + tierColors[l.tier] + '"></div></div>' +
-      '<div class="lot-card-body"><div class="lot-price">' + l.price + '</div>' +
-      '<div class="lot-row"><span class="key">Area</span><span class="val">' + l.area.toLocaleString() + ' m&#178;</span></div>' +
-      '<div class="lot-row"><span class="key">Acres</span><span class="val">' + l.ac + ' ac</span></div>' +
-      '<div class="lot-row"><span class="key">Zoning</span><span class="val">RA1 / RA2</span></div>' +
-      '<div class="lot-row"><span class="key">Title</span><span class="val">' + l.title + '</span></div>' +
-      '<div class="lot-row"><span class="key">PID</span><span class="val">' + l.pid + '</span></div>' +
-      '<div class="lot-status">Available</div></div></div>';
+const LOT_IDS = [1,2,3,4,5,6,7,8,9,10,11,12,13];
+let selectedLotId = null;
+let lotLayers = {};
+
+// ── LOT COLOURS ──
+function lotColor(type, selected) {
+  if (selected) return { color:'#f0c04a', fillColor:'#d4a84b', fillOpacity:0.72, weight:3 };
+  if (type === 'premium') return { color:'#b8842a', fillColor:'#b8842a', fillOpacity:0.38, weight:2 };
+  if (type === 'back')    return { color:'#7a5a37', fillColor:'#7a5a37', fillOpacity:0.38, weight:2 };
+  return { color:'#5a7a62', fillColor:'#5a7a62', fillOpacity:0.32, weight:2 };
+}
+
+// ── COORDINATE CALCULATION ──
+// Road start: south end of South Bamfield Road (junction with main Bamfield Rd)
+// Road bearing: approximately 315° (NW direction along road)
+// Coordinates are approximate and visually positioned in Bamfield area
+const ROAD_START_LAT = 48.8308;
+const ROAD_START_LON = -125.1340;
+const ROAD_BEARING_RAD = 315 * Math.PI / 180;
+
+const LAT_M = 1 / 111320;                                   // deg per meter (lat)
+const LON_M = 1 / (111320 * Math.cos(48.833 * Math.PI/180)); // deg per meter (lon)
+
+// Unit vectors along road (bearing 315° = NW)
+const RD_DLAT = Math.cos(ROAD_BEARING_RAD) * LAT_M;  // positive (northward)
+const RD_DLON = Math.sin(ROAD_BEARING_RAD) * LON_M;  // negative (westward)
+
+// Perpendicular: right of road (bearing 45°, NE side = SE lots)
+const R_DLAT  = Math.cos(45 * Math.PI/180) * LAT_M;
+const R_DLON  = Math.sin(45 * Math.PI/180) * LON_M;
+
+// Perpendicular: left of road (bearing 225°, SW side = NW lots)
+const L_DLAT  = Math.cos(225 * Math.PI/180) * LAT_M;
+const L_DLON  = Math.sin(225 * Math.PI/180) * LON_M;
+
+function roadPt(m) {
+  return [ROAD_START_LAT + m * RD_DLAT, ROAD_START_LON + m * RD_DLON];
+}
+
+function makeLotPoly(startM, widthM, depthM, side, backOffM) {
+  const backOff = backOffM || 0;
+  const dlat = side === 'right' ? R_DLAT : L_DLAT;
+  const dlon = side === 'right' ? R_DLON : L_DLON;
+  const p0r  = roadPt(startM);
+  const p1r  = roadPt(startM + widthM);
+  const p0   = [p0r[0] + backOff * dlat, p0r[1] + backOff * dlon];
+  const p1   = [p1r[0] + backOff * dlat, p1r[1] + backOff * dlon];
+  const p2   = [p1r[0] + (backOff + depthM) * dlat, p1r[1] + (backOff + depthM) * dlon];
+  const p3   = [p0r[0] + (backOff + depthM) * dlat, p0r[1] + (backOff + depthM) * dlon];
+  return [p0, p1, p2, p3];
+}
+
+// Lot geometric definitions
+// startM = metres from road start along South Bamfield Road
+// widthM = road frontage in metres  (37 ft ≈ 11.3 m uniform)
+// depth  = lot depth in metres from road (or from backOff line)
+// side   = 'right' (SE side) or 'left' (NW side)
+const W = 11.3; // uniform frontage
+const LOT_GEOM = {
+  1:  { startM: 5,    widthM: W,    depthM: 33,  side:'right', backOff:0    },
+  2:  { startM: 18,   widthM: W,    depthM: 33,  side:'right', backOff:0    },
+  3:  { startM: 31,   widthM: W,    depthM: 52,  side:'right', backOff:0    },
+  4:  { startM: 44,   widthM: W,    depthM: 35,  side:'right', backOff:0    },
+  5:  { startM: 57,   widthM: W,    depthM: 44,  side:'right', backOff:0    },
+  // Back lots — positioned past lot 5, wider, larger
+  6:  { startM: 70,   widthM: 21,   depthM: 34,  side:'right', backOff:0    },
+  7:  { startM: 70,   widthM: 19,   depthM: 32,  side:'left',  backOff:0    },
+  // NW side lots
+  8:  { startM: 5,    widthM: W,    depthM: 33,  side:'left',  backOff:0    },
+  9:  { startM: 18,   widthM: W,    depthM: 51,  side:'left',  backOff:0    },
+  10: { startM: 31,   widthM: W,    depthM: 35,  side:'left',  backOff:0    },
+  11: { startM: 44,   widthM: W,    depthM: 33,  side:'left',  backOff:0    },
+  12: { startM: 57,   widthM: W,    depthM: 33,  side:'left',  backOff:0    },
+  13: { startM: 70,   widthM: W,    depthM: 35,  side:'left',  backOff:44   },
+};
+
+// ── INITIALIZE LEAFLET MAP ──
+const map = L.map('leaflet-map', {
+  center: [48.8316, -125.1352],
+  zoom: 18,
+  zoomControl: true,
+  attributionControl: true,
+});
+
+// Esri World Imagery (satellite) — free, no API key
+L.tileLayer(
+  'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+  { attribution: 'Tiles © Esri, Maxar, Earthstar Geographics', maxZoom: 20 }
+).addTo(map);
+
+// Optional: road labels overlay
+L.tileLayer(
+  'https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
+  { attribution: '', maxZoom: 20, opacity: 0.5 }
+).addTo(map);
+
+// ── DRAW SOUTH BAMFIELD ROAD REFERENCE LINE ──
+const roadPts = [];
+for (let m = 0; m <= 100; m += 5) { roadPts.push(roadPt(m)); }
+L.polyline(roadPts, { color:'#f0c04a', weight:5, opacity:0.7, dashArray:'10,6' })
+ .addTo(map)
+ .bindTooltip('South Bamfield Road', { permanent:false, className:'leaflet-tooltip' });
+
+// Road label
+L.marker(roadPt(45), {
+  icon: L.divIcon({
+    className:'',
+    html:`<div style="background:rgba(20,40,28,0.82);color:#d4a84b;padding:3px 8px;font-size:11px;font-family:Arial,sans-serif;letter-spacing:0.1em;white-space:nowrap;border-radius:2px;">South Bamfield Road</div>`,
+    iconAnchor:[60,10]
+  })
+}).addTo(map);
+
+// ── DRAW LOTS ──
+LOT_IDS.forEach(id => {
+  const g  = LOT_GEOM[id];
+  const d  = LOT_DATA[id];
+  const coords = makeLotPoly(g.startM, g.widthM, g.depthM, g.side, g.backOff);
+  const style  = lotColor(d.type, false);
+
+  const poly = L.polygon(coords, {
+    ...style,
+    interactive: true,
+    bubblingMouseEvents: false,
+  }).addTo(map);
+
+  // Lot number label at centroid
+  const centLat = coords.reduce((s,c)=>s+c[0],0)/4;
+  const centLon = coords.reduce((s,c)=>s+c[1],0)/4;
+  const label = L.marker([centLat, centLon], {
+    icon: L.divIcon({
+      className:'',
+      html:`<div style="
+        background:rgba(20,40,28,0.85);color:white;
+        width:26px;height:26px;border-radius:50%;
+        display:flex;align-items:center;justify-content:center;
+        font-family:Arial,sans-serif;font-size:11px;font-weight:bold;
+        border:2px solid rgba(255,255,255,0.6);
+        box-shadow:0 2px 6px rgba(0,0,0,0.4);
+        cursor:pointer;
+      ">${id}</div>`,
+      iconAnchor:[13,13]
+    }),
+    interactive:true
+  }).addTo(map);
+
+  // Click handlers for both polygon and label
+  [poly, label].forEach(el => {
+    el.on('click', () => selectLot(id));
   });
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    var msg = document.getElementById("form-msg");
-    msg.style.display = "block";
-    e.target.reset();
-    setTimeout(function(){msg.style.display="none";}, 6000);
+  poly.on('mouseover', () => { if(id !== selectedLotId) poly.setStyle({ fillOpacity: style.fillOpacity + 0.2 }); });
+  poly.on('mouseout',  () => { if(id !== selectedLotId) poly.setStyle({ fillOpacity: style.fillOpacity }); });
+
+  lotLayers[id] = { poly, label, style, centLat, centLon };
+});
+
+// ── SELECT LOT ──
+function selectLot(id) {
+  // Deselect previous
+  if (selectedLotId && lotLayers[selectedLotId]) {
+    const prev = lotLayers[selectedLotId];
+    prev.poly.setStyle(prev.style);
   }
 
-  var sections = document.querySelectorAll("section[id]");
-  var navLinks = document.querySelectorAll(".nav-links a");
-  window.addEventListener("scroll", function() {
-    var current = "";
-    sections.forEach(function(s){ if(window.scrollY >= s.offsetTop - 80) current = s.id; });
-    navLinks.forEach(function(a){ a.style.color = a.getAttribute("href") === "#" + current ? "#8FBE8A" : ""; });
+  selectedLotId = id;
+  const cur = lotLayers[id];
+  cur.poly.setStyle(lotColor(LOT_DATA[id].type, true));
+
+  // Pan map slightly toward lot
+  map.panTo([cur.centLat, cur.centLon], { animate:true, duration:0.4 });
+
+  // Update panel
+  document.getElementById('panel-prompt').style.display = 'none';
+  const detail = document.getElementById('panel-detail');
+  detail.style.display = 'flex';
+
+  const d = LOT_DATA[id];
+  document.getElementById('p-num').textContent   = `Lot ${id}`;
+  document.getElementById('p-price').textContent = `$${d.price.toLocaleString()}`;
+  document.getElementById('p-sqft').textContent  = `${d.sqft.toLocaleString()} sq ft`;
+
+  const badge = document.getElementById('p-badge');
+  badge.textContent = d.label;
+  badge.className   = 'panel-badge' + (d.type === 'back' ? ' back' : '');
+
+  const feat = document.getElementById('p-features');
+  feat.innerHTML = d.features.map(f=>`<li>${f}</li>`).join('');
+
+  document.getElementById('p-inquire').textContent = `Inquire About Lot ${id}`;
+}
+
+// ── NAVIGATE LOTS ──
+function navigateLot(dir) {
+  const idx  = LOT_IDS.indexOf(selectedLotId);
+  const next = (idx + dir + LOT_IDS.length) % LOT_IDS.length;
+  selectLot(LOT_IDS[next]);
+}
+
+// Auto-select Lot 1 on load
+setTimeout(() => selectLot(1), 800);
+
+// ── FORM SUBMIT ──
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.form-submit');
+  btn.textContent = '✓ Inquiry received — we\'ll be in touch shortly.';
+  btn.style.background = 'var(--sage)';
+  btn.disabled = true;
+}
+
+// ── SMOOTH SCROLL ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior:'smooth' }); }
   });
+});
 </script>
 </body>
 </html>
