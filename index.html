@@ -167,19 +167,20 @@
       padding:0 3.5rem;
     }
     .map-outer{
-      position:relative;width:100%;
-      aspect-ratio:2400/1784;
-      max-height:82vh;
-      overflow:hidden;
+      position:relative;
+      width:100%;
+      /* Height is driven by the image — no max-height so nothing crops */
     }
     .map-satellite{
-      position:absolute;inset:0;
-      width:100%;height:100%;
-      object-fit:cover;object-position:center;
+      /* Flow naturally so height auto-matches width at the image's aspect ratio */
+      position:relative;
+      width:100%;height:auto;
       display:block;
     }
     .map-svg-overlay{
-      position:absolute;inset:0;
+      /* Stretch the SVG over exactly the image area */
+      position:absolute;
+      top:0;left:0;
       width:100%;height:100%;
     }
     /* Info panel overlaid on map */
@@ -616,96 +617,56 @@ const lotPolygons = {};
 // ── LOT FILL COLOURS ──
 // Image already shows boundaries; keep overlays nearly transparent by default
 function lotFill(type, selected) {
-  if (selected) return {fill:'rgba(212,168,75,0.55)', stroke:'#d4a84b', sw:8};
-  if (type==='back') return {fill:'rgba(120,90,50,0.07)', stroke:'rgba(120,90,50,0.0)', sw:4};
-  if (type==='mid')  return {fill:'rgba(46,107,72,0.07)',  stroke:'rgba(46,107,72,0.0)',  sw:4};
-  return                    {fill:'rgba(46,107,72,0.07)',  stroke:'rgba(46,107,72,0.0)',  sw:4};
+  if (selected) return {fill:'rgba(212,168,75,0.45)', stroke:'#d4a84b', sw:10};
+  // Default: almost invisible so the image numbers show through
+  return {fill:'rgba(255,255,255,0.01)', stroke:'rgba(255,255,255,0.0)', sw:0};
 }
 
-// ── POLYGON COORDINATES ──
-// SVG viewBox 0 0 2400 1784 — matches "superimposed with large numbering.png.png".
-// Lot triangle vertices (calibrated from the annotated satellite photo):
-//   A = NE apex (junction of both road boundaries): (2195, 20)
-//   B = SE corner (Bamfield Road end):              (2380, 1760)
-//   C = SW corner (South Bamfield Road end):        (70,   1760)
-//
-// Edge A→B (right boundary, Bamfield Road, nearly vertical): Lots 1–7 top→bottom
-// Edge A→C (diagonal, South Bamfield Road, NE→SW):           Lots 8–13 top→bottom
-
-// ── Right boundary edge: A(2195,20) → B(2380,1760), lots 1–7 ──
-// Areas (m²): 4050,4050,4295,4295,5575,7761,6485  total 40511
-// Cumulative fractions along the edge:
-const rtFracs = [0, 0.100, 0.200, 0.306, 0.412, 0.550, 0.742, 1.000];
-const rtEdgePts = rtFracs.map(f => ({x: 2195 + f*185, y: 20 + f*1740}));
-// Inward perpendicular (left/west into the triangle):
-// AB unit ≈ (0.106, 0.994) → CCW perp ≈ (-0.994, 0.106)
-const rtPerp = {x: -0.994, y: 0.106};
-
-// ── South Bamfield Road diagonal: A(2195,20) → C(70,1760), lots 8–13 ──
-// Areas (m²): 4930,4155,4310,4050,4050,4050  total 25545
-// Cumulative fractions along the road:
-const diagFracs = [0, 0.193, 0.356, 0.525, 0.684, 0.843, 1.000];
-const diagEdgePts = diagFracs.map(f => ({x: 2195 + f*(-2125), y: 20 + f*1740}));
-// Inward perpendicular (right/east into the triangle):
-// AC unit ≈ (-0.774, 0.633) → CW perp ≈ (0.633, 0.774)
-const diagPerp = {x: 0.633, y: 0.774};
-
-function poly(p0, p1, perp, near, far) {
-  const nx = perp.x, ny = perp.y;
-  return [
-    {x: p0.x + near*nx, y: p0.y + near*ny},
-    {x: p1.x + near*nx, y: p1.y + near*ny},
-    {x: p1.x + far*nx,  y: p1.y + far*ny},
-    {x: p0.x + far*nx,  y: p0.y + far*ny},
-  ];
-}
-
-// Lot polygon depth (px) scales with sq m area relative to triangle width at that position
-const LOT_POLYS = {
-  // Lots 1–7: Bamfield Road side (right edge, A → B)
-  1: poly(rtEdgePts[0], rtEdgePts[1], rtPerp, 12,  160),
-  2: poly(rtEdgePts[1], rtEdgePts[2], rtPerp, 12,  220),
-  3: poly(rtEdgePts[2], rtEdgePts[3], rtPerp, 12,  240),
-  4: poly(rtEdgePts[3], rtEdgePts[4], rtPerp, 12,  250),
-  5: poly(rtEdgePts[4], rtEdgePts[5], rtPerp, 12,  340),
-  6: poly(rtEdgePts[5], rtEdgePts[6], rtPerp, 12,  500),
-  7: poly(rtEdgePts[6], rtEdgePts[7], rtPerp, 12,  420),
-  // Lots 8–13: South Bamfield Road side (diagonal, A → C)
-  8:  poly(diagEdgePts[0], diagEdgePts[1], diagPerp, 12, 320),
-  9:  poly(diagEdgePts[1], diagEdgePts[2], diagPerp, 12, 260),
-  10: poly(diagEdgePts[2], diagEdgePts[3], diagPerp, 12, 240),
-  11: poly(diagEdgePts[3], diagEdgePts[4], diagPerp, 12, 220),
-  12: poly(diagEdgePts[4], diagEdgePts[5], diagPerp, 12, 220),
-  13: poly(diagEdgePts[5], diagEdgePts[6], diagPerp, 12, 240),
+// ── CIRCLE HOTSPOTS ──
+// Centers placed directly over each lot number in the 2400×1784 image.
+// Radius 80 px gives a comfortable click/touch target without overlapping neighbours.
+const LOT_CIRCLES = {
+   1: {cx: 2212, cy:  440},
+   2: {cx: 2160, cy:  700},
+   3: {cx: 2100, cy:  888},
+   4: {cx: 2032, cy: 1052},
+   5: {cx: 1908, cy: 1212},
+   6: {cx: 2124, cy: 1532},
+   7: {cx: 1848, cy: 1752},
+   8: {cx: 1488, cy: 1332},
+   9: {cx: 1292, cy: 1480},
+  10: {cx: 1108, cy: 1520},
+  11: {cx:  900, cy: 1560},
+  12: {cx:  672, cy: 1660},
+  13: {cx:  352, cy: 1752},
 };
+const LOT_CIRCLE_R = 80;
 
 // ── RENDER LOTS ──
 const svg = document.getElementById('lot-svg');
 
-function ptsToStr(pts){ return pts.map(p=>p.x.toFixed(1)+','+p.y.toFixed(1)).join(' '); }
-function centroid(pts){ return {x:pts.reduce((s,p)=>s+p.x,0)/pts.length, y:pts.reduce((s,p)=>s+p.y,0)/pts.length}; }
-
 LOT_IDS.forEach(id => {
-  const pts = LOT_POLYS[id];
+  const {cx, cy} = LOT_CIRCLES[id];
   const d   = LOT_DATA[id];
   const sty = lotFill(d.type, false);
 
-  // Polygon
-  const p = document.createElementNS('http://www.w3.org/2000/svg','polygon');
-  p.setAttribute('points', ptsToStr(pts));
-  p.setAttribute('fill', sty.fill);
-  p.setAttribute('stroke', sty.stroke);
-  p.setAttribute('stroke-width', sty.sw);
-  p.style.cursor = 'pointer';
-  p.style.transition = 'fill 0.2s';
-  svg.appendChild(p);
+  // Transparent circle centred on the lot number — the clickable hotspot
+  const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  c.setAttribute('cx', cx);
+  c.setAttribute('cy', cy);
+  c.setAttribute('r',  LOT_CIRCLE_R);
+  c.setAttribute('fill', sty.fill);
+  c.setAttribute('stroke', sty.stroke);
+  c.setAttribute('stroke-width', sty.sw);
+  c.style.cursor = 'pointer';
+  c.style.transition = 'fill 0.2s';
+  svg.appendChild(c);
 
-  // Click — whole polygon is the clickable target (numbers already on the image)
-  p.addEventListener('click', () => selectLot(id));
-  p.addEventListener('mouseenter', () => { if(id!==selectedId) p.setAttribute('fill','rgba(212,168,75,0.28)'); });
-  p.addEventListener('mouseleave', () => { if(id!==selectedId) p.setAttribute('fill', sty.fill); });
+  c.addEventListener('click', () => selectLot(id));
+  c.addEventListener('mouseenter', () => { if(id!==selectedId) c.setAttribute('fill','rgba(212,168,75,0.28)'); });
+  c.addEventListener('mouseleave', () => { if(id!==selectedId) c.setAttribute('fill', sty.fill); });
 
-  lotPolygons[id] = {poly:p, defaultStyle:sty};
+  lotPolygons[id] = {poly:c, defaultStyle:sty};
 });
 
 // ── SELECT LOT ──
