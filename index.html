@@ -461,10 +461,10 @@
 
   <div class="map-outer">
     <!-- Static satellite image -->
-    <img class="map-satellite" src="superimposed with large numbering.png.png" alt="Satellite view of Bamfield Sanctuary lots">
+    <img class="map-satellite" src="map photo 600x446.png.png" alt="Satellite view of Bamfield Sanctuary lots">
 
     <!-- SVG lot overlay -->
-    <svg class="map-svg-overlay" viewBox="0 0 2400 1784" xmlns="http://www.w3.org/2000/svg" id="lot-svg">
+    <svg class="map-svg-overlay" viewBox="0 0 600 446" xmlns="http://www.w3.org/2000/svg" id="lot-svg">
       <!-- Lots rendered by JS — image already has boundaries and numbers -->
     </svg>
 
@@ -626,21 +626,21 @@ function lotFill(type, selected) {
 // Centers placed directly over each lot number in the 2400×1784 image.
 // Radius 80 px gives a comfortable click/touch target without overlapping neighbours.
 const LOT_CIRCLES = {
-   1: {cx: 2212, cy:  440},
-   2: {cx: 2160, cy:  700},
-   3: {cx: 2100, cy:  888},
-   4: {cx: 2032, cy: 1052},
-   5: {cx: 1908, cy: 1212},
-   6: {cx: 2124, cy: 1532},
-   7: {cx: 1848, cy: 1752},
-   8: {cx: 1488, cy: 1332},
-   9: {cx: 1292, cy: 1480},
-  10: {cx: 1108, cy: 1520},
-  11: {cx:  900, cy: 1560},
-  12: {cx:  672, cy: 1660},
-  13: {cx:  352, cy: 1752},
+   1: {cx: 553, cy:  110},
+   2: {cx: 540, cy:  175},
+   3: {cx: 525, cy:  222},
+   4: {cx: 508, cy:  263},
+   5: {cx: 477, cy:  303},
+   6: {cx: 531, cy:  383},
+   7: {cx: 462, cy:  438},
+   8: {cx: 372, cy:  333},
+   9: {cx: 323, cy:  370},
+  10: {cx: 277, cy:  380},
+  11: {cx: 225, cy:  390},
+  12: {cx: 168, cy:  415},
+  13: {cx:  88, cy:  437},
 };
-const LOT_CIRCLE_R = 80;
+const LOT_CIRCLE_R = 20;
 
 // ── RENDER LOTS ──
 const svg = document.getElementById('lot-svg');
