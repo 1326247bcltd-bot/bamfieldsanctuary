@@ -168,9 +168,8 @@
     }
     .map-outer{
       position:relative;width:100%;
-      /* Fixed aspect ratio matching the satellite image */
-      padding-bottom:0;
-      height:560px;
+      aspect-ratio:2400/1784;
+      max-height:82vh;
       overflow:hidden;
     }
     .map-satellite{
@@ -461,16 +460,11 @@
 
   <div class="map-outer">
     <!-- Static satellite image -->
-    <img class="map-satellite" src="keep interactive map static on this view.png" alt="Satellite view of Bamfield Sanctuary lots">
+    <img class="map-satellite" src="superimposed with large numbering.png.png" alt="Satellite view of Bamfield Sanctuary lots">
 
     <!-- SVG lot overlay -->
-    <svg class="map-svg-overlay" viewBox="0 0 820 520" xmlns="http://www.w3.org/2000/svg" id="lot-svg">
-      <!-- South Bamfield Road label -->
-      <path id="road-path" d="M660,70 L630,395" fill="none" stroke="none"/>
-      <text font-family="Arial" font-size="11" fill="rgba(255,255,255,0.9)" font-weight="600">
-        <textPath href="#road-path" startOffset="10%">South Bamfield Road</textPath>
-      </text>
-      <!-- Lots drawn by JS -->
+    <svg class="map-svg-overlay" viewBox="0 0 2400 1784" xmlns="http://www.w3.org/2000/svg" id="lot-svg">
+      <!-- Lots rendered by JS — image already has boundaries and numbers -->
     </svg>
 
     <!-- Info panel -->
@@ -481,7 +475,7 @@
         <div class="panel-lot-num" id="p-num">Lot 1</div>
         <div class="panel-plan">Plan EPP141779 · Barclay District</div>
         <div class="panel-price" id="p-price">$199,000</div>
-        <div class="panel-sqft" id="p-sqft">4,050 sq ft</div>
+        <div class="panel-sqft" id="p-sqft">4,050 sq m</div>
         <span class="panel-badge" id="p-badge">Road-Front</span>
         <ul class="panel-features" id="p-features"></ul>
         <a href="#contact" class="panel-inquire" id="p-inquire">Inquire About This Lot</a>
@@ -554,19 +548,19 @@
           <label>Lot of Interest</label>
           <select>
             <option value="">Any / Multiple</option>
-            <option>Lot 1, $199,000, 4,050 sq ft, Road-Front</option>
-            <option>Lot 2, $205,000, 4,060 sq ft, Road-Front</option>
-            <option>Lot 3, $299,000, 6,295 sq ft, Premium Large</option>
-            <option>Lot 4, $219,000, 4,275 sq ft, Road-Front</option>
-            <option>Lot 5, $259,000, 5,375 sq ft, Road-Front</option>
-            <option>Lot 6, $245,000, 7,761 sq ft, Back Lot</option>
-            <option>Lot 7, $235,000, 6,485 sq ft, Back Lot</option>
-            <option>Lot 8, $199,000, 4,020 sq ft, Road-Front</option>
-            <option>Lot 9, $289,000, 6,225 sq ft, Premium Large</option>
-            <option>Lot 10, $215,000, 4,310 sq ft, Road-Front</option>
-            <option>Lot 11, $209,000, 4,050 sq ft, Road-Front</option>
-            <option>Lot 12, $209,000, 4,060 sq ft, Road-Front</option>
-            <option>Lot 13, $215,000, 4,220 sq ft, Road-Front</option>
+            <option>Lot 1  — $199,000 — 4,050 sq m — Bamfield Road</option>
+            <option>Lot 2  — $205,000 — 4,050 sq m — Bamfield Road</option>
+            <option>Lot 3  — $219,000 — 4,295 sq m — Bamfield Road</option>
+            <option>Lot 4  — $219,000 — 4,295 sq m — Bamfield Road</option>
+            <option>Lot 5  — $249,000 — 5,575 sq m — Bamfield Road</option>
+            <option>Lot 6  — $269,000 — 7,761 sq m — Bamfield Road, Large Lot</option>
+            <option>Lot 7  — $249,000 — 6,485 sq m — Bamfield Road, Large Lot</option>
+            <option>Lot 8  — $215,000 — 4,930 sq m — South Bamfield Road</option>
+            <option>Lot 9  — $209,000 — 4,155 sq m — South Bamfield Road</option>
+            <option>Lot 10 — $209,000 — 4,310 sq m — South Bamfield Road</option>
+            <option>Lot 11 — $199,000 — 4,050 sq m — South Bamfield Road</option>
+            <option>Lot 12 — $199,000 — 4,050 sq m — South Bamfield Road</option>
+            <option>Lot 13 — $199,000 — 4,050 sq m — South Bamfield Road</option>
           </select>
         </div>
         <div class="form-group">
@@ -600,19 +594,19 @@
 <script>
 // ── LOT DATA ──
 const LOT_DATA = {
-  1:  {sqft:4050,  price:199000, type:'small',   label:'Road-Front', features:['Direct access, South Bamfield Road','4,050 sq ft registered freehold','Services to lot line','No building deadline']},
-  2:  {sqft:4060,  price:205000, type:'small',   label:'Road-Front', features:['Direct access, South Bamfield Road','4,060 sq ft registered freehold','Services to lot line','No building deadline']},
-  3:  {sqft:6295,  price:299000, type:'premium', label:'Premium Large', features:['Direct access, South Bamfield Road','6,295 sq ft registered freehold','Largest road-front lot','Services to lot line']},
-  4:  {sqft:4275,  price:219000, type:'small',   label:'Road-Front', features:['Direct access, South Bamfield Road','4,275 sq ft registered freehold','Services to lot line','No building deadline']},
-  5:  {sqft:5375,  price:259000, type:'mid',     label:'Road-Front', features:['Direct access, South Bamfield Road','5,375 sq ft registered freehold','Services to lot line','No building deadline']},
-  6:  {sqft:7761,  price:245000, type:'back',    label:'Back Lot', features:['Largest lot in subdivision','7,761 sq ft registered freehold','Maximum privacy, natural buffer','Accessed via South Bamfield Road']},
-  7:  {sqft:6485,  price:235000, type:'back',    label:'Back Lot', features:['Second largest in subdivision','6,485 sq ft registered freehold','Maximum privacy, natural buffer','Accessed via South Bamfield Road']},
-  8:  {sqft:4020,  price:199000, type:'small',   label:'Road-Front', features:['Direct access, South Bamfield Road','4,020 sq ft registered freehold','Services to lot line','No building deadline']},
-  9:  {sqft:6225,  price:289000, type:'premium', label:'Premium Large', features:['Direct access, South Bamfield Road','6,225 sq ft registered freehold','Premium road-front size','Services to lot line']},
-  10: {sqft:4310,  price:215000, type:'small',   label:'Road-Front', features:['Direct access, South Bamfield Road','4,310 sq ft registered freehold','Services to lot line','No building deadline']},
-  11: {sqft:4050,  price:209000, type:'small',   label:'Road-Front', features:['Direct access, South Bamfield Road','4,050 sq ft registered freehold','Services to lot line','No building deadline']},
-  12: {sqft:4060,  price:209000, type:'small',   label:'Road-Front', features:['Direct access, South Bamfield Road','4,060 sq ft registered freehold','Services to lot line','No building deadline']},
-  13: {sqft:4220,  price:215000, type:'small',   label:'Road-Front', features:['Direct access, South Bamfield Road','4,220 sq ft registered freehold','Services to lot line','No building deadline']},
+  1:  {sqft:4050,  price:199000, type:'small',   label:'Road-Front', features:['Bamfield Road frontage','4,050 sq m registered freehold','Plan EPP141779, Barclay District','Services to lot line']},
+  2:  {sqft:4050,  price:205000, type:'small',   label:'Road-Front', features:['Bamfield Road frontage','4,050 sq m registered freehold','Plan EPP141779, Barclay District','Services to lot line']},
+  3:  {sqft:4295,  price:219000, type:'small',   label:'Road-Front', features:['Bamfield Road frontage','4,295 sq m registered freehold','Plan EPP141779, Barclay District','Services to lot line']},
+  4:  {sqft:4295,  price:219000, type:'small',   label:'Road-Front', features:['Bamfield Road frontage','4,295 sq m registered freehold','Plan EPP141779, Barclay District','Services to lot line']},
+  5:  {sqft:5575,  price:249000, type:'mid',     label:'Road-Front', features:['Bamfield Road frontage','5,575 sq m registered freehold','Plan EPP141779, Barclay District','Larger lot with forest buffer']},
+  6:  {sqft:7761,  price:269000, type:'back',    label:'Large Lot',  features:['Largest lot in subdivision','7,761 sq m registered freehold','Maximum privacy, natural buffer','Bamfield Road access']},
+  7:  {sqft:6485,  price:249000, type:'back',    label:'Large Lot',  features:['Second largest in subdivision','6,485 sq m registered freehold','Maximum privacy, natural buffer','Bamfield Road access']},
+  8:  {sqft:4930,  price:215000, type:'mid',     label:'Road-Front', features:['South Bamfield Road frontage','4,930 sq m registered freehold','Plan EPP141779, Barclay District','Services to lot line']},
+  9:  {sqft:4155,  price:209000, type:'small',   label:'Road-Front', features:['South Bamfield Road frontage','4,155 sq m registered freehold','Plan EPP141779, Barclay District','Services to lot line']},
+  10: {sqft:4310,  price:209000, type:'small',   label:'Road-Front', features:['South Bamfield Road frontage','4,310 sq m registered freehold','Plan EPP141779, Barclay District','Services to lot line']},
+  11: {sqft:4050,  price:199000, type:'small',   label:'Road-Front', features:['South Bamfield Road frontage','4,050 sq m registered freehold','Plan EPP141779, Barclay District','Services to lot line']},
+  12: {sqft:4050,  price:199000, type:'small',   label:'Road-Front', features:['South Bamfield Road frontage','4,050 sq m registered freehold','Plan EPP141779, Barclay District','Services to lot line']},
+  13: {sqft:4050,  price:199000, type:'small',   label:'Road-Front', features:['South Bamfield Road frontage','4,050 sq m registered freehold','Plan EPP141779, Barclay District','Services to lot line, largest road frontage']},
 };
 
 const LOT_IDS = [1,2,3,4,5,6,7,8,9,10,11,12,13];
@@ -620,68 +614,69 @@ let selectedId = null;
 const lotPolygons = {};
 
 // ── LOT FILL COLOURS ──
+// Image already shows boundaries; keep overlays nearly transparent by default
 function lotFill(type, selected) {
-  if (selected) return {fill:'rgba(212,168,75,0.72)', stroke:'#d4a84b', sw:3};
-  if (type==='premium') return {fill:'rgba(184,132,42,0.45)', stroke:'#b8842a', sw:1.5};
-  if (type==='back')    return {fill:'rgba(120,90,50,0.45)',  stroke:'#7a5a32', sw:1.5};
-  return {fill:'rgba(46,107,72,0.42)', stroke:'#2e6b48', sw:1.5};
+  if (selected) return {fill:'rgba(212,168,75,0.55)', stroke:'#d4a84b', sw:8};
+  if (type==='back') return {fill:'rgba(120,90,50,0.07)', stroke:'rgba(120,90,50,0.0)', sw:4};
+  if (type==='mid')  return {fill:'rgba(46,107,72,0.07)',  stroke:'rgba(46,107,72,0.0)',  sw:4};
+  return                    {fill:'rgba(46,107,72,0.07)',  stroke:'rgba(46,107,72,0.0)',  sw:4};
 }
 
 // ── POLYGON COORDINATES ──
-// SVG viewBox 820x520 matches satellite image aspect ratio.
-// Lot triangle vertices (from overhead satellite reference):
-//   A = top apex (north, road junction):    (660, 70)
-//   B = bottom right (S. Bamfield Rd end): (630, 395)
-//   C = bottom left (far west boundary):   (395, 385)
+// SVG viewBox 0 0 2400 1784 — matches "superimposed with large numbering.png.png".
+// Lot triangle vertices (calibrated from the annotated satellite photo):
+//   A = NE apex (junction of both road boundaries): (2195, 20)
+//   B = SE corner (Bamfield Road end):              (2380, 1760)
+//   C = SW corner (South Bamfield Road end):        (70,   1760)
 //
-// Edge AB (South Bamfield Road, right/east): Lots 8–13 (top to bottom)
-// Edge CA (Bamfield Road diagonal):          Lots 1–7  (top to bottom)
+// Edge A→B (right boundary, Bamfield Road, nearly vertical): Lots 1–7 top→bottom
+// Edge A→C (diagonal, South Bamfield Road, NE→SW):           Lots 8–13 top→bottom
 
-// South Bamfield Road edge: A(660,70) → B(630,395), 6 lots
-const rtEdgePts = [];
-for(let i = 0; i <= 6; i++){
-  rtEdgePts.push({x: 660 + i*(-30/6), y: 70 + i*(325/6)});
-}
-// Inward perpendicular: left/west into the triangle from this edge
-const rtPerp = {x: -0.9958, y: -0.0919};
+// ── Right boundary edge: A(2195,20) → B(2380,1760), lots 1–7 ──
+// Areas (m²): 4050,4050,4295,4295,5575,7761,6485  total 40511
+// Cumulative fractions along the edge:
+const rtFracs = [0, 0.100, 0.200, 0.306, 0.412, 0.550, 0.742, 1.000];
+const rtEdgePts = rtFracs.map(f => ({x: 2195 + f*185, y: 20 + f*1740}));
+// Inward perpendicular (left/west into the triangle):
+// AB unit ≈ (0.106, 0.994) → CCW perp ≈ (-0.994, 0.106)
+const rtPerp = {x: -0.994, y: 0.106};
 
-// Bamfield Road diagonal: A(660,70) → C(395,385), 7 lots
-const diagEdgePts = [];
-for(let i = 0; i <= 7; i++){
-  diagEdgePts.push({x: 660 + i*(-265/7), y: 70 + i*(315/7)});
-}
-// Inward perpendicular: right/east into the triangle from this edge
-const diagPerp = {x: 0.7652, y: 0.6439};
+// ── South Bamfield Road diagonal: A(2195,20) → C(70,1760), lots 8–13 ──
+// Areas (m²): 4930,4155,4310,4050,4050,4050  total 25545
+// Cumulative fractions along the road:
+const diagFracs = [0, 0.193, 0.356, 0.525, 0.684, 0.843, 1.000];
+const diagEdgePts = diagFracs.map(f => ({x: 2195 + f*(-2125), y: 20 + f*1740}));
+// Inward perpendicular (right/east into the triangle):
+// AC unit ≈ (-0.774, 0.633) → CW perp ≈ (0.633, 0.774)
+const diagPerp = {x: 0.633, y: 0.774};
 
 function poly(p0, p1, perp, near, far) {
-  const nx=perp.x, ny=perp.y;
+  const nx = perp.x, ny = perp.y;
   return [
-    {x:p0.x+near*nx, y:p0.y+near*ny},
-    {x:p1.x+near*nx, y:p1.y+near*ny},
-    {x:p1.x+far*nx,  y:p1.y+far*ny},
-    {x:p0.x+far*nx,  y:p0.y+far*ny},
+    {x: p0.x + near*nx, y: p0.y + near*ny},
+    {x: p1.x + near*nx, y: p1.y + near*ny},
+    {x: p1.x + far*nx,  y: p1.y + far*ny},
+    {x: p0.x + far*nx,  y: p0.y + far*ny},
   ];
 }
 
-// Lot geometry — depth proportional to sq footage
-// Bamfield Rd side (lots 1–7): 4050, 4050, 4295, 4295, 5575, 7761, 6485 m²
-// S. Bamfield Rd side (lots 8–13): 4930, 4155, 4310, 4050, 4050, 4050 m²
+// Lot polygon depth (px) scales with sq m area relative to triangle width at that position
 const LOT_POLYS = {
-  // Lots 1–7: along diagonal Bamfield Road edge (top A → bottom C)
-  1: poly(diagEdgePts[0], diagEdgePts[1], diagPerp, 5, 34),
-  2: poly(diagEdgePts[1], diagEdgePts[2], diagPerp, 5, 34),
-  3: poly(diagEdgePts[2], diagEdgePts[3], diagPerp, 5, 36),
-  4: poly(diagEdgePts[3], diagEdgePts[4], diagPerp, 5, 36),
-  5: poly(diagEdgePts[4], diagEdgePts[5], diagPerp, 5, 46),
-  6: poly(diagEdgePts[5], diagEdgePts[6], diagPerp, 5, 64),
-  7: poly(diagEdgePts[6], diagEdgePts[7], diagPerp, 5, 54),
-  // Lots 8–13: along South Bamfield Road edge (top A → bottom B)
-  8:  poly(rtEdgePts[0], rtEdgePts[1], rtPerp, 5, 42),
-  9:  poly(rtEdgePts[1], rtEdgePts[2], rtPerp, 5, 36),
-  10: poly(rtEdgePts[2], rtEdgePts[3], rtPerp, 5, 38),
-  11: poly(rtEdgePts[3], rtEdgePts[4], rtPerp, 5, 34),
-  12: poly(rtEdgePts[4], rtEdgePts[5], rtPerp, 5, 34),
-  13: poly(rtEdgePts[5], rtEdgePts[6], rtPerp, 5, 34),
+  // Lots 1–7: Bamfield Road side (right edge, A → B)
+  1: poly(rtEdgePts[0], rtEdgePts[1], rtPerp, 12,  160),
+  2: poly(rtEdgePts[1], rtEdgePts[2], rtPerp, 12,  220),
+  3: poly(rtEdgePts[2], rtEdgePts[3], rtPerp, 12,  240),
+  4: poly(rtEdgePts[3], rtEdgePts[4], rtPerp, 12,  250),
+  5: poly(rtEdgePts[4], rtEdgePts[5], rtPerp, 12,  340),
+  6: poly(rtEdgePts[5], rtEdgePts[6], rtPerp, 12,  500),
+  7: poly(rtEdgePts[6], rtEdgePts[7], rtPerp, 12,  420),
+  // Lots 8–13: South Bamfield Road side (diagonal, A → C)
+  8:  poly(diagEdgePts[0], diagEdgePts[1], diagPerp, 12, 320),
+  9:  poly(diagEdgePts[1], diagEdgePts[2], diagPerp, 12, 260),
+  10: poly(diagEdgePts[2], diagEdgePts[3], diagPerp, 12, 240),
+  11: poly(diagEdgePts[3], diagEdgePts[4], diagPerp, 12, 220),
+  12: poly(diagEdgePts[4], diagEdgePts[5], diagPerp, 12, 220),
+  13: poly(diagEdgePts[5], diagEdgePts[6], diagPerp, 12, 240),
 };
 
 // ── RENDER LOTS ──
@@ -693,7 +688,6 @@ function centroid(pts){ return {x:pts.reduce((s,p)=>s+p.x,0)/pts.length, y:pts.r
 LOT_IDS.forEach(id => {
   const pts = LOT_POLYS[id];
   const d   = LOT_DATA[id];
-  const c   = centroid(pts);
   const sty = lotFill(d.type, false);
 
   // Polygon
@@ -706,31 +700,12 @@ LOT_IDS.forEach(id => {
   p.style.transition = 'fill 0.2s';
   svg.appendChild(p);
 
-  // Number circle
-  const g = document.createElementNS('http://www.w3.org/2000/svg','g');
-  const circ = document.createElementNS('http://www.w3.org/2000/svg','circle');
-  circ.setAttribute('cx', c.x); circ.setAttribute('cy', c.y); circ.setAttribute('r', 10);
-  circ.setAttribute('fill','rgba(255,255,255,0.88)');
-  circ.setAttribute('stroke', sty.stroke); circ.setAttribute('stroke-width','1.5');
-  const txt = document.createElementNS('http://www.w3.org/2000/svg','text');
-  txt.setAttribute('x', c.x); txt.setAttribute('y', c.y+4);
-  txt.setAttribute('text-anchor','middle');
-  txt.setAttribute('font-family','Arial'); txt.setAttribute('font-size','9');
-  txt.setAttribute('font-weight','bold'); txt.setAttribute('fill','#1a2a1e');
-  txt.setAttribute('pointer-events','none');
-  txt.textContent = id;
-  g.appendChild(circ); g.appendChild(txt);
-  g.style.cursor='pointer';
-  svg.appendChild(g);
+  // Click — whole polygon is the clickable target (numbers already on the image)
+  p.addEventListener('click', () => selectLot(id));
+  p.addEventListener('mouseenter', () => { if(id!==selectedId) p.setAttribute('fill','rgba(212,168,75,0.28)'); });
+  p.addEventListener('mouseleave', () => { if(id!==selectedId) p.setAttribute('fill', sty.fill); });
 
-  // Click
-  [p, g].forEach(el => {
-    el.addEventListener('click', () => selectLot(id));
-    el.addEventListener('mouseenter', () => { if(id!==selectedId) p.setAttribute('fill', sty.fill.replace(/[\d.]+\)$/, '0.68)')); });
-    el.addEventListener('mouseleave', () => { if(id!==selectedId) p.setAttribute('fill', sty.fill); });
-  });
-
-  lotPolygons[id] = {poly:p, circ, defaultStyle:sty};
+  lotPolygons[id] = {poly:p, defaultStyle:sty};
 });
 
 // ── SELECT LOT ──
@@ -758,7 +733,7 @@ function selectLot(id) {
   const d = LOT_DATA[id];
   document.getElementById('p-num').textContent   = 'Lot ' + id;
   document.getElementById('p-price').textContent = '$' + d.price.toLocaleString();
-  document.getElementById('p-sqft').textContent  = d.sqft.toLocaleString() + ' sq ft';
+  document.getElementById('p-sqft').textContent  = d.sqft.toLocaleString() + ' sq m';
   const badge = document.getElementById('p-badge');
   badge.textContent  = d.label;
   badge.className    = 'panel-badge' + (d.type==='back' ? ' back' : '');
