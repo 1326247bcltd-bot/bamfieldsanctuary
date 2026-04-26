@@ -466,9 +466,9 @@
     <!-- SVG lot overlay -->
     <svg class="map-svg-overlay" viewBox="0 0 820 520" xmlns="http://www.w3.org/2000/svg" id="lot-svg">
       <!-- South Bamfield Road label -->
-      <path id="road-path" d="M598,305 Q578,183 557,60" fill="none" stroke="none"/>
+      <path id="road-path" d="M660,70 L630,395" fill="none" stroke="none"/>
       <text font-family="Arial" font-size="11" fill="rgba(255,255,255,0.9)" font-weight="600">
-        <textPath href="#road-path" startOffset="15%">South Bamfield Road</textPath>
+        <textPath href="#road-path" startOffset="10%">South Bamfield Road</textPath>
       </text>
       <!-- Lots drawn by JS -->
     </svg>
@@ -629,31 +629,29 @@ function lotFill(type, selected) {
 
 // ── POLYGON COORDINATES ──
 // SVG viewBox 820x520 matches satellite image aspect ratio.
-// Triangle of lots (from overhead shot overlay):
-//   Bottom-left vertex (far NW end): ~(196, 337)
-//   Right vertex (Bamfield Rd junction): ~(598, 305)
-//   Top vertex (top of S. Bamfield Rd): ~(557, 60)
+// Lot triangle vertices (from overhead satellite reference):
+//   A = top apex (north, road junction):    (660, 70)
+//   B = bottom right (S. Bamfield Rd end): (630, 395)
+//   C = bottom left (far west boundary):   (395, 385)
 //
-// Group A (Lots 1–7): along the bottom edge (Bamfield Rd to bottom-left)
-// Group B (Lots 8–13): along the right edge (S. Bamfield Rd)
+// Edge AB (South Bamfield Road, right/east): Lots 8–13 (top to bottom)
+// Edge CA (Bamfield Road diagonal):          Lots 1–7  (top to bottom)
 
-// Bottom edge: (598,305) → (196,337), 7 lots
-// Edge unit: (-402,32)/403 = (-0.997, 0.079)
-// Inward perp (CCW): (-0.079,-0.997) = mostly upward
-const botEdgePts = [];
-for(let i=0;i<=7;i++){
-  botEdgePts.push({x: 598 + i*(-402/7), y: 305 + i*(32/7)});
-}
-const botPerp = {x:-0.079, y:-0.997};
-
-// Right edge: (598,305) → (557,60), 6 lots
-// Edge unit: (-41,-245)/248 = (-0.165,-0.988)
-// Inward perp (CW): (-0.988, 0.165) = toward lower-left (into triangle)
+// South Bamfield Road edge: A(660,70) → B(630,395), 6 lots
 const rtEdgePts = [];
-for(let i=0;i<=6;i++){
-  rtEdgePts.push({x: 598 + i*(-41/6), y: 305 + i*(-245/6)});
+for(let i = 0; i <= 6; i++){
+  rtEdgePts.push({x: 660 + i*(-30/6), y: 70 + i*(325/6)});
 }
-const rtPerp = {x:-0.988, y:0.165};
+// Inward perpendicular: left/west into the triangle from this edge
+const rtPerp = {x: -0.9958, y: -0.0919};
+
+// Bamfield Road diagonal: A(660,70) → C(395,385), 7 lots
+const diagEdgePts = [];
+for(let i = 0; i <= 7; i++){
+  diagEdgePts.push({x: 660 + i*(-265/7), y: 70 + i*(315/7)});
+}
+// Inward perpendicular: right/east into the triangle from this edge
+const diagPerp = {x: 0.7652, y: 0.6439};
 
 function poly(p0, p1, perp, near, far) {
   const nx=perp.x, ny=perp.y;
@@ -665,23 +663,25 @@ function poly(p0, p1, perp, near, far) {
   ];
 }
 
-// Lot geometry definitions
-// Group A (bottom edge): lots 1–7
+// Lot geometry — depth proportional to sq footage
+// Bamfield Rd side (lots 1–7): 4050, 4050, 4295, 4295, 5575, 7761, 6485 m²
+// S. Bamfield Rd side (lots 8–13): 4930, 4155, 4310, 4050, 4050, 4050 m²
 const LOT_POLYS = {
-  1: poly(botEdgePts[0], botEdgePts[1], botPerp, 5, 35),
-  2: poly(botEdgePts[1], botEdgePts[2], botPerp, 5, 35),
-  3: poly(botEdgePts[2], botEdgePts[3], botPerp, 5, 50), // premium
-  4: poly(botEdgePts[3], botEdgePts[4], botPerp, 5, 36),
-  5: poly(botEdgePts[4], botEdgePts[5], botPerp, 5, 43),
-  6: poly(botEdgePts[5], botEdgePts[6], botPerp, 5, 62), // back lot
-  7: poly(botEdgePts[6], botEdgePts[7], botPerp, 5, 55), // back lot
-  // Group B (right/road edge): lots 8–13
-  8:  poly(rtEdgePts[0], rtEdgePts[1], rtPerp, 5, 30),
-  9:  poly(rtEdgePts[1], rtEdgePts[2], rtPerp, 5, 48), // premium
-  10: poly(rtEdgePts[2], rtEdgePts[3], rtPerp, 5, 32),
-  11: poly(rtEdgePts[3], rtEdgePts[4], rtPerp, 5, 30),
-  12: poly(rtEdgePts[4], rtEdgePts[5], rtPerp, 5, 30),
-  13: poly(rtEdgePts[5], rtEdgePts[6], rtPerp, 5, 32),
+  // Lots 1–7: along diagonal Bamfield Road edge (top A → bottom C)
+  1: poly(diagEdgePts[0], diagEdgePts[1], diagPerp, 5, 34),
+  2: poly(diagEdgePts[1], diagEdgePts[2], diagPerp, 5, 34),
+  3: poly(diagEdgePts[2], diagEdgePts[3], diagPerp, 5, 36),
+  4: poly(diagEdgePts[3], diagEdgePts[4], diagPerp, 5, 36),
+  5: poly(diagEdgePts[4], diagEdgePts[5], diagPerp, 5, 46),
+  6: poly(diagEdgePts[5], diagEdgePts[6], diagPerp, 5, 64),
+  7: poly(diagEdgePts[6], diagEdgePts[7], diagPerp, 5, 54),
+  // Lots 8–13: along South Bamfield Road edge (top A → bottom B)
+  8:  poly(rtEdgePts[0], rtEdgePts[1], rtPerp, 5, 42),
+  9:  poly(rtEdgePts[1], rtEdgePts[2], rtPerp, 5, 36),
+  10: poly(rtEdgePts[2], rtEdgePts[3], rtPerp, 5, 38),
+  11: poly(rtEdgePts[3], rtEdgePts[4], rtPerp, 5, 34),
+  12: poly(rtEdgePts[4], rtEdgePts[5], rtPerp, 5, 34),
+  13: poly(rtEdgePts[5], rtEdgePts[6], rtPerp, 5, 34),
 };
 
 // ── RENDER LOTS ──
