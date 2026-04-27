@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bamfield Sanctuary — 13 Private Lots on Vancouver Island's West Coast</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
     :root{
@@ -53,6 +54,28 @@
       display:grid;grid-template-columns:1fr 1fr;
       min-height:100vh;padding-top:0;
     }
+    /* Left: photo with overlay */
+    .hero-photo{
+      position:relative;overflow:hidden;
+    }
+    .hero-photo img{
+      width:100%;height:100%;object-fit:cover;display:block;
+    }
+    .hero-photo-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(to bottom,rgba(15,35,20,0.45) 0%,rgba(15,35,20,0.30) 50%,rgba(15,35,20,0.55) 100%);
+      display:flex;align-items:flex-end;justify-content:flex-start;
+      padding:3.5rem;
+    }
+    .hero-sanctuary-text{
+      font-family:'Cormorant Garamond',Georgia,serif;
+      font-size:clamp(2.6rem,4.5vw,4.4rem);
+      font-weight:600;font-style:italic;
+      color:rgba(255,255,255,0.96);
+      line-height:1.1;letter-spacing:0.03em;
+      text-shadow:0 2px 18px rgba(0,0,0,0.45);
+    }
+    /* Right: text */
     .hero-text{
       background:var(--cream);
       display:flex;flex-direction:column;justify-content:center;
@@ -66,7 +89,12 @@
       font-size:clamp(2.4rem,4vw,3.8rem);font-weight:normal;
       line-height:1.2;color:var(--heading);margin-bottom:1.5rem;
     }
-    .hero-title em{font-style:italic;color:var(--green);}
+    .hero-title em{
+      font-family:'Cormorant Garamond',Georgia,serif;
+      font-style:italic;font-weight:600;
+      font-size:1.15em;color:var(--green);
+      letter-spacing:0.02em;
+    }
     .hero-sub{
       font-family:Arial,sans-serif;font-size:1rem;line-height:1.8;
       color:var(--body);margin-bottom:2.5rem;max-width:460px;
@@ -79,9 +107,6 @@
       transition:background 0.2s;align-self:flex-start;
     }
     .hero-cta:hover{background:var(--green-mid);}
-    .hero-image{
-      background:url('https://images.unsplash.com/photo-1476611338391-6f395a0dd82e?auto=format&fit=crop&w=1200&q=85') center/cover no-repeat;
-    }
 
     /* STATS BAR */
     .stats-bar{
@@ -164,18 +189,22 @@
       max-width:1140px;margin:0 auto 2.5rem;
       padding:0 3.5rem;
     }
-    .map-static-wrap{
-      max-width:1140px;margin:0 auto 3rem;
+    /* Side-by-side map + table */
+    .map-content{
+      max-width:1140px;margin:0 auto;
       padding:0 3.5rem;
+      display:grid;
+      grid-template-columns:1.1fr 0.9fr;
+      gap:2.5rem;
+      align-items:start;
     }
+    .map-static-wrap{}
     .map-static{
       width:100%;height:auto;display:block;
       border:1px solid var(--border);
     }
     /* Lots table */
     .lots-table-wrap{
-      max-width:1140px;margin:0 auto;
-      padding:0 3.5rem;
       overflow-x:auto;
     }
     .lots-table{
@@ -286,6 +315,12 @@
 
 <!-- HERO (split layout) -->
 <div class="hero">
+  <div class="hero-photo">
+    <img src="stock photo 1.jpg" alt="Bamfield Sanctuary rainforest">
+    <div class="hero-photo-overlay">
+      <span class="hero-sanctuary-text">Bamfield<br>Sanctuary</span>
+    </div>
+  </div>
   <div class="hero-text">
     <p class="hero-eyebrow">Vancouver Island · Barkley Sound · British Columbia</p>
     <h1 class="hero-title">Where the <em>rainforest</em> meets the sea</h1>
@@ -296,7 +331,6 @@
     </p>
     <a href="#the-lots" class="hero-cta">Explore the Lots</a>
   </div>
-  <div class="hero-image"></div>
 </div>
 
 <!-- STATS BAR -->
@@ -307,8 +341,8 @@
   </div>
   <div class="stat-div"></div>
   <div class="stat">
-    <span class="stat-num">4,020 to 7,761</span>
-    <span class="stat-label">Square Feet</span>
+    <span class="stat-num">4,050 to 7,761</span>
+    <span class="stat-label">Square Metres</span>
   </div>
   <div class="stat-div"></div>
   <div class="stat">
@@ -320,11 +354,7 @@
     <span class="stat-num">2023</span>
     <span class="stat-label">Road Paved, Year-Round Access</span>
   </div>
-  <div class="stat-div"></div>
-  <div class="stat">
-    <span class="stat-num">EPP141779</span>
-    <span class="stat-label">Registered Title, Barclay District</span>
-  </div>
+
 </div>
 
 <!-- WHY BAMFIELD -->
@@ -391,42 +421,44 @@
   <div class="map-header">
     <p class="section-eyebrow">The Lots</p>
     <h2 class="section-title">Thirteen lots. One chance.</h2>
-    <p class="section-body">All lots are registered freehold title under Plan EPP141779, Barclay District. Services to lot line. Click any row to inquire.</p>
+    <p class="section-body">Thirteen registered freehold lots. Services to lot line. Click any row to inquire.</p>
   </div>
 
-  <!-- Static map image -->
-  <div class="map-static-wrap">
-    <img class="map-static" src="Map photo 1200x892.png.png" alt="Aerial map of Bamfield Sanctuary lots">
-  </div>
+  <!-- Map left · Table right -->
+  <div class="map-content">
+    <!-- Static map image -->
+    <div class="map-static-wrap">
+      <img class="map-static" src="Map photo 1200x892.png.png" alt="Aerial map of Bamfield Sanctuary lots">
+    </div>
 
-  <!-- Lot table -->
-  <div class="lots-table-wrap">
-    <table class="lots-table">
-      <thead>
-        <tr>
-          <th>Lot</th>
-          <th>Size</th>
-          <th>Price</th>
-          <th>Frontage</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr onclick="location='#contact'"><td>Lot 1</td><td>4,050 sq m</td><td>$199,000</td><td>Bamfield Road</td><td class="status-available">Available</td></tr>
-        <tr onclick="location='#contact'"><td>Lot 2</td><td>4,050 sq m</td><td>$205,000</td><td>Bamfield Road</td><td class="status-available">Available</td></tr>
-        <tr onclick="location='#contact'"><td>Lot 3</td><td>4,295 sq m</td><td>$219,000</td><td>Bamfield Road</td><td class="status-available">Available</td></tr>
-        <tr onclick="location='#contact'"><td>Lot 4</td><td>4,295 sq m</td><td>$219,000</td><td>Bamfield Road</td><td class="status-available">Available</td></tr>
-        <tr onclick="location='#contact'"><td>Lot 5</td><td>5,575 sq m</td><td>$249,000</td><td>Bamfield Road</td><td class="status-available">Available</td></tr>
-        <tr onclick="location='#contact'"><td>Lot 6</td><td>7,761 sq m</td><td>$269,000</td><td>Bamfield Road</td><td class="status-available">Available</td></tr>
-        <tr onclick="location='#contact'"><td>Lot 7</td><td>6,485 sq m</td><td>$249,000</td><td>Bamfield Road</td><td class="status-available">Available</td></tr>
-        <tr onclick="location='#contact'"><td>Lot 8</td><td>4,930 sq m</td><td>$215,000</td><td>South Bamfield Road</td><td class="status-available">Available</td></tr>
-        <tr onclick="location='#contact'"><td>Lot 9</td><td>4,155 sq m</td><td>$209,000</td><td>South Bamfield Road</td><td class="status-available">Available</td></tr>
-        <tr onclick="location='#contact'"><td>Lot 10</td><td>4,310 sq m</td><td>$209,000</td><td>South Bamfield Road</td><td class="status-available">Available</td></tr>
-        <tr onclick="location='#contact'"><td>Lot 11</td><td>4,050 sq m</td><td>$199,000</td><td>South Bamfield Road</td><td class="status-available">Available</td></tr>
-        <tr onclick="location='#contact'"><td>Lot 12</td><td>4,050 sq m</td><td>$199,000</td><td>South Bamfield Road</td><td class="status-available">Available</td></tr>
-        <tr onclick="location='#contact'"><td>Lot 13</td><td>4,050 sq m</td><td>$199,000</td><td>South Bamfield Road</td><td class="status-available">Available</td></tr>
-      </tbody>
-    </table>
+    <!-- Lot table -->
+    <div class="lots-table-wrap">
+      <table class="lots-table">
+        <thead>
+          <tr>
+            <th>Lot</th>
+            <th>Size</th>
+            <th>Price</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr onclick="location='#contact'"><td>Lot 1</td><td>4,050 sq m</td><td>$199,000</td><td class="status-available">Available</td></tr>
+          <tr onclick="location='#contact'"><td>Lot 2</td><td>4,050 sq m</td><td>$205,000</td><td class="status-available">Available</td></tr>
+          <tr onclick="location='#contact'"><td>Lot 3</td><td>4,295 sq m</td><td>$219,000</td><td class="status-available">Available</td></tr>
+          <tr onclick="location='#contact'"><td>Lot 4</td><td>4,295 sq m</td><td>$219,000</td><td class="status-available">Available</td></tr>
+          <tr onclick="location='#contact'"><td>Lot 5</td><td>5,575 sq m</td><td>$249,000</td><td class="status-available">Available</td></tr>
+          <tr onclick="location='#contact'"><td>Lot 6</td><td>7,761 sq m</td><td>$269,000</td><td class="status-available">Available</td></tr>
+          <tr onclick="location='#contact'"><td>Lot 7</td><td>6,485 sq m</td><td>$249,000</td><td class="status-available">Available</td></tr>
+          <tr onclick="location='#contact'"><td>Lot 8</td><td>4,930 sq m</td><td>$215,000</td><td class="status-available">Available</td></tr>
+          <tr onclick="location='#contact'"><td>Lot 9</td><td>4,155 sq m</td><td>$209,000</td><td class="status-available">Available</td></tr>
+          <tr onclick="location='#contact'"><td>Lot 10</td><td>4,310 sq m</td><td>$209,000</td><td class="status-available">Available</td></tr>
+          <tr onclick="location='#contact'"><td>Lot 11</td><td>4,050 sq m</td><td>$199,000</td><td class="status-available">Available</td></tr>
+          <tr onclick="location='#contact'"><td>Lot 12</td><td>4,050 sq m</td><td>$199,000</td><td class="status-available">Available</td></tr>
+          <tr onclick="location='#contact'"><td>Lot 13</td><td>4,050 sq m</td><td>$199,000</td><td class="status-available">Available</td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
 
