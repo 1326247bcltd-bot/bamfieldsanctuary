@@ -35,7 +35,7 @@
     .nav-logo{display:flex;align-items:center;gap:0.75rem;font-size:1rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--heading);line-height:1.35;}
     .nav-logo em{font-style:normal;color:var(--green);display:block;}
     .nav-logo-emblem{width:44px;height:44px;overflow:hidden;flex-shrink:0;border-radius:50%;}
-    .nav-logo-emblem img{width:121px;height:auto;margin-left:-39px;margin-top:-1px;display:block;}
+    .nav-logo-emblem img{width:121px;height:auto;margin-left:-39px;margin-top:-1px;display:block;mix-blend-mode:multiply;}
     .nav-links{display:flex;gap:2.5rem;list-style:none;}
     .nav-links a{
       color:var(--body);text-decoration:none;
@@ -74,7 +74,7 @@
     .hero-emblem img{
       width:551px;height:auto;
       margin-left:-172px;margin-top:-8px;
-      display:block;
+      display:block;mix-blend-mode:multiply;
     }
     .wordmark-location{
       font-family:Arial,sans-serif;font-size:0.63rem;
@@ -231,6 +231,7 @@
       display:flex;
       align-items:stretch;
       gap:2.5rem;
+      height:500px;
     }
     .map-static-wrap{
       flex-shrink:0;
@@ -240,12 +241,13 @@
     .map-static{
       display:block;
       height:100%;
-      width:auto;
+      width:auto; /* preserves aspect ratio: 500px tall → ~671px wide */
       border:1px solid var(--border);
     }
     .lots-table-wrap{
       flex:1;
-      overflow-x:auto;
+      overflow-y:auto;
+      overflow-x:hidden;
     }
     .lots-table{
       width:100%;border-collapse:collapse;
@@ -579,8 +581,4 @@
   <span class="footer-logo">Bamfield <em>Sanctuary</em></span>
   <p>Plan EPP141779 · Section 18 · Township 1 · Barclay District, British Columbia</p>
   <p style="margin-top:0.3rem;">Taxation Authority: Port Alberni Assessment Area · 1326247 B.C. Ltd.</p>
-  <p style="margin-top:0.8rem;font-size:0.7rem;">All lot sizes and prices are approximate and subject to change without notice. This website is for information purposes only and does not constitute a formal offer to sell. E.O.E.</p>
-  <p style="margin-top:0.3rem;font-size:0.7rem;">2026 Bamfield Sanctuary. All rights reserved.</p>
-</footer>
-
-<s
+  <p style="margin-top:0.8rem;font-size:0.7rem;">All lot sizes and prices are approximate and subject to change without notice. This website is for information purposes only and does not constitute
