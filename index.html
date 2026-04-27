@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bamfield Sanctuary — 13 Private Lots on Vancouver Island's West Coast</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Great+Vibes&family=Pinyon+Script&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
     :root{
@@ -32,8 +32,10 @@
       border-bottom:1px solid var(--border);
       backdrop-filter:blur(8px);
     }
-    .nav-logo{font-size:1rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--heading);}
-    .nav-logo em{font-style:normal;color:var(--green);}
+    .nav-logo{display:flex;align-items:center;gap:0.75rem;font-size:1rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--heading);line-height:1.35;}
+    .nav-logo em{font-style:normal;color:var(--green);display:block;}
+    .nav-logo-emblem{width:44px;height:44px;overflow:hidden;flex-shrink:0;border-radius:50%;}
+    .nav-logo-emblem img{width:121px;height:auto;margin-left:-39px;margin-top:-1px;display:block;}
     .nav-links{display:flex;gap:2.5rem;list-style:none;}
     .nav-links a{
       color:var(--body);text-decoration:none;
@@ -61,19 +63,46 @@
     .hero-photo img{
       width:100%;height:100%;object-fit:cover;display:block;
     }
-    .hero-photo-overlay{
-      position:absolute;inset:0;
-      background:linear-gradient(to bottom,rgba(15,35,20,0.45) 0%,rgba(15,35,20,0.30) 50%,rgba(15,35,20,0.55) 100%);
-      display:flex;align-items:flex-end;justify-content:flex-start;
-      padding:3.5rem;
+    /* Hero wordmark block */
+    .hero-wordmark{text-align:center;margin-bottom:2rem;}
+    /* Circular emblem — crops the circle from logo no text.png (2814×1536, circle ≈1020px) */
+    .hero-emblem{
+      width:200px;height:200px;
+      border-radius:50%;overflow:hidden;
+      margin:0 auto 0.5rem;
     }
-    .hero-sanctuary-text{
-      font-family:'Cormorant Garamond',Georgia,serif;
-      font-size:clamp(2.6rem,4.5vw,4.4rem);
-      font-weight:600;font-style:italic;
-      color:rgba(255,255,255,0.96);
-      line-height:1.1;letter-spacing:0.03em;
-      text-shadow:0 2px 18px rgba(0,0,0,0.45);
+    .hero-emblem img{
+      width:551px;height:auto;
+      margin-left:-172px;margin-top:-8px;
+      display:block;
+    }
+    .wordmark-location{
+      font-family:Arial,sans-serif;font-size:0.63rem;
+      letter-spacing:0.32em;text-transform:uppercase;
+      color:var(--muted);margin-bottom:0.6rem;
+      white-space:nowrap;
+    }
+    .wordmark-name{
+      font-family:'Georgia',serif;
+      font-size:clamp(1.6rem,2.4vw,2.2rem);
+      font-weight:normal;color:var(--heading);
+      line-height:1.15;letter-spacing:0.25em;
+      text-transform:uppercase;
+      margin-top:2rem;margin-bottom:2rem;
+    }
+    .wordmark-name em{font-style:normal;color:var(--green);}
+    .wordmark-tagline{
+      font-family:'Georgia',serif;
+      font-style:italic;font-size:1.15rem;
+      color:var(--body);margin-bottom:0.75rem;
+    }
+    .tagline-rainforest{
+      color:var(--green);font-size:1.25em;
+      font-style:italic;
+    }
+    .wordmark-deco{
+      color:var(--green);font-size:0.85rem;
+      letter-spacing:0.25em;
     }
     /* Right: text */
     .hero-text{
@@ -90,10 +119,10 @@
       line-height:1.2;color:var(--heading);margin-bottom:1.5rem;
     }
     .hero-title em{
-      font-family:'Cormorant Garamond',Georgia,serif;
-      font-style:italic;font-weight:600;
-      font-size:1.15em;color:var(--green);
-      letter-spacing:0.02em;
+      font-family:'Pinyon Script',cursive;
+      font-style:normal;font-weight:400;
+      font-size:1.35em;color:var(--green);
+      letter-spacing:0.01em;
     }
     .hero-sub{
       font-family:Arial,sans-serif;font-size:1rem;line-height:1.8;
@@ -189,25 +218,28 @@
       max-width:1140px;margin:0 auto 2.5rem;
       padding:0 3.5rem;
     }
-    /* Header row: text left, map right */
-    .map-header-row{
-      max-width:1140px;margin:0 auto 3rem;
-      padding:0 3.5rem;
-      display:grid;
-      grid-template-columns:1fr 1.15fr;
-      gap:3rem;
-      align-items:center;
-    }
-    .map-static-wrap{}
-    .map-static{
-      width:100%;height:auto;display:block;
-      max-height:420px;object-fit:contain;
-      border:1px solid var(--border);
-    }
-    /* Lots table — full width below */
-    .lots-table-wrap{
+    /* Map + table side by side, same height */
+    .map-table-row{
       max-width:1140px;margin:0 auto;
       padding:0 3.5rem;
+      display:flex;
+      align-items:stretch;
+      gap:2.5rem;
+    }
+    .map-static-wrap{
+      flex-shrink:0;
+      display:flex;
+    }
+    .map-static{
+      display:block;
+      height:100%;
+      width:auto;
+      max-width:560px;
+      object-fit:contain;
+      border:1px solid var(--border);
+    }
+    .lots-table-wrap{
+      flex:1;
       overflow-x:auto;
     }
     .lots-table{
@@ -306,7 +338,10 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">Bamfield <em>Sanctuary</em></div>
+  <div class="nav-logo">
+    <div class="nav-logo-emblem"><img src="logo no text.png" alt="Bamfield Sanctuary emblem"></div>
+    <span>Bamfield<em>Sanctuary</em></span>
+  </div>
   <ul class="nav-links">
     <li><a href="#why">Why Bamfield</a></li>
     <li><a href="#the-lots">The Lots</a></li>
@@ -320,13 +355,17 @@
 <div class="hero">
   <div class="hero-photo">
     <img src="stock photo 1.jpg" alt="Bamfield Sanctuary rainforest">
-    <div class="hero-photo-overlay">
-      <span class="hero-sanctuary-text">Bamfield<br>Sanctuary</span>
-    </div>
   </div>
   <div class="hero-text">
-    <p class="hero-eyebrow">Vancouver Island · Barkley Sound · British Columbia</p>
-    <h1 class="hero-title">Where the <em>rainforest</em> meets the sea</h1>
+    <div class="hero-wordmark">
+      <div class="hero-emblem">
+        <img src="logo no text.png" alt="Bamfield Sanctuary emblem">
+      </div>
+      <p class="wordmark-location">Bamfield, British Columbia</p>
+      <h1 class="wordmark-name">Bamfield<br><em>Sanctuary</em></h1>
+      <p class="wordmark-tagline">Where the <span class="tagline-rainforest">rainforest</span> meets the sea</p>
+      <p class="wordmark-deco">— ✦ —</p>
+    </div>
     <p class="hero-sub">
       Thirteen rare freehold lots on the edge of Barkley Sound.
       Old growth forest. Eagles overhead. Whales in the inlet.
@@ -422,20 +461,19 @@
 <!-- LOT MAP & TABLE -->
 <section class="map-section" id="the-lots">
 
-  <!-- Top row: heading text left · map right -->
-  <div class="map-header-row">
-    <div>
-      <p class="section-eyebrow">The Lots</p>
-      <h2 class="section-title">Thirteen lots. One chance.</h2>
-      <p class="section-body">Thirteen registered freehold lots. Services to lot line. Click any row to inquire.</p>
-    </div>
+  <!-- Heading -->
+  <div class="map-header">
+    <p class="section-eyebrow">The Lots</p>
+    <h2 class="section-title">Thirteen lots. One chance.</h2>
+    <p class="section-body">Thirteen registered freehold lots. Services to lot line. Click any row to inquire.</p>
+  </div>
+
+  <!-- Map left · Table right, same height -->
+  <div class="map-table-row">
     <div class="map-static-wrap">
       <img class="map-static" src="Map photo 1200x892.png.png" alt="Aerial map of Bamfield Sanctuary lots">
     </div>
-  </div>
-
-  <!-- Table below, full width -->
-  <div class="lots-table-wrap">
+    <div class="lots-table-wrap">
     <table class="lots-table">
       <thead>
         <tr>
@@ -461,6 +499,7 @@
         <tr onclick="location='#contact'"><td>Lot 13</td><td>4,050 sq m</td><td>$199,000</td><td class="status-available">Available</td></tr>
       </tbody>
     </table>
+    </div>
   </div>
 </section>
 
@@ -543,38 +582,4 @@
       <div class="form-group">
         <label>Message (Optional)</label>
         <textarea placeholder="Tell us about your vision for the lot."></textarea>
-      </div>
-      <button type="submit" class="form-submit">Submit Inquiry</button>
-    </form>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <span class="footer-logo">Bamfield <em>Sanctuary</em></span>
-  <p>Plan EPP141779 · Section 18 · Township 1 · Barclay District, British Columbia</p>
-  <p style="margin-top:0.3rem;">Taxation Authority: Port Alberni Assessment Area · 1326247 B.C. Ltd.</p>
-  <p style="margin-top:0.8rem;font-size:0.7rem;">All lot sizes and prices are approximate and subject to change without notice. This website is for information purposes only and does not constitute a formal offer to sell. E.O.E.</p>
-  <p style="margin-top:0.3rem;font-size:0.7rem;">2026 Bamfield Sanctuary. All rights reserved.</p>
-</footer>
-
-<script>
-// ── FORM ──
-function handleSubmit(e){
-  e.preventDefault();
-  const btn = e.target.querySelector('.form-submit');
-  btn.textContent = 'Inquiry received. We will be in touch shortly.';
-  btn.style.background = 'var(--green-mid)';
-  btn.disabled = true;
-}
-
-// ── SMOOTH SCROLL ──
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    const t=document.querySelector(a.getAttribute('href'));
-    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
-  });
-});
-</script>
-</body>
-</html>
+      </di
