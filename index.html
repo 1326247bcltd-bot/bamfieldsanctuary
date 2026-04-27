@@ -189,22 +189,25 @@
       max-width:1140px;margin:0 auto 2.5rem;
       padding:0 3.5rem;
     }
-    /* Side-by-side map + table */
-    .map-content{
-      max-width:1140px;margin:0 auto;
+    /* Header row: text left, map right */
+    .map-header-row{
+      max-width:1140px;margin:0 auto 3rem;
       padding:0 3.5rem;
       display:grid;
-      grid-template-columns:1.1fr 0.9fr;
-      gap:2.5rem;
-      align-items:start;
+      grid-template-columns:1fr 1.15fr;
+      gap:3rem;
+      align-items:center;
     }
     .map-static-wrap{}
     .map-static{
       width:100%;height:auto;display:block;
+      max-height:420px;object-fit:contain;
       border:1px solid var(--border);
     }
-    /* Lots table */
+    /* Lots table — full width below */
     .lots-table-wrap{
+      max-width:1140px;margin:0 auto;
+      padding:0 3.5rem;
       overflow-x:auto;
     }
     .lots-table{
@@ -418,47 +421,46 @@
 
 <!-- LOT MAP & TABLE -->
 <section class="map-section" id="the-lots">
-  <div class="map-header">
-    <p class="section-eyebrow">The Lots</p>
-    <h2 class="section-title">Thirteen lots. One chance.</h2>
-    <p class="section-body">Thirteen registered freehold lots. Services to lot line. Click any row to inquire.</p>
-  </div>
 
-  <!-- Map left · Table right -->
-  <div class="map-content">
-    <!-- Static map image -->
+  <!-- Top row: heading text left · map right -->
+  <div class="map-header-row">
+    <div>
+      <p class="section-eyebrow">The Lots</p>
+      <h2 class="section-title">Thirteen lots. One chance.</h2>
+      <p class="section-body">Thirteen registered freehold lots. Services to lot line. Click any row to inquire.</p>
+    </div>
     <div class="map-static-wrap">
       <img class="map-static" src="Map photo 1200x892.png.png" alt="Aerial map of Bamfield Sanctuary lots">
     </div>
+  </div>
 
-    <!-- Lot table -->
-    <div class="lots-table-wrap">
-      <table class="lots-table">
-        <thead>
-          <tr>
-            <th>Lot</th>
-            <th>Size</th>
-            <th>Price</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr onclick="location='#contact'"><td>Lot 1</td><td>4,050 sq m</td><td>$199,000</td><td class="status-available">Available</td></tr>
-          <tr onclick="location='#contact'"><td>Lot 2</td><td>4,050 sq m</td><td>$205,000</td><td class="status-available">Available</td></tr>
-          <tr onclick="location='#contact'"><td>Lot 3</td><td>4,295 sq m</td><td>$219,000</td><td class="status-available">Available</td></tr>
-          <tr onclick="location='#contact'"><td>Lot 4</td><td>4,295 sq m</td><td>$219,000</td><td class="status-available">Available</td></tr>
-          <tr onclick="location='#contact'"><td>Lot 5</td><td>5,575 sq m</td><td>$249,000</td><td class="status-available">Available</td></tr>
-          <tr onclick="location='#contact'"><td>Lot 6</td><td>7,761 sq m</td><td>$269,000</td><td class="status-available">Available</td></tr>
-          <tr onclick="location='#contact'"><td>Lot 7</td><td>6,485 sq m</td><td>$249,000</td><td class="status-available">Available</td></tr>
-          <tr onclick="location='#contact'"><td>Lot 8</td><td>4,930 sq m</td><td>$215,000</td><td class="status-available">Available</td></tr>
-          <tr onclick="location='#contact'"><td>Lot 9</td><td>4,155 sq m</td><td>$209,000</td><td class="status-available">Available</td></tr>
-          <tr onclick="location='#contact'"><td>Lot 10</td><td>4,310 sq m</td><td>$209,000</td><td class="status-available">Available</td></tr>
-          <tr onclick="location='#contact'"><td>Lot 11</td><td>4,050 sq m</td><td>$199,000</td><td class="status-available">Available</td></tr>
-          <tr onclick="location='#contact'"><td>Lot 12</td><td>4,050 sq m</td><td>$199,000</td><td class="status-available">Available</td></tr>
-          <tr onclick="location='#contact'"><td>Lot 13</td><td>4,050 sq m</td><td>$199,000</td><td class="status-available">Available</td></tr>
-        </tbody>
-      </table>
-    </div>
+  <!-- Table below, full width -->
+  <div class="lots-table-wrap">
+    <table class="lots-table">
+      <thead>
+        <tr>
+          <th>Lot</th>
+          <th>Size</th>
+          <th>Price</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr onclick="location='#contact'"><td>Lot 1</td><td>4,050 sq m</td><td>$199,000</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 2</td><td>4,050 sq m</td><td>$205,000</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 3</td><td>4,295 sq m</td><td>$219,000</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 4</td><td>4,295 sq m</td><td>$219,000</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 5</td><td>5,575 sq m</td><td>$249,000</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 6</td><td>7,761 sq m</td><td>$269,000</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 7</td><td>6,485 sq m</td><td>$249,000</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 8</td><td>4,930 sq m</td><td>$215,000</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 9</td><td>4,155 sq m</td><td>$209,000</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 10</td><td>4,310 sq m</td><td>$209,000</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 11</td><td>4,050 sq m</td><td>$199,000</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 12</td><td>4,050 sq m</td><td>$199,000</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 13</td><td>4,050 sq m</td><td>$199,000</td><td class="status-available">Available</td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
