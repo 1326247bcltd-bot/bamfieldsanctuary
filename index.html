@@ -172,7 +172,13 @@
     }
 
     /* WHY BAMFIELD */
-    .why-bamfield{background:var(--white);}
+    .why-bamfield{
+      background:
+        url('old growth.avif') center/cover no-repeat;
+    }
+    .why-bamfield .section-eyebrow{color:var(--green-mid);text-shadow:0 1px 6px rgba(0,0,0,0.5);}
+    .why-bamfield .section-title{color:#ffffff;text-shadow:0 2px 10px rgba(0,0,0,0.6);}
+    .why-bamfield .section-body{color:rgba(255,255,255,0.92);text-shadow:0 1px 6px rgba(0,0,0,0.5);}
     .why-header{max-width:1140px;margin:0 auto 3rem;}
     .why-grid{
       display:grid;grid-template-columns:repeat(3,1fr);
@@ -229,13 +235,12 @@
     .map-static-wrap{
       flex-shrink:0;
       display:flex;
+      align-items:stretch;
     }
     .map-static{
       display:block;
       height:100%;
       width:auto;
-      max-width:560px;
-      object-fit:contain;
       border:1px solid var(--border);
     }
     .lots-table-wrap{
@@ -402,7 +407,6 @@
 <!-- WHY BAMFIELD -->
 <section class="why-bamfield" id="why">
   <div class="why-header">
-    <p class="section-eyebrow">Why Here</p>
     <h2 class="section-title">Bamfield is today what Tofino was twenty years ago</h2>
     <p class="section-body">
       For decades, Bamfield was the best-kept secret on Vancouver Island. Too remote for most, which kept it pristine.
@@ -439,24 +443,6 @@
 </section>
 
 <!-- PHOTO GALLERY -->
-<div class="gallery-strip">
-  <div class="gallery-item">
-    <img src="https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?auto=format&fit=crop&w=600&q=80" alt="Barkley Sound coastal vista" loading="lazy">
-    <div class="gallery-caption">Barkley Sound</div>
-  </div>
-  <div class="gallery-item">
-    <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=80" alt="Old growth rainforest" loading="lazy">
-    <div class="gallery-caption">Old Growth Rainforest</div>
-  </div>
-  <div class="gallery-item">
-    <img src="https://images.unsplash.com/photo-1624395213043-fa2e123b2656?auto=format&fit=crop&w=600&q=80" alt="Bald eagle in flight" loading="lazy">
-    <div class="gallery-caption">Bald Eagle</div>
-  </div>
-  <div class="gallery-item">
-    <img src="https://images.unsplash.com/photo-1568430462989-44163eb1752f?auto=format&fit=crop&w=600&q=80" alt="Humpback whale" loading="lazy">
-    <div class="gallery-caption">Humpback Whale</div>
-  </div>
-</div>
 
 <!-- LOT MAP & TABLE -->
 <section class="map-section" id="the-lots">
@@ -582,4 +568,19 @@
       <div class="form-group">
         <label>Message (Optional)</label>
         <textarea placeholder="Tell us about your vision for the lot."></textarea>
-      </di
+      </div>
+      <button type="submit" class="form-submit">Submit Inquiry</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Bamfield <em>Sanctuary</em></span>
+  <p>Plan EPP141779 · Section 18 · Township 1 · Barclay District, British Columbia</p>
+  <p style="margin-top:0.3rem;">Taxation Authority: Port Alberni Assessment Area · 1326247 B.C. Ltd.</p>
+  <p style="margin-top:0.8rem;font-size:0.7rem;">All lot sizes and prices are approximate and subject to change without notice. This website is for information purposes only and does not constitute a formal offer to sell. E.O.E.</p>
+  <p style="margin-top:0.3rem;font-size:0.7rem;">2026 Bamfield Sanctuary. All rights reserved.</p>
+</footer>
+
+<s
