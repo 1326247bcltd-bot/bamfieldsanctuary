@@ -34,8 +34,13 @@
     }
     .nav-logo{display:flex;align-items:center;gap:0.75rem;font-size:1rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--heading);line-height:1.35;}
     .nav-logo em{font-style:normal;color:var(--green);display:block;}
-    .nav-logo-emblem{flex-shrink:0;}
-    .nav-logo-emblem img{height:96px;width:auto;display:block;}
+    .nav-logo-emblem{
+      flex-shrink:0;
+      width:128px;height:128px;
+      overflow:hidden;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .nav-logo-emblem img{height:128px;width:auto;display:block;flex-shrink:0;}
     .nav-links{display:flex;gap:2.5rem;list-style:none;}
     .nav-links a{
       color:var(--body);text-decoration:none;
@@ -51,47 +56,74 @@
     }
     .nav-cta:hover{background:var(--green-mid);}
 
-    /* HERO — full-bleed photo */
+    /* HERO — full-bleed photo, content anchored to top */
     .hero{
       position:relative;
       min-height:100vh;
-      background:url('stock photo 1.jpg') center/cover no-repeat;
-      display:flex;align-items:center;justify-content:center;
-      padding-top:96px;
+      background:url('stock photo 1.jpg') center 25%/cover no-repeat;
+      display:flex;align-items:flex-start;justify-content:center;
+      padding-top:160px; /* clears the 128px nav + 1rem top/bottom padding */
+      padding-bottom:4rem;
     }
     .hero-text{
       display:flex;flex-direction:column;align-items:center;
-      background:rgba(250,247,242,0.91);
-      padding:2.5rem 3.5rem 3rem;
-      max-width:580px;width:90%;
+      background:none;
+      padding:0;
+      max-width:860px;width:92%;
       text-align:center;
     }
     /* Hero wordmark block */
-    .hero-wordmark{text-align:center;margin-bottom:1.2rem;width:100%;}
-    .hero-emblem{margin:0 auto 0.8rem;text-align:center;}
-    .hero-emblem img{height:220px;width:auto;display:block;margin:0 auto;}
+    .hero-wordmark{text-align:center;margin-bottom:0;width:100%;}
+    /* Logo — cropped square, no margin below so location text sits flush */
+    .hero-emblem{
+      width:280px;height:280px;
+      overflow:hidden;
+      display:flex;align-items:center;justify-content:center;
+      margin:0 auto;
+    }
+    .hero-emblem img{height:280px;width:auto;display:block;flex-shrink:0;}
+    /* Location — sits below logo with breathing room */
     .wordmark-location{
-      font-family:Arial,sans-serif;font-size:0.63rem;
+      font-family:Arial,sans-serif;font-size:0.7rem;
       letter-spacing:0.32em;text-transform:uppercase;
-      color:var(--muted);margin-bottom:0.5rem;white-space:nowrap;
+      color:var(--green);margin-top:1.2rem;margin-bottom:0.3rem;white-space:nowrap;
+      text-shadow:0 1px 6px rgba(255,255,255,0.6);
     }
     .wordmark-name{
       font-family:'Georgia',serif;
-      font-size:clamp(1.4rem,2vw,2rem);
-      font-weight:normal;color:var(--heading);
+      font-size:clamp(2.8rem,5vw,4rem);
+      font-weight:normal;color:#ffffff;
       line-height:1.15;letter-spacing:0.25em;text-transform:uppercase;
-      margin-top:0.8rem;margin-bottom:0.8rem;
+      margin-top:0.3rem;margin-bottom:0.3rem;
+      text-shadow:0 2px 14px rgba(0,0,0,0.6);
     }
-    .wordmark-name em{font-style:normal;color:var(--green);}
+    /* Green text — white outline, no glow shadow */
+    .wordmark-name em{
+      font-style:normal;color:var(--green-mid);
+      text-shadow:none;
+      -webkit-text-stroke:0.4px #ffffff;
+    }
     .wordmark-tagline{
-      font-family:'Georgia',serif;font-style:italic;font-size:1.1rem;
-      color:var(--body);margin-bottom:0.5rem;
+      font-family:'Georgia',serif;font-style:italic;font-size:2.2rem;
+      color:#ffffff;margin-top:0;margin-bottom:0.3rem;
+      text-shadow:0 2px 10px rgba(0,0,0,0.6);
     }
-    .tagline-rainforest{color:var(--green);font-size:1.2em;font-style:italic;}
-    .wordmark-deco{color:var(--green);font-size:0.85rem;letter-spacing:0.25em;}
+    .tagline-rainforest{
+      color:var(--green-mid);font-size:1em;font-style:italic;
+      text-shadow:none;
+      -webkit-text-stroke:0.4px #ffffff;
+    }
+    .wordmark-deco{color:rgba(255,255,255,0.8);font-size:1rem;letter-spacing:0.25em;margin-top:0.2rem;margin-bottom:0.8rem;}
+    /* Cream panel — wraps only the paragraph text, tight padding */
+    .hero-sub-wrap{
+      background:rgba(250,247,242,0.90);
+      padding:1.2rem 2rem;
+      max-width:520px;width:88%;
+      margin-bottom:1.2rem;
+    }
     .hero-sub{
-      font-family:Arial,sans-serif;font-size:0.95rem;line-height:1.8;
-      color:var(--body);margin-bottom:1.5rem;text-align:center;
+      font-family:Arial,sans-serif;font-size:1.25rem;line-height:1.8;
+      color:var(--body);margin-bottom:0;text-align:center;
     }
     .hero-cta{
       display:inline-block;padding:0.9rem 2.5rem;
@@ -303,17 +335,20 @@
     }
     @media (max-width:768px){
       /* Nav */
-      nav{padding:0.75rem 1.25rem;}
+      nav{padding:0.5rem 1.25rem;}
       .nav-links{display:none;}
-      .nav-logo-emblem img{height:56px;}
+      .nav-logo-emblem{width:68px;height:68px;}
+      .nav-logo-emblem img{height:68px;}
       .nav-cta{padding:0.5rem 1rem;font-size:0.72rem;}
 
       /* Hero */
-      .hero{padding-top:72px;min-height:auto;padding-bottom:2rem;}
-      .hero-text{padding:1.75rem 1.5rem 2rem;max-width:100%;width:92%;}
-      .hero-emblem img{height:150px;}
-      .wordmark-name{font-size:1.3rem;margin-top:0.5rem;margin-bottom:0.5rem;}
-      .wordmark-tagline{font-size:1rem;}
+      .hero{padding-top:120px;min-height:auto;padding-bottom:2rem;}
+      .hero-text{padding:0;width:95%;}
+      .hero-emblem{width:147px;height:147px;}
+      .hero-emblem img{height:147px;}
+      .wordmark-name{font-size:2rem;margin-top:0.75rem;margin-bottom:0.75rem;}
+      .wordmark-tagline{font-size:1.4rem;}
+      .hero-sub-wrap{padding:1.25rem 1.5rem 1.5rem;max-width:100%;}
       .hero-sub{font-size:0.9rem;margin-bottom:1.25rem;}
 
       /* Stats */
@@ -367,7 +402,7 @@
 <!-- NAV -->
 <nav>
   <div class="nav-logo">
-    <div class="nav-logo-emblem"><img src="logo transparent.png" alt="Bamfield Sanctuary emblem"></div>
+    <div class="nav-logo-emblem"><img src="logo.png" alt="Bamfield Sanctuary emblem"></div>
     <span>Bamfield<em>Sanctuary</em></span>
   </div>
   <ul class="nav-links">
@@ -384,18 +419,20 @@
   <div class="hero-text">
     <div class="hero-wordmark">
       <div class="hero-emblem">
-        <img src="logo transparent.png" alt="Bamfield Sanctuary emblem">
+        <img src="logo.png" alt="Bamfield Sanctuary emblem">
       </div>
       <p class="wordmark-location">Bamfield, British Columbia</p>
       <h1 class="wordmark-name">Bamfield<br><em>Sanctuary</em></h1>
       <p class="wordmark-tagline">Where the <span class="tagline-rainforest">rainforest</span> meets the sea</p>
       <p class="wordmark-deco">— ✦ —</p>
     </div>
-    <p class="hero-sub">
-      Thirteen rare freehold lots on the edge of Barkley Sound.
-      Old growth forest. Eagles overhead. Whales in the inlet.
-      A chance to build in one of BC's most extraordinary places, before everyone else arrives.
-    </p>
+    <div class="hero-sub-wrap">
+      <p class="hero-sub">
+        Thirteen rare freehold lots on the edge of Barkley Sound.
+        Old growth forest. Eagles overhead. Whales in the inlet.
+        A chance to build in one of BC's most extraordinary places, before everyone else arrives.
+      </p>
+    </div>
     <a href="#the-lots" class="hero-cta">Explore the Lots</a>
   </div>
 </div>
