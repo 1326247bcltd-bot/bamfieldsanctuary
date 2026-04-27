@@ -51,88 +51,53 @@
     }
     .nav-cta:hover{background:var(--green-mid);}
 
-    /* HERO — split layout */
+    /* HERO — full-bleed photo */
     .hero{
-      display:grid;grid-template-columns:1fr 1fr;
-      min-height:100vh;padding-top:0;
+      position:relative;
+      min-height:100vh;
+      background:url('stock photo 1.jpg') center/cover no-repeat;
+      display:flex;align-items:center;justify-content:center;
+      padding-top:96px;
     }
-    /* Left: photo with overlay */
-    .hero-photo{
-      position:relative;overflow:hidden;
-    }
-    .hero-photo img{
-      width:100%;height:100%;object-fit:cover;display:block;
-    }
-    /* Hero wordmark block */
-    .hero-wordmark{text-align:center;margin-bottom:2rem;}
-    /* Circular emblem — crops the circle from logo transparent.png (2814×1536, circle ≈1020px) */
-    .hero-emblem{
-      margin:0 auto 0.5rem;
+    .hero-text{
+      display:flex;flex-direction:column;align-items:center;
+      background:rgba(250,247,242,0.91);
+      padding:2.5rem 3.5rem 3rem;
+      max-width:580px;width:90%;
       text-align:center;
     }
-    .hero-emblem img{
-      height:420px;width:auto;
-      display:block;margin:0 auto;
-    }
+    /* Hero wordmark block */
+    .hero-wordmark{text-align:center;margin-bottom:1.2rem;width:100%;}
+    .hero-emblem{margin:0 auto 0.8rem;text-align:center;}
+    .hero-emblem img{height:220px;width:auto;display:block;margin:0 auto;}
     .wordmark-location{
       font-family:Arial,sans-serif;font-size:0.63rem;
       letter-spacing:0.32em;text-transform:uppercase;
-      color:var(--muted);margin-bottom:0.6rem;
-      white-space:nowrap;
+      color:var(--muted);margin-bottom:0.5rem;white-space:nowrap;
     }
     .wordmark-name{
       font-family:'Georgia',serif;
-      font-size:clamp(1.6rem,2.4vw,2.2rem);
+      font-size:clamp(1.4rem,2vw,2rem);
       font-weight:normal;color:var(--heading);
-      line-height:1.15;letter-spacing:0.25em;
-      text-transform:uppercase;
-      margin-top:2rem;margin-bottom:2rem;
+      line-height:1.15;letter-spacing:0.25em;text-transform:uppercase;
+      margin-top:0.8rem;margin-bottom:0.8rem;
     }
     .wordmark-name em{font-style:normal;color:var(--green);}
     .wordmark-tagline{
-      font-family:'Georgia',serif;
-      font-style:italic;font-size:1.15rem;
-      color:var(--body);margin-bottom:0.75rem;
+      font-family:'Georgia',serif;font-style:italic;font-size:1.1rem;
+      color:var(--body);margin-bottom:0.5rem;
     }
-    .tagline-rainforest{
-      color:var(--green);font-size:1.25em;
-      font-style:italic;
-    }
-    .wordmark-deco{
-      color:var(--green);font-size:0.85rem;
-      letter-spacing:0.25em;
-    }
-    /* Right: text */
-    .hero-text{
-      background:var(--cream);
-      display:flex;flex-direction:column;justify-content:center;
-      padding:7rem 4rem 4rem 4rem;
-    }
-    .hero-eyebrow{
-      font-family:Arial,sans-serif;font-size:0.72rem;letter-spacing:0.3em;
-      text-transform:uppercase;color:var(--green);margin-bottom:1.5rem;
-    }
-    .hero-title{
-      font-size:clamp(2.4rem,4vw,3.8rem);font-weight:normal;
-      line-height:1.2;color:var(--heading);margin-bottom:1.5rem;
-    }
-    .hero-title em{
-      font-family:'Pinyon Script',cursive;
-      font-style:normal;font-weight:400;
-      font-size:1.35em;color:var(--green);
-      letter-spacing:0.01em;
-    }
+    .tagline-rainforest{color:var(--green);font-size:1.2em;font-style:italic;}
+    .wordmark-deco{color:var(--green);font-size:0.85rem;letter-spacing:0.25em;}
     .hero-sub{
-      font-family:Arial,sans-serif;font-size:1rem;line-height:1.8;
-      color:var(--body);margin-bottom:2.5rem;max-width:460px;
-      text-align:center;margin-left:auto;margin-right:auto;
+      font-family:Arial,sans-serif;font-size:0.95rem;line-height:1.8;
+      color:var(--body);margin-bottom:1.5rem;text-align:center;
     }
     .hero-cta{
-      display:inline-block;padding:1rem 2.5rem;
+      display:inline-block;padding:0.9rem 2.5rem;
       background:var(--green);color:white;text-decoration:none;
       font-family:Arial,sans-serif;font-size:0.8rem;
-      letter-spacing:0.15em;text-transform:uppercase;
-      transition:background 0.2s;align-self:center;
+      letter-spacing:0.15em;text-transform:uppercase;transition:background 0.2s;
     }
     .hero-cta:hover{background:var(--green-mid);}
 
@@ -180,7 +145,7 @@
     .why-bamfield .section-body{color:rgba(255,255,255,0.92);text-shadow:0 1px 6px rgba(0,0,0,0.5);}
     .why-header{max-width:1140px;margin:0 auto 3rem;}
     .why-grid{
-      display:grid;grid-template-columns:repeat(3,1fr);
+      display:grid;grid-template-columns:repeat(2,1fr);
       gap:1.8rem;max-width:1140px;margin:0 auto;
     }
     .why-card{
@@ -223,27 +188,22 @@
       max-width:1140px;margin:0 auto 2.5rem;
       padding:0 3.5rem;
     }
-    /* Map + table side by side */
+    /* Map stacked above table */
     .map-table-row{
       max-width:1140px;margin:0 auto;
       padding:0 3.5rem;
       display:flex;
-      align-items:flex-start;
-      gap:2.5rem;
+      flex-direction:column;
+      gap:2rem;
     }
-    .map-static-wrap{
-      flex-shrink:0;
-    }
+    .map-static-wrap{width:100%;}
     .map-static{
       display:block;
-      width:520px;
-      height:auto; /* preserves aspect ratio: 520px wide → ~387px tall */
+      width:100%;
+      height:auto;
       border:1px solid var(--border);
     }
-    .lots-table-wrap{
-      flex:1;
-      min-width:0;
-    }
+    .lots-table-wrap{width:100%;}
     .lots-table{
       width:100%;border-collapse:collapse;
       font-family:Arial,sans-serif;font-size:0.88rem;
@@ -270,16 +230,22 @@
 
     /* GETTING THERE */
     .getting-there{
-      background:linear-gradient(rgba(10,30,20,0.55),rgba(10,30,20,0.55)),
-                  url('water.jpg') center/cover no-repeat;
+      background:url('water.jpg') center/cover no-repeat;
     }
-    .getting-there .section-eyebrow{color:var(--green-mid);text-shadow:0 1px 6px rgba(0,0,0,0.5);}
-    .getting-there .section-title{color:#ffffff;text-shadow:0 2px 10px rgba(0,0,0,0.6);}
-    .getting-there .section-body{color:rgba(255,255,255,0.92);text-shadow:0 1px 6px rgba(0,0,0,0.5);}
-    .getting-there .route-card{background:rgba(250,247,242,0.92);}
+    .getting-there .section-eyebrow{color:var(--green);}
+    .getting-there .section-title{color:var(--heading);}
+    .getting-there .section-body{color:var(--body);}
+    .getting-there .route-card{background:rgba(250,247,242,0.95);}
     .getting-there .route-title{color:var(--heading);}
     .getting-there .route-desc{color:var(--body);}
     .getting-there .route-time{color:var(--green);}
+    /* wrap header text in a translucent panel so it reads over any photo */
+    .getting-there-header{
+      max-width:1140px;margin:0 auto 0;
+      background:rgba(250,247,242,0.88);
+      padding:2rem 2.5rem 1.5rem;
+      margin-bottom:0;
+    }
     .routes-grid{
       display:grid;grid-template-columns:repeat(3,1fr);
       gap:1.8rem;max-width:1140px;margin:2.5rem auto 0;
@@ -306,7 +272,7 @@
     /* CONTACT */
     .contact-section{background:var(--cream);}
     .contact-inner{max-width:640px;margin:0 auto;}
-    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;align-items:start;}
     .form-group{display:flex;flex-direction:column;gap:0.3rem;margin-bottom:1rem;}
     .form-group label{
       font-family:Arial,sans-serif;font-size:0.7rem;
@@ -329,6 +295,56 @@
       cursor:pointer;transition:background 0.2s;
     }
     .form-submit:hover{background:var(--green-mid);}
+
+    /* ── MOBILE RESPONSIVE ── */
+    @media (max-width:900px){
+      .why-grid{grid-template-columns:1fr;}
+      .routes-grid{grid-template-columns:1fr;}
+    }
+    @media (max-width:768px){
+      /* Nav */
+      nav{padding:0.75rem 1.25rem;}
+      .nav-links{display:none;}
+      .nav-logo-emblem img{height:56px;}
+      .nav-cta{padding:0.5rem 1rem;font-size:0.72rem;}
+
+      /* Hero */
+      .hero{padding-top:72px;min-height:auto;padding-bottom:2rem;}
+      .hero-text{padding:1.75rem 1.5rem 2rem;max-width:100%;width:92%;}
+      .hero-emblem img{height:150px;}
+      .wordmark-name{font-size:1.3rem;margin-top:0.5rem;margin-bottom:0.5rem;}
+      .wordmark-tagline{font-size:1rem;}
+      .hero-sub{font-size:0.9rem;margin-bottom:1.25rem;}
+
+      /* Stats */
+      .stats-bar{padding:1.5rem 1.25rem;flex-direction:column;gap:1rem;}
+      .stat-div{display:none;}
+
+      /* Sections */
+      section{padding:3rem 1.25rem;}
+      .section-title{font-size:clamp(1.4rem,5vw,2rem);}
+
+      /* Why Bamfield */
+      .why-header{margin-bottom:2rem;}
+      .why-grid{grid-template-columns:1fr;gap:1rem;}
+
+      /* Map & table */
+      .map-section{padding:3rem 0;}
+      .map-header{padding:0 1.25rem;margin-bottom:1.5rem;}
+      .map-table-row{padding:0 1.25rem;gap:1.25rem;}
+      .lots-table th,.lots-table td{padding:0.6rem 0.75rem;font-size:0.82rem;}
+
+      /* Getting There */
+      .getting-there-header{padding:1.5rem 1.25rem 1rem;}
+      .routes-grid{grid-template-columns:1fr;gap:1rem;margin-top:1.5rem;}
+
+      /* Contact */
+      .contact-inner{padding:0;}
+      .form-row{grid-template-columns:1fr;}
+
+      /* Footer */
+      footer{padding:2rem 1.25rem;}
+    }
 
     /* FOOTER */
     footer{
@@ -363,11 +379,8 @@
   <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Register Interest</button>
 </nav>
 
-<!-- HERO (split layout) -->
+<!-- HERO (full-bleed photo) -->
 <div class="hero">
-  <div class="hero-photo">
-    <img src="stock photo 1.jpg" alt="Bamfield Sanctuary rainforest">
-  </div>
   <div class="hero-text">
     <div class="hero-wordmark">
       <div class="hero-emblem">
@@ -494,13 +507,15 @@
 <!-- GETTING THERE -->
 <section class="getting-there" id="getting-there">
   <div style="max-width:1140px;margin:0 auto;">
-    <p class="section-eyebrow">Getting There</p>
-    <h2 class="section-title">Closer than you think</h2>
-    <p class="section-body">
-      Since the Bamfield Road was paved in 2023, getting here is easy and comfortable.
-      From downtown Vancouver you can be standing in Bamfield in under five hours.
-    </p>
-    <div class="routes-grid">
+    <div class="getting-there-header">
+      <p class="section-eyebrow">Getting There</p>
+      <h2 class="section-title">Closer than you think</h2>
+      <p class="section-body">
+        Since the Bamfield Road was paved in 2023, getting here is easy and comfortable.
+        From downtown Vancouver you can be standing in Bamfield in under five hours.
+      </p>
+    </div>
+    <div class="routes-grid" style="margin-top:2rem;">
       <div class="route-card">
         <h3 class="route-title">By Road via Port Alberni</h3>
         <p class="route-desc">Take BC Ferries from Tsawwassen to Nanaimo (Departure Bay), then drive the Island Highway south to Port Alberni. From there, the fully paved 76-kilometre Bamfield Road winds through old growth forest directly into the village. Straightforward and scenic.</p>
