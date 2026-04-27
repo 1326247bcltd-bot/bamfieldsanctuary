@@ -167,32 +167,43 @@
       padding:0 3.5rem;
     }
     .map-outer{
-      position:relative;
+      display:flex;
+      flex-direction:row;
       width:100%;
-      max-width:800px;
-      margin:0 auto;
+      height:75vh;
+      min-height:420px;
+    }
+    .map-img-wrap{
+      flex:1;
+      position:relative;
+      overflow:hidden;
+      order:2;
+      background:var(--heading);
     }
     .map-satellite{
-      /* Flow naturally so height auto-matches width at the image's aspect ratio */
-      position:relative;
-      width:100%;height:auto;
       display:block;
+      height:100%;
+      width:auto;
     }
     .map-svg-overlay{
-      /* Stretch the SVG over exactly the image area */
       position:absolute;
       top:0;left:0;
-      width:100%;height:100%;
+      height:100%;
+      width:auto;
+      aspect-ratio:600/446;
     }
-    /* Info panel overlaid on map */
+    /* Info panel — left column */
     .map-panel{
-      position:absolute;top:0;left:0;bottom:0;
+      position:relative;
+      flex-shrink:0;
+      order:1;
       width:280px;z-index:10;
       background:rgba(255,255,255,0.96);
       backdrop-filter:blur(6px);
       border-right:1px solid var(--border);
       padding:1.8rem;
       display:flex;flex-direction:column;
+      overflow-y:auto;
     }
     .panel-brand{
       font-size:0.85rem;letter-spacing:0.2em;text-transform:uppercase;
@@ -461,13 +472,13 @@
   </div>
 
   <div class="map-outer">
-    <!-- Static satellite image -->
-    <img class="map-satellite" src="map-600x446.png" alt="Satellite view of Bamfield Sanctuary lots">
-
-    <!-- SVG lot overlay -->
-    <svg class="map-svg-overlay" viewBox="0 0 600 446" xmlns="http://www.w3.org/2000/svg" id="lot-svg">
-      <!-- Lots rendered by JS — image already has boundaries and numbers -->
-    </svg>
+    <!-- Image + SVG wrapper -->
+    <div class="map-img-wrap">
+      <img class="map-satellite" src="map-600x446.png" alt="Satellite view of Bamfield Sanctuary lots">
+      <svg class="map-svg-overlay" viewBox="0 0 600 446" xmlns="http://www.w3.org/2000/svg" id="lot-svg">
+        <!-- Lots rendered by JS — image already has boundaries and numbers -->
+      </svg>
+    </div>
 
     <!-- Info panel -->
     <div class="map-panel">
@@ -725,9 +736,4 @@ function handleSubmit(e){
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click',e=>{
     const t=document.querySelector(a.getAttribute('href'));
-    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
-  });
-});
-</script>
-</body>
-</html>
+    if(t){e.preventDe
