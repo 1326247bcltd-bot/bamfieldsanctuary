@@ -34,8 +34,8 @@
     }
     .nav-logo{display:flex;align-items:center;gap:0.75rem;font-size:1rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--heading);line-height:1.35;}
     .nav-logo em{font-style:normal;color:var(--green);display:block;}
-    .nav-logo-emblem{width:44px;height:44px;overflow:hidden;flex-shrink:0;border-radius:50%;}
-    .nav-logo-emblem img{width:121px;height:auto;margin-left:-39px;margin-top:-1px;display:block;mix-blend-mode:multiply;}
+    .nav-logo-emblem{flex-shrink:0;}
+    .nav-logo-emblem img{height:96px;width:auto;display:block;}
     .nav-links{display:flex;gap:2.5rem;list-style:none;}
     .nav-links a{
       color:var(--body);text-decoration:none;
@@ -65,16 +65,14 @@
     }
     /* Hero wordmark block */
     .hero-wordmark{text-align:center;margin-bottom:2rem;}
-    /* Circular emblem — crops the circle from logo no text.png (2814×1536, circle ≈1020px) */
+    /* Circular emblem — crops the circle from logo transparent.png (2814×1536, circle ≈1020px) */
     .hero-emblem{
-      width:200px;height:200px;
-      border-radius:50%;overflow:hidden;
       margin:0 auto 0.5rem;
+      text-align:center;
     }
     .hero-emblem img{
-      width:551px;height:auto;
-      margin-left:-172px;margin-top:-8px;
-      display:block;mix-blend-mode:multiply;
+      height:420px;width:auto;
+      display:block;margin:0 auto;
     }
     .wordmark-location{
       font-family:Arial,sans-serif;font-size:0.63rem;
@@ -127,13 +125,14 @@
     .hero-sub{
       font-family:Arial,sans-serif;font-size:1rem;line-height:1.8;
       color:var(--body);margin-bottom:2.5rem;max-width:460px;
+      text-align:center;margin-left:auto;margin-right:auto;
     }
     .hero-cta{
       display:inline-block;padding:1rem 2.5rem;
       background:var(--green);color:white;text-decoration:none;
       font-family:Arial,sans-serif;font-size:0.8rem;
       letter-spacing:0.15em;text-transform:uppercase;
-      transition:background 0.2s;align-self:flex-start;
+      transition:background 0.2s;align-self:center;
     }
     .hero-cta:hover{background:var(--green-mid);}
 
@@ -224,30 +223,26 @@
       max-width:1140px;margin:0 auto 2.5rem;
       padding:0 3.5rem;
     }
-    /* Map + table side by side, same height */
+    /* Map + table side by side */
     .map-table-row{
       max-width:1140px;margin:0 auto;
       padding:0 3.5rem;
       display:flex;
-      align-items:stretch;
+      align-items:flex-start;
       gap:2.5rem;
-      height:500px;
     }
     .map-static-wrap{
       flex-shrink:0;
-      display:flex;
-      align-items:stretch;
     }
     .map-static{
       display:block;
-      height:100%;
-      width:auto; /* preserves aspect ratio: 500px tall → ~671px wide */
+      width:520px;
+      height:auto; /* preserves aspect ratio: 520px wide → ~387px tall */
       border:1px solid var(--border);
     }
     .lots-table-wrap{
       flex:1;
-      overflow-y:auto;
-      overflow-x:hidden;
+      min-width:0;
     }
     .lots-table{
       width:100%;border-collapse:collapse;
@@ -274,7 +269,17 @@
     }
 
     /* GETTING THERE */
-    .getting-there{background:var(--white);}
+    .getting-there{
+      background:linear-gradient(rgba(10,30,20,0.55),rgba(10,30,20,0.55)),
+                  url('water.jpg') center/cover no-repeat;
+    }
+    .getting-there .section-eyebrow{color:var(--green-mid);text-shadow:0 1px 6px rgba(0,0,0,0.5);}
+    .getting-there .section-title{color:#ffffff;text-shadow:0 2px 10px rgba(0,0,0,0.6);}
+    .getting-there .section-body{color:rgba(255,255,255,0.92);text-shadow:0 1px 6px rgba(0,0,0,0.5);}
+    .getting-there .route-card{background:rgba(250,247,242,0.92);}
+    .getting-there .route-title{color:var(--heading);}
+    .getting-there .route-desc{color:var(--body);}
+    .getting-there .route-time{color:var(--green);}
     .routes-grid{
       display:grid;grid-template-columns:repeat(3,1fr);
       gap:1.8rem;max-width:1140px;margin:2.5rem auto 0;
@@ -300,7 +305,7 @@
 
     /* CONTACT */
     .contact-section{background:var(--cream);}
-    .contact-inner{max-width:640px;margin:2.5rem auto 0;}
+    .contact-inner{max-width:640px;margin:0 auto;}
     .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
     .form-group{display:flex;flex-direction:column;gap:0.3rem;margin-bottom:1rem;}
     .form-group label{
@@ -346,7 +351,7 @@
 <!-- NAV -->
 <nav>
   <div class="nav-logo">
-    <div class="nav-logo-emblem"><img src="logo no text.png" alt="Bamfield Sanctuary emblem"></div>
+    <div class="nav-logo-emblem"><img src="logo transparent.png" alt="Bamfield Sanctuary emblem"></div>
     <span>Bamfield<em>Sanctuary</em></span>
   </div>
   <ul class="nav-links">
@@ -366,7 +371,7 @@
   <div class="hero-text">
     <div class="hero-wordmark">
       <div class="hero-emblem">
-        <img src="logo no text.png" alt="Bamfield Sanctuary emblem">
+        <img src="logo transparent.png" alt="Bamfield Sanctuary emblem">
       </div>
       <p class="wordmark-location">Bamfield, British Columbia</p>
       <h1 class="wordmark-name">Bamfield<br><em>Sanctuary</em></h1>
@@ -397,11 +402,6 @@
   <div class="stat">
     <span class="stat-num">From $195,000</span>
     <span class="stat-label">Starting Price</span>
-  </div>
-  <div class="stat-div"></div>
-  <div class="stat">
-    <span class="stat-num">2023</span>
-    <span class="stat-label">Road Paved, Year-Round Access</span>
   </div>
 
 </div>
@@ -522,12 +522,10 @@
 
 <!-- CONTACT -->
 <section class="contact-section" id="contact">
-  <div style="max-width:1140px;margin:0 auto;">
+  <div class="contact-inner">
     <p class="section-eyebrow">Register Interest</p>
     <h2 class="section-title">Inquire about Bamfield Sanctuary</h2>
-    <p class="section-body">These 13 lots will not last. Complete the form below to receive detailed lot information, pricing, covenant details, and to arrange a site visit at your convenience.</p>
-  </div>
-  <div class="contact-inner">
+    <p class="section-body" style="max-width:100%;margin-bottom:2rem;">These 13 lots will not last. Complete the form below to receive detailed lot information, pricing, covenant details, and to arrange a site visit at your convenience.</p>
     <form onsubmit="handleSubmit(event)">
       <div class="form-row">
         <div class="form-group"><label>First Name</label><input type="text" placeholder="First name" required></div>
@@ -581,4 +579,27 @@
   <span class="footer-logo">Bamfield <em>Sanctuary</em></span>
   <p>Plan EPP141779 · Section 18 · Township 1 · Barclay District, British Columbia</p>
   <p style="margin-top:0.3rem;">Taxation Authority: Port Alberni Assessment Area · 1326247 B.C. Ltd.</p>
-  <p style="margin-top:0.8rem;font-size:0.7rem;">All lot sizes and prices are approximate and subject to change without notice. This website is for information purposes only and does not constitute
+  <p style="margin-top:0.8rem;font-size:0.7rem;">All lot sizes and prices are approximate and subject to change without notice. This website is for information purposes only and does not constitute a formal offer to sell. E.O.E.</p>
+  <p style="margin-top:0.3rem;font-size:0.7rem;">2026 Bamfield Sanctuary. All rights reserved.</p>
+</footer>
+
+<script>
+// ── FORM ──
+function handleSubmit(e){
+  e.preventDefault();
+  const btn = e.target.querySelector('.form-submit');
+  btn.textContent = 'Inquiry received. We will be in touch shortly.';
+  btn.style.background = 'var(--green-mid)';
+  btn.disabled = true;
+}
+
+// ── SMOOTH SCROLL ──
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+  });
+});
+</script>
+</body>
+</html>
