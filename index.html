@@ -125,10 +125,8 @@
       gap:1.8rem;max-width:1140px;margin:0 auto;
     }
     .why-card{
-      background:var(--white);padding:2rem;
+      background:var(--cream);padding:2rem;
       border:1px solid var(--border);
-      border-left:3px solid var(--green);
-      transition:box-shadow 0.3s;
     }
     .why-card:hover{box-shadow:0 8px 32px rgba(0,0,0,0.07);}
     .why-card-title{
@@ -161,123 +159,48 @@
     }
 
     /* MAP SECTION */
-    .map-section{background:var(--cream);padding:5rem 0 0;}
+    .map-section{background:var(--cream);padding:5rem 0;}
     .map-header{
       max-width:1140px;margin:0 auto 2.5rem;
       padding:0 3.5rem;
     }
-    .map-outer{
-      display:flex;
-      flex-direction:row;
-      width:100%;
-      height:75vh;
-      min-height:420px;
+    .map-static-wrap{
+      max-width:1140px;margin:0 auto 3rem;
+      padding:0 3.5rem;
     }
-    .map-img-wrap{
-      flex:1;
-      position:relative;
-      overflow:hidden;
-      order:2;
-      background:var(--heading);
+    .map-static{
+      width:100%;height:auto;display:block;
+      border:1px solid var(--border);
     }
-    .map-satellite{
-      display:block;
-      height:100%;
-      width:auto;
+    /* Lots table */
+    .lots-table-wrap{
+      max-width:1140px;margin:0 auto;
+      padding:0 3.5rem;
+      overflow-x:auto;
     }
-    .map-svg-overlay{
-      position:absolute;
-      top:0;left:0;
-      height:100%;
-      width:auto;
-      aspect-ratio:600/446;
+    .lots-table{
+      width:100%;border-collapse:collapse;
+      font-family:Arial,sans-serif;font-size:0.88rem;
     }
-    /* Info panel — left column */
-    .map-panel{
-      position:relative;
-      flex-shrink:0;
-      order:1;
-      width:280px;z-index:10;
-      background:rgba(255,255,255,0.96);
-      backdrop-filter:blur(6px);
-      border-right:1px solid var(--border);
-      padding:1.8rem;
-      display:flex;flex-direction:column;
-      overflow-y:auto;
+    .lots-table th{
+      text-align:left;padding:0.75rem 1.2rem;
+      background:var(--green);color:white;
+      font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;
+      font-family:Arial,sans-serif;font-weight:normal;
     }
-    .panel-brand{
-      font-size:0.85rem;letter-spacing:0.2em;text-transform:uppercase;
-      color:var(--green);margin-bottom:1.4rem;padding-bottom:1rem;
-      border-bottom:1px solid var(--border);font-family:Arial,sans-serif;
+    .lots-table td{
+      padding:0.75rem 1.2rem;
+      border-bottom:1px solid var(--border);
+      color:var(--body);
     }
-    .panel-prompt{
-      font-family:Arial,sans-serif;font-size:0.85rem;
-      color:var(--muted);line-height:1.65;font-style:italic;
+    .lots-table tbody tr{cursor:pointer;}
+    .lots-table tr:nth-child(even) td{background:var(--green-light);}
+    .lots-table tr:hover td{background:rgba(212,168,75,0.1);}
+    .status-available{
+      color:var(--green);font-weight:bold;
+      font-family:Arial,sans-serif;font-size:0.8rem;
+      letter-spacing:0.05em;
     }
-    #panel-detail{flex:1;display:none;flex-direction:column;}
-    #panel-detail.active{display:flex;}
-    .panel-lot-num{font-size:2.6rem;color:var(--heading);line-height:1;}
-    .panel-plan{
-      font-family:Arial,sans-serif;font-size:0.7rem;letter-spacing:0.12em;
-      text-transform:uppercase;color:var(--muted);margin-bottom:1.2rem;
-    }
-    .panel-price{font-size:1.8rem;color:var(--green);margin-bottom:0.3rem;}
-    .panel-sqft{
-      font-family:Arial,sans-serif;font-size:0.82rem;
-      color:var(--muted);margin-bottom:1.2rem;
-    }
-    .panel-badge{
-      display:inline-block;padding:0.2rem 0.7rem;margin-bottom:1.2rem;
-      font-family:Arial,sans-serif;font-size:0.68rem;letter-spacing:0.1em;
-      text-transform:uppercase;background:var(--green-light);
-      color:var(--green);border:1px solid var(--border);
-    }
-    .panel-badge.back{
-      background:#fdf6ee;color:var(--gold);border-color:#e8d5b0;
-    }
-    .panel-features{list-style:none;margin-bottom:1.4rem;}
-    .panel-features li{
-      font-family:Arial,sans-serif;font-size:0.8rem;color:var(--body);
-      padding:0.38rem 0;border-bottom:1px solid var(--border);
-      display:flex;align-items:flex-start;gap:0.5rem;
-    }
-    .panel-features li::before{
-      content:'';width:5px;height:5px;border-radius:50%;
-      background:var(--green);flex-shrink:0;margin-top:5px;
-    }
-    .panel-inquire{
-      display:block;width:100%;padding:0.8rem;
-      background:var(--green);color:white;border:none;
-      font-family:Arial,sans-serif;font-size:0.77rem;
-      letter-spacing:0.12em;text-transform:uppercase;
-      cursor:pointer;text-align:center;text-decoration:none;
-      transition:background 0.2s;margin-top:auto;
-    }
-    .panel-inquire:hover{background:var(--green-mid);}
-    .panel-nav{display:flex;gap:0.5rem;margin-top:0.6rem;}
-    .panel-nav button{
-      flex:1;padding:0.45rem;
-      background:var(--green-light);color:var(--green);
-      border:1px solid var(--border);font-family:Arial,sans-serif;
-      font-size:0.73rem;cursor:pointer;letter-spacing:0.05em;
-      transition:background 0.2s;
-    }
-    .panel-nav button:hover{background:var(--border);}
-
-    /* Map legend */
-    .map-legend{
-      background:var(--cream);padding:1rem 3.5rem 2.5rem;
-      display:flex;align-items:center;gap:2rem;flex-wrap:wrap;
-    }
-    .legend-label{
-      font-family:Arial,sans-serif;font-size:0.7rem;
-      letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);
-    }
-    .legend-item{
-      display:flex;align-items:center;gap:0.4rem;
-      font-family:Arial,sans-serif;font-size:0.78rem;color:var(--body);
-    }
-    .legend-dot{width:12px;height:12px;border-radius:2px;}
 
     /* GETTING THERE */
     .getting-there{background:var(--white);}
@@ -463,50 +386,47 @@
   </div>
 </div>
 
-<!-- INTERACTIVE LOT MAP -->
+<!-- LOT MAP & TABLE -->
 <section class="map-section" id="the-lots">
   <div class="map-header">
     <p class="section-eyebrow">The Lots</p>
     <h2 class="section-title">Thirteen lots. One chance.</h2>
-    <p class="section-body">Click any lot on the map to view its details, square footage, and pricing. All lots are registered freehold title under Plan EPP141779, Barclay District, with frontage on South Bamfield Road.</p>
+    <p class="section-body">All lots are registered freehold title under Plan EPP141779, Barclay District. Services to lot line. Click any row to inquire.</p>
   </div>
 
-  <div class="map-outer">
-    <!-- Image + SVG wrapper -->
-    <div class="map-img-wrap">
-      <img class="map-satellite" src="map-600x446.png" alt="Satellite view of Bamfield Sanctuary lots">
-      <svg class="map-svg-overlay" viewBox="0 0 600 446" xmlns="http://www.w3.org/2000/svg" id="lot-svg">
-        <!-- Lots rendered by JS — image already has boundaries and numbers -->
-      </svg>
-    </div>
-
-    <!-- Info panel -->
-    <div class="map-panel">
-      <div class="panel-brand">Bamfield Sanctuary</div>
-      <p class="panel-prompt" id="panel-prompt">Click any lot on the map to view its details, size, and pricing.</p>
-      <div id="panel-detail">
-        <div class="panel-lot-num" id="p-num">Lot 1</div>
-        <div class="panel-plan">Plan EPP141779 · Barclay District</div>
-        <div class="panel-price" id="p-price">$199,000</div>
-        <div class="panel-sqft" id="p-sqft">4,050 sq m</div>
-        <span class="panel-badge" id="p-badge">Road-Front</span>
-        <ul class="panel-features" id="p-features"></ul>
-        <a href="#contact" class="panel-inquire" id="p-inquire">Inquire About This Lot</a>
-        <div class="panel-nav">
-          <button onclick="navigateLot(-1)">Prev</button>
-          <button onclick="navigateLot(1)">Next</button>
-        </div>
-      </div>
-    </div>
+  <!-- Static map image -->
+  <div class="map-static-wrap">
+    <img class="map-static" src="Map photo 1200x892.png.png" alt="Aerial map of Bamfield Sanctuary lots">
   </div>
 
-  <!-- Legend -->
-  <div class="map-legend">
-    <span class="legend-label">Legend:</span>
-    <div class="legend-item"><div class="legend-dot" style="background:rgba(46,107,72,0.55);border:2px solid #2e6b48;"></div>Road-Front Lot</div>
-    <div class="legend-item"><div class="legend-dot" style="background:rgba(184,132,42,0.55);border:2px solid #b8842a;"></div>Premium Large Lot</div>
-    <div class="legend-item"><div class="legend-dot" style="background:rgba(120,90,50,0.55);border:2px solid #7a5a32;"></div>Back Lot</div>
-    <div class="legend-item"><div class="legend-dot" style="background:rgba(212,168,75,0.85);border:2px solid #d4a84b;"></div>Selected</div>
+  <!-- Lot table -->
+  <div class="lots-table-wrap">
+    <table class="lots-table">
+      <thead>
+        <tr>
+          <th>Lot</th>
+          <th>Size</th>
+          <th>Price</th>
+          <th>Frontage</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr onclick="location='#contact'"><td>Lot 1</td><td>4,050 sq m</td><td>$199,000</td><td>Bamfield Road</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 2</td><td>4,050 sq m</td><td>$205,000</td><td>Bamfield Road</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 3</td><td>4,295 sq m</td><td>$219,000</td><td>Bamfield Road</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 4</td><td>4,295 sq m</td><td>$219,000</td><td>Bamfield Road</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 5</td><td>5,575 sq m</td><td>$249,000</td><td>Bamfield Road</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 6</td><td>7,761 sq m</td><td>$269,000</td><td>Bamfield Road</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 7</td><td>6,485 sq m</td><td>$249,000</td><td>Bamfield Road</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 8</td><td>4,930 sq m</td><td>$215,000</td><td>South Bamfield Road</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 9</td><td>4,155 sq m</td><td>$209,000</td><td>South Bamfield Road</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 10</td><td>4,310 sq m</td><td>$209,000</td><td>South Bamfield Road</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 11</td><td>4,050 sq m</td><td>$199,000</td><td>South Bamfield Road</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 12</td><td>4,050 sq m</td><td>$199,000</td><td>South Bamfield Road</td><td class="status-available">Available</td></tr>
+        <tr onclick="location='#contact'"><td>Lot 13</td><td>4,050 sq m</td><td>$199,000</td><td>South Bamfield Road</td><td class="status-available">Available</td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
@@ -605,124 +525,6 @@
 </footer>
 
 <script>
-// ── LOT DATA ──
-const LOT_DATA = {
-  1:  {sqft:4050,  price:199000, type:'small',   label:'Road-Front', features:['Bamfield Road frontage','4,050 sq m registered freehold','Plan EPP141779, Barclay District','Services to lot line']},
-  2:  {sqft:4050,  price:205000, type:'small',   label:'Road-Front', features:['Bamfield Road frontage','4,050 sq m registered freehold','Plan EPP141779, Barclay District','Services to lot line']},
-  3:  {sqft:4295,  price:219000, type:'small',   label:'Road-Front', features:['Bamfield Road frontage','4,295 sq m registered freehold','Plan EPP141779, Barclay District','Services to lot line']},
-  4:  {sqft:4295,  price:219000, type:'small',   label:'Road-Front', features:['Bamfield Road frontage','4,295 sq m registered freehold','Plan EPP141779, Barclay District','Services to lot line']},
-  5:  {sqft:5575,  price:249000, type:'mid',     label:'Road-Front', features:['Bamfield Road frontage','5,575 sq m registered freehold','Plan EPP141779, Barclay District','Larger lot with forest buffer']},
-  6:  {sqft:7761,  price:269000, type:'back',    label:'Large Lot',  features:['Largest lot in subdivision','7,761 sq m registered freehold','Maximum privacy, natural buffer','Bamfield Road access']},
-  7:  {sqft:6485,  price:249000, type:'back',    label:'Large Lot',  features:['Second largest in subdivision','6,485 sq m registered freehold','Maximum privacy, natural buffer','Bamfield Road access']},
-  8:  {sqft:4930,  price:215000, type:'mid',     label:'Road-Front', features:['South Bamfield Road frontage','4,930 sq m registered freehold','Plan EPP141779, Barclay District','Services to lot line']},
-  9:  {sqft:4155,  price:209000, type:'small',   label:'Road-Front', features:['South Bamfield Road frontage','4,155 sq m registered freehold','Plan EPP141779, Barclay District','Services to lot line']},
-  10: {sqft:4310,  price:209000, type:'small',   label:'Road-Front', features:['South Bamfield Road frontage','4,310 sq m registered freehold','Plan EPP141779, Barclay District','Services to lot line']},
-  11: {sqft:4050,  price:199000, type:'small',   label:'Road-Front', features:['South Bamfield Road frontage','4,050 sq m registered freehold','Plan EPP141779, Barclay District','Services to lot line']},
-  12: {sqft:4050,  price:199000, type:'small',   label:'Road-Front', features:['South Bamfield Road frontage','4,050 sq m registered freehold','Plan EPP141779, Barclay District','Services to lot line']},
-  13: {sqft:4050,  price:199000, type:'small',   label:'Road-Front', features:['South Bamfield Road frontage','4,050 sq m registered freehold','Plan EPP141779, Barclay District','Services to lot line, largest road frontage']},
-};
-
-const LOT_IDS = [1,2,3,4,5,6,7,8,9,10,11,12,13];
-let selectedId = null;
-const lotPolygons = {};
-
-// ── LOT FILL COLOURS ──
-// Image already shows boundaries; keep overlays nearly transparent by default
-function lotFill(type, selected) {
-  if (selected) return {fill:'rgba(212,168,75,0.45)', stroke:'#d4a84b', sw:10};
-  // Default: almost invisible so the image numbers show through
-  return {fill:'rgba(255,255,255,0.01)', stroke:'rgba(255,255,255,0.0)', sw:0};
-}
-
-// ── CIRCLE HOTSPOTS ──
-// Centers placed directly over each lot number in the 2400×1784 image.
-// Radius 80 px gives a comfortable click/touch target without overlapping neighbours.
-const LOT_CIRCLES = {
-   1: {cx: 553, cy:  110},
-   2: {cx: 540, cy:  175},
-   3: {cx: 525, cy:  222},
-   4: {cx: 508, cy:  263},
-   5: {cx: 477, cy:  303},
-   6: {cx: 531, cy:  383},
-   7: {cx: 462, cy:  438},
-   8: {cx: 372, cy:  333},
-   9: {cx: 323, cy:  370},
-  10: {cx: 277, cy:  380},
-  11: {cx: 225, cy:  390},
-  12: {cx: 168, cy:  415},
-  13: {cx:  88, cy:  437},
-};
-const LOT_CIRCLE_R = 20;
-
-// ── RENDER LOTS ──
-const svg = document.getElementById('lot-svg');
-
-LOT_IDS.forEach(id => {
-  const {cx, cy} = LOT_CIRCLES[id];
-  const d   = LOT_DATA[id];
-  const sty = lotFill(d.type, false);
-
-  // Transparent circle centred on the lot number — the clickable hotspot
-  const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
-  c.setAttribute('cx', cx);
-  c.setAttribute('cy', cy);
-  c.setAttribute('r',  LOT_CIRCLE_R);
-  c.setAttribute('fill', sty.fill);
-  c.setAttribute('stroke', sty.stroke);
-  c.setAttribute('stroke-width', sty.sw);
-  c.style.cursor = 'pointer';
-  c.style.transition = 'fill 0.2s';
-  svg.appendChild(c);
-
-  c.addEventListener('click', () => selectLot(id));
-  c.addEventListener('mouseenter', () => { if(id!==selectedId) c.setAttribute('fill','rgba(212,168,75,0.28)'); });
-  c.addEventListener('mouseleave', () => { if(id!==selectedId) c.setAttribute('fill', sty.fill); });
-
-  lotPolygons[id] = {poly:c, defaultStyle:sty};
-});
-
-// ── SELECT LOT ──
-function selectLot(id) {
-  // Reset previous
-  if(selectedId) {
-    const prev = lotPolygons[selectedId];
-    const s = prev.defaultStyle;
-    prev.poly.setAttribute('fill', s.fill);
-    prev.poly.setAttribute('stroke', s.stroke);
-    prev.poly.setAttribute('stroke-width', s.sw);
-  }
-  selectedId = id;
-  const cur = lotPolygons[id];
-  const sel = lotFill(LOT_DATA[id].type, true);
-  cur.poly.setAttribute('fill', sel.fill);
-  cur.poly.setAttribute('stroke', sel.stroke);
-  cur.poly.setAttribute('stroke-width', sel.sw);
-
-  // Panel
-  document.getElementById('panel-prompt').style.display = 'none';
-  const det = document.getElementById('panel-detail');
-  det.classList.add('active');
-
-  const d = LOT_DATA[id];
-  document.getElementById('p-num').textContent   = 'Lot ' + id;
-  document.getElementById('p-price').textContent = '$' + d.price.toLocaleString();
-  document.getElementById('p-sqft').textContent  = d.sqft.toLocaleString() + ' sq m';
-  const badge = document.getElementById('p-badge');
-  badge.textContent  = d.label;
-  badge.className    = 'panel-badge' + (d.type==='back' ? ' back' : '');
-  document.getElementById('p-features').innerHTML = d.features.map(f=>'<li>'+f+'</li>').join('');
-  document.getElementById('p-inquire').textContent = 'Inquire About Lot ' + id;
-}
-
-function navigateLot(dir) {
-  const idx  = LOT_IDS.indexOf(selectedId ?? 0);
-  const next = (idx + dir + LOT_IDS.length) % LOT_IDS.length;
-  selectLot(LOT_IDS[next]);
-}
-
-// Auto-select lot 1 on load
-setTimeout(() => selectLot(1), 400);
-
 // ── FORM ──
 function handleSubmit(e){
   e.preventDefault();
@@ -736,4 +538,9 @@ function handleSubmit(e){
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click',e=>{
     const t=document.querySelector(a.getAttribute('href'));
-    if(t){e.preventDe
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+  });
+});
+</script>
+</body>
+</html>
