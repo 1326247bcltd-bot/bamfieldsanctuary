@@ -109,8 +109,7 @@
   /* ============ HERO ============ */
   .hero {
     position: relative;
-    height: 100vh;
-    min-height: 720px;
+    min-height: 100vh;
     overflow: hidden;
     display: flex;
     align-items: flex-end;
@@ -141,7 +140,7 @@
   .hero-content {
     position: relative;
     z-index: 2;
-    padding: 0 48px 80px;
+    padding: 140px 48px 80px;
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
@@ -165,8 +164,8 @@
   .hero h1 {
     font-family: 'Fraunces', serif;
     font-weight: 300;
-    font-size: clamp(44px, 6.2vw, 96px);
-    line-height: 1.0;
+    font-size: clamp(40px, 5.4vw, 80px);
+    line-height: 1.02;
     letter-spacing: -0.02em;
     max-width: 1000px;
     margin-bottom: 36px;
@@ -737,6 +736,28 @@
     color: var(--sand-light);
     text-align: center;
   }
+  .gallery-credit {
+    margin-top: 56px;
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--sand);
+    letter-spacing: 0.02em;
+    opacity: 0.7;
+  }
+  .gallery-credit::before,
+  .gallery-credit::after {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--sand);
+    vertical-align: middle;
+    margin: 0 14px;
+    opacity: 0.5;
+  }
+
   /* Tile sizing: hero sunset + tide-pool macro pair / vista row / detail row */
   .g-hero  { grid-column: span 7; grid-row: span 5; }
   .g-macro { grid-column: span 5; grid-row: span 5; }
@@ -1379,7 +1400,7 @@
   <div class="lifestyle-inner">
     <div class="lifestyle-header reveal">
       <div class="section-label">The Lifestyle</div>
-      <h2>Quiet mornings.<br/>Tide tables. <em>Cedar smoke.</em></h2>
+      <h2>Quiet mornings.<br/>Tide tables. <em>Long sunsets.</em></h2>
     </div>
     <div class="gallery">
       <!-- Row A: hero opener + macro detail -->
@@ -1425,6 +1446,7 @@
         <div class="caption">Charter rods, ready for chinook</div>
       </div>
     </div>
+    <div class="gallery-credit reveal">Photography by Tamara Dee</div>
   </div>
 </section>
 
