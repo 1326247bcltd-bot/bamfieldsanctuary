@@ -617,6 +617,7 @@
   .g-detail2 { grid-column: span 3; grid-row: span 4; }
   .g-detail3 { grid-column: span 3; grid-row: span 4; }
   .g-detail4 { grid-column: span 3; grid-row: span 4; }
+  .g-wide   { grid-column: span 12; grid-row: span 5; }
 
   /* ============ THE LOTS ============ */
   .lots {
@@ -904,7 +905,22 @@
     nav.scrolled { padding: 14px 24px; }
     .nav-links { gap: 18px; }
     .nav-links a:not(.nav-cta) { display: none; }
-    .hero-content { padding: 0 24px 60px; }
+
+    /* Mobile hero: lower the headline so it doesn't sit right under the nav.
+       Switch from flex-end bottom-anchor to a generous top padding that
+       clears the nav, and let content flow naturally with breathing room. */
+    .hero {
+      align-items: flex-end;
+      min-height: 640px;
+    }
+    .hero-content {
+      padding: 140px 24px 56px;
+    }
+    .hero-eyebrow { margin-bottom: 24px; }
+    .hero h1 { margin-bottom: 28px; }
+    .hero-meta { gap: 28px 40px; padding-top: 24px; }
+    .hero-meta div p { font-size: 18px; }
+
     .scroll-indicator { display: none; }
     section { padding: 80px 24px; }
     .intro { padding: 100px 24px; }
@@ -917,11 +933,12 @@
     .nearby-categories { grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 60px; }
     .gallery { grid-template-columns: repeat(6, 1fr); grid-auto-rows: 110px; }
     .g-hero, .g-macro, .g-vista1, .g-quote, .g-vista2,
-    .g-detail1, .g-detail2, .g-detail3, .g-detail4 {
+    .g-detail1, .g-detail2, .g-detail3, .g-detail4, .g-wide {
       grid-column: span 6;
       grid-row: span 3;
     }
     .g-quote { grid-row: span 2; }
+    .g-wide { grid-row: span 4; }
     .lifestyle-inner { padding: 80px 24px; }
     .stats { grid-template-columns: 1fr; }
     .lot-table { font-size: 13px; }
@@ -1044,9 +1061,9 @@
         <p>A 1.2-kilometre crescent of fine sand facing the open Pacific, on Huu-ay-aht First Nation territory. The northern terminus of the West Coast Trail and one of the most striking beaches on Vancouver Island.</p>
       </div>
       <div class="nearby-item reveal">
-        <div class="distance">~25 min on foot</div>
+        <div class="distance">Across the inlet</div>
         <h3>Brady's Beach</h3>
-        <p>A short walk from the West Bamfield government dock through old-growth forest, opening onto dramatic sandstone sea stacks and tide pools. Often empty. Locally beloved.</p>
+        <p>A short water-taxi ride to West Bamfield, then a 20-minute walk through second-growth forest from the West Government Dock. Dramatic sandstone sea stacks, tide pools, and a blowhole. Often empty. Locally beloved.</p>
       </div>
       <div class="nearby-item reveal">
         <div class="distance">Day-hike</div>
@@ -1185,42 +1202,53 @@
       <h2>Quiet mornings.<br/>Tide tables. <em>Cedar smoke.</em></h2>
     </div>
     <div class="gallery">
+      <!-- Row A: hero opener + macro detail -->
       <div class="gallery-item g-hero reveal">
         <img src="assets/sunset_boat.jpg" alt="Sunset over Bamfield Inlet with a boat heading home" />
         <div class="caption">A boat home, last light over the inlet</div>
       </div>
       <div class="gallery-item g-macro reveal">
-        <img src="assets/tidepool_seastars.jpg" alt="Purple and orange sea stars in a Bamfield tide pool" />
-        <div class="caption">Sea stars at low tide</div>
+        <img src="assets/urchins_macro.jpg" alt="Red sea urchins in a Bamfield tide pool with snail and clam" />
+        <div class="caption">Red urchins, low tide</div>
       </div>
 
+      <!-- Row B: vista, quote, vista -->
       <div class="gallery-item g-vista1 reveal">
-        <img src="assets/sunset_red.jpg" alt="Fiery red sunset over Bamfield village" />
-        <div class="caption">Wildfire skies, March</div>
+        <img src="assets/pacific_beach.jpg" alt="Quiet rocky beach on the Bamfield coast at low tide, looking out across the inlet" />
+        <div class="caption">A morning on the coast</div>
       </div>
       <div class="gallery-item gallery-quote g-quote reveal">
         <p>"There are sunsets in Bamfield<br/>that don't repeat anywhere else<br/>on the coast."</p>
       </div>
       <div class="gallery-item g-vista2 reveal">
-        <img src="assets/sunset_orange.jpg" alt="Orange sunset reflecting on the inlet at Bamfield" />
-        <div class="caption">Reflection, west harbour</div>
+        <img src="assets/sunset_orange.jpg" alt="Dramatic orange sunset over Bamfield village and inlet" />
+        <div class="caption">Wildfire skies, west harbour</div>
       </div>
 
+      <!-- Row C: four detail tiles -->
       <div class="gallery-item g-detail1 reveal">
-        <img src="assets/tidepool_anemone.jpg" alt="Pink-tipped anemone in a Bamfield tide pool" />
-        <div class="caption">Anemone, low tide</div>
+        <img src="assets/seastar_solo.jpg" alt="Single ochre sea star resting on red seaweed and rock" />
+        <div class="caption">Sea star, west shore</div>
       </div>
       <div class="gallery-item g-detail2 reveal">
-        <img src="assets/sunset_pastel.jpg" alt="Pastel sunset over Barkley Sound from Bamfield" />
-        <div class="caption">Pastel evening, Barkley Sound</div>
-      </div>
-      <div class="gallery-item g-detail3 reveal">
         <img src="assets/tidepool_aggregating.jpg" alt="Aggregating green anemones in a Bamfield tide pool" />
         <div class="caption">Aggregating anemones</div>
       </div>
+      <div class="gallery-item g-detail3 reveal">
+        <img src="assets/surge_channel.jpg" alt="Tidal surge channel rushing between rocks framed by old-growth conifers" />
+        <div class="caption">Surge channel, Cape Beale side</div>
+      </div>
       <div class="gallery-item g-detail4 reveal">
-        <img src="assets/inlet_dusk.jpg" alt="Dusk over Bamfield Inlet, view of the village across the water" />
-        <div class="caption">Dusk across the inlet</div>
+        <!-- Sport fishing stock photo. Source: Unsplash, stephen momot (@ah360).
+             Free to use under the Unsplash License. Photo: https://unsplash.com/photos/UivGzIDhVyw -->
+        <img src="assets/salmon_fishing.jpg" alt="Sport fishing rods racked at the stern of a charter boat with churning wake behind" />
+        <div class="caption">Charter rods, ready for chinook</div>
+      </div>
+
+      <!-- Row D: full-width finale -->
+      <div class="gallery-item g-wide reveal">
+        <img src="assets/whale_breach.jpg" alt="Humpback whale breaching in the Pacific waters off the west coast of Vancouver Island" />
+        <div class="caption">Humpback breach, Pacific waters</div>
       </div>
     </div>
   </div>
@@ -1242,26 +1270,25 @@
       <thead>
         <tr>
           <th>Lot</th>
-          <th>PID</th>
           <th>Area</th>
           <th>Acres</th>
           <th style="text-align:right;">Asking</th>
         </tr>
       </thead>
       <tbody>
-        <tr><td class="lot-num">01</td><td>032-810-369</td><td class="lot-area">4,050 m²</td><td>1.001</td><td class="lot-price">$428,000</td></tr>
-        <tr><td class="lot-num">02</td><td>032-810-377</td><td class="lot-area">4,050 m²</td><td>1.001</td><td class="lot-price">$428,000</td></tr>
-        <tr><td class="lot-num">03</td><td>032-810-385</td><td class="lot-area">4,256 m²</td><td>1.052</td><td class="lot-price">$476,000</td></tr>
-        <tr><td class="lot-num">04</td><td>032-810-393</td><td class="lot-area">4,275 m²</td><td>1.056</td><td class="lot-price">$487,000</td></tr>
-        <tr><td class="lot-num">05</td><td>032-810-407</td><td class="lot-area">5,575 m²</td><td>1.378</td><td class="lot-price">$564,000</td></tr>
-        <tr><td class="lot-num">06</td><td>032-810-415</td><td class="lot-area">7,951 m²</td><td>1.965</td><td class="lot-price">$564,000</td></tr>
-        <tr><td class="lot-num">07</td><td>032-810-423</td><td class="lot-area">6,485 m²</td><td>1.602</td><td class="lot-price">$564,000</td></tr>
-        <tr><td class="lot-num">08</td><td>032-810-431</td><td class="lot-area">4,930 m²</td><td>1.218</td><td class="lot-price">$564,000</td></tr>
-        <tr><td class="lot-num">09</td><td>032-810-440</td><td class="lot-area">4,155 m²</td><td>1.027</td><td class="lot-price">$476,000</td></tr>
-        <tr><td class="lot-num">10</td><td>032-810-458</td><td class="lot-area">4,310 m²</td><td>1.065</td><td class="lot-price">$497,000</td></tr>
-        <tr><td class="lot-num">11</td><td>032-810-466</td><td class="lot-area">4,050 m²</td><td>1.001</td><td class="lot-price">$428,000</td></tr>
-        <tr><td class="lot-num">12</td><td>032-810-474</td><td class="lot-area">4,050 m²</td><td>1.001</td><td class="lot-price">$428,000</td></tr>
-        <tr><td class="lot-num">13</td><td>032-810-482</td><td class="lot-area">4,050 m²</td><td>1.001</td><td class="lot-price">$428,000</td></tr>
+        <tr><td class="lot-num">01</td><td class="lot-area">4,050 m²</td><td>1.001 acres</td><td class="lot-price">$428,000</td></tr>
+        <tr><td class="lot-num">02</td><td class="lot-area">4,050 m²</td><td>1.001 acres</td><td class="lot-price">$428,000</td></tr>
+        <tr><td class="lot-num">03</td><td class="lot-area">4,256 m²</td><td>1.052 acres</td><td class="lot-price">$476,000</td></tr>
+        <tr><td class="lot-num">04</td><td class="lot-area">4,275 m²</td><td>1.056 acres</td><td class="lot-price">$487,000</td></tr>
+        <tr><td class="lot-num">05</td><td class="lot-area">5,575 m²</td><td>1.378 acres</td><td class="lot-price">$564,000</td></tr>
+        <tr><td class="lot-num">06</td><td class="lot-area">7,951 m²</td><td>1.965 acres</td><td class="lot-price">$564,000</td></tr>
+        <tr><td class="lot-num">07</td><td class="lot-area">6,485 m²</td><td>1.602 acres</td><td class="lot-price">$564,000</td></tr>
+        <tr><td class="lot-num">08</td><td class="lot-area">4,930 m²</td><td>1.218 acres</td><td class="lot-price">$564,000</td></tr>
+        <tr><td class="lot-num">09</td><td class="lot-area">4,155 m²</td><td>1.027 acres</td><td class="lot-price">$476,000</td></tr>
+        <tr><td class="lot-num">10</td><td class="lot-area">4,310 m²</td><td>1.065 acres</td><td class="lot-price">$497,000</td></tr>
+        <tr><td class="lot-num">11</td><td class="lot-area">4,050 m²</td><td>1.001 acres</td><td class="lot-price">$428,000</td></tr>
+        <tr><td class="lot-num">12</td><td class="lot-area">4,050 m²</td><td>1.001 acres</td><td class="lot-price">$428,000</td></tr>
+        <tr><td class="lot-num">13</td><td class="lot-area">4,050 m²</td><td>1.001 acres</td><td class="lot-price">$428,000</td></tr>
       </tbody>
     </table>
   </div>
