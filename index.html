@@ -434,6 +434,79 @@
     position: relative;
     z-index: 1;
   }
+  .tourist-map-image-wrap {
+    position: relative;
+    z-index: 1;
+  }
+  .lots-marker {
+    position: absolute;
+    /* Position derived from the marked location on tourist_map.jpg:
+       South Bamfield Road, between Argo's Landing and the West Coast Trail junction */
+    left: 65.7%;
+    top: 74.1%;
+    width: 22px;
+    height: 22px;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    pointer-events: none;
+  }
+  .lots-marker::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--rust);
+    box-shadow:
+      0 0 0 3px var(--paper),
+      0 2px 8px rgba(0, 0, 0, 0.35);
+    animation: lots-marker-pulse 2.4s ease-out infinite;
+  }
+  .lots-marker::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid var(--rust);
+    opacity: 0.5;
+    animation: lots-marker-ring 2.4s ease-out infinite;
+  }
+  @keyframes lots-marker-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+  }
+  @keyframes lots-marker-ring {
+    0% { transform: scale(1); opacity: 0.55; }
+    100% { transform: scale(2.4); opacity: 0; }
+  }
+  .lots-marker-label {
+    position: absolute;
+    /* Slightly offset above the dot so the label sits clear of road text */
+    left: 65.7%;
+    top: 74.1%;
+    transform: translate(-50%, calc(-100% - 14px));
+    z-index: 3;
+    pointer-events: none;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 6px 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+    white-space: nowrap;
+  }
+  .lots-marker-label::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    transform: translateX(-50%);
+    border-style: solid;
+    border-width: 6px 5px 0 5px;
+    border-color: var(--paper) transparent transparent transparent;
+  }
   .tourist-map-figure figcaption {
     position: relative;
     z-index: 1;
@@ -1237,7 +1310,11 @@
 
     <div class="tourist-map-composition">
       <figure class="tourist-map-figure reveal">
-        <img src="assets/tourist_map.jpg" alt="Tourist map of Bamfield showing Bamfield West and Bamfield East villages, Brady's Beach, the Blowhole, the Boardwalk, Bamfield Inlet, Grappler Inlet, the Marine Sciences Centre, Mills Peninsula, and the road to Port Alberni and the Pacific Rim National Park Reserve" />
+        <div class="tourist-map-image-wrap">
+          <img src="assets/tourist_map.jpg" alt="Tourist map of Bamfield showing Bamfield West and Bamfield East villages, Brady's Beach, the Blowhole, the Boardwalk, Bamfield Inlet, Grappler Inlet, the Marine Sciences Centre, Mills Peninsula, and the road to Port Alberni and the Pacific Rim National Park Reserve. A red marker indicates the location of the lots on South Bamfield Road." />
+          <span class="lots-marker" aria-hidden="true"></span>
+          <span class="lots-marker-label">The Lots</span>
+        </div>
         <figcaption>
           <span><em>Bamfield &amp; Barkley Sound</em> — village map</span>
           <span class="figcaption-num">Plate i.</span>
