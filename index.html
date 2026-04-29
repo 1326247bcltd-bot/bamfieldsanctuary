@@ -390,6 +390,28 @@
     padding-bottom: 12px;
   }
 
+  .tourist-map-wrap {
+    margin-bottom: 80px;
+    border: 1px solid var(--line);
+    background: var(--sand-light);
+    overflow: hidden;
+    position: relative;
+  }
+  .tourist-map-wrap img {
+    width: 100%;
+    display: block;
+  }
+  .tourist-map-caption {
+    position: absolute;
+    top: 24px; left: 24px;
+    background: var(--paper);
+    padding: 12px 20px;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    border: 1px solid var(--line);
+  }
+
   .nearby-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -617,7 +639,6 @@
   .g-detail2 { grid-column: span 3; grid-row: span 4; }
   .g-detail3 { grid-column: span 3; grid-row: span 4; }
   .g-detail4 { grid-column: span 3; grid-row: span 4; }
-  .g-wide   { grid-column: span 12; grid-row: span 5; }
 
   /* ============ THE LOTS ============ */
   .lots {
@@ -933,12 +954,11 @@
     .nearby-categories { grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 60px; }
     .gallery { grid-template-columns: repeat(6, 1fr); grid-auto-rows: 110px; }
     .g-hero, .g-macro, .g-vista1, .g-quote, .g-vista2,
-    .g-detail1, .g-detail2, .g-detail3, .g-detail4, .g-wide {
+    .g-detail1, .g-detail2, .g-detail3, .g-detail4 {
       grid-column: span 6;
       grid-row: span 3;
     }
     .g-quote { grid-row: span 2; }
-    .g-wide { grid-row: span 4; }
     .lifestyle-inner { padding: 80px 24px; }
     .stats { grid-template-columns: 1fr; }
     .lot-table { font-size: 13px; }
@@ -1052,6 +1072,11 @@
     <div class="nearby-header reveal">
       <h2>Beaches, boats, and a <em>working coast</em> at your door.</h2>
       <p>Bamfield's draw is what surrounds it. Within a short drive, walk, or boat ride: empty Pacific beaches, world-class fishing, an island archipelago that draws kayakers from around the world, and a small village of charters, resorts, and restaurants.</p>
+    </div>
+
+    <div class="tourist-map-wrap reveal">
+      <div class="tourist-map-caption">The Lay of the Land — Bamfield &amp; Surrounds</div>
+      <img src="assets/tourist_map.jpg" alt="Illustrated tourist map of Bamfield showing West and East villages, Brady's Beach, the Blowhole, the inlet, Mills Peninsula, and the route to South Bamfield Road" />
     </div>
 
     <div class="nearby-grid">
@@ -1244,12 +1269,6 @@
         <img src="assets/salmon_fishing.jpg" alt="Sport fishing rods racked at the stern of a charter boat with churning wake behind" />
         <div class="caption">Charter rods, ready for chinook</div>
       </div>
-
-      <!-- Row D: full-width finale -->
-      <div class="gallery-item g-wide reveal">
-        <img src="assets/whale_breach.jpg" alt="Humpback whale breaching in the Pacific waters off the west coast of Vancouver Island" />
-        <div class="caption">Humpback breach, Pacific waters</div>
-      </div>
     </div>
   </div>
 </section>
@@ -1263,7 +1282,7 @@
     </div>
     <div class="map-wrap reveal">
       <div class="map-caption">Plan EPP141779 — South Bamfield Road</div>
-      <img src="assets/Map_photo_1200x892_png.png" alt="Subdivision map showing all 13 lots along South Bamfield Road" />
+      <img src="assets/site_map.jpg" alt="Subdivision site map showing all 13 lots along South Bamfield Road" />
     </div>
 
     <table class="lot-table reveal">
