@@ -362,6 +362,104 @@
     max-width: 420px;
   }
 
+  /* ============ NEARBY / RECREATION ============ */
+  .nearby {
+    background: var(--paper);
+    position: relative;
+  }
+  .nearby-header {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 80px;
+    margin-bottom: 90px;
+    align-items: end;
+  }
+  .nearby-header h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(40px, 5.5vw, 76px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .nearby-header h2 em { font-style: italic; color: var(--cedar); }
+  .nearby-header p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    max-width: 480px;
+    padding-bottom: 12px;
+  }
+
+  .nearby-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line);
+  }
+  .nearby-item {
+    padding: 44px 36px;
+    border-bottom: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    transition: background 0.3s ease;
+  }
+  .nearby-item:nth-child(3n) { border-right: none; }
+  .nearby-item:hover { background: rgba(74,100,80,0.04); }
+  .nearby-item .distance {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--cedar);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .nearby-item .distance::before {
+    content: '';
+    width: 18px; height: 1px;
+    background: var(--cedar);
+  }
+  .nearby-item h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.2;
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+  }
+  .nearby-item p {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    opacity: 0.85;
+  }
+
+  .nearby-categories {
+    margin-top: 90px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 50px;
+  }
+  .category h4 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 19px;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+    letter-spacing: -0.005em;
+  }
+  .category ul {
+    list-style: none;
+  }
+  .category ul li {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    padding: 4px 0;
+    opacity: 0.85;
+  }
+
   /* ============ ACCESS / GETTING HERE ============ */
   .access {
     background: var(--paper);
@@ -810,10 +908,13 @@
     .scroll-indicator { display: none; }
     section { padding: 80px 24px; }
     .intro { padding: 100px 24px; }
-    .why-header, .access-grid, .lots-header, .invest-grid { grid-template-columns: 1fr; gap: 32px; }
+    .why-header, .access-grid, .lots-header, .invest-grid, .nearby-header { grid-template-columns: 1fr; gap: 32px; }
     .why-grid { grid-template-columns: 1fr; }
     .why-item:nth-child(odd) { border-right: none; }
     .why-item { padding: 40px 24px; }
+    .nearby-grid { grid-template-columns: 1fr; }
+    .nearby-item { padding: 32px 24px; border-right: none; }
+    .nearby-categories { grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 60px; }
     .gallery { grid-template-columns: repeat(6, 1fr); grid-auto-rows: 110px; }
     .g-hero, .g-macro, .g-vista1, .g-quote, .g-vista2,
     .g-detail1, .g-detail2, .g-detail3, .g-detail4 {
@@ -845,6 +946,7 @@
   </div>
   <div class="nav-links">
     <a href="#why">Why Bamfield</a>
+    <a href="#nearby">Nearby</a>
     <a href="#access">Getting Here</a>
     <a href="#lots">The Lots</a>
     <a href="#contact" class="nav-cta">Inquire</a>
@@ -922,6 +1024,100 @@
         <span class="num">vi.</span>
         <h3>A community, not a resort</h3>
         <p>This is a working coastal village — marina, shops, school, seasonal services. Tight-knit, lived-in, and protective of what makes the place rare.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEARBY / RECREATION -->
+<section class="nearby" id="nearby">
+  <div class="container">
+    <div class="nearby-header reveal">
+      <h2>Beaches, boats, and a <em>working coast</em> at your door.</h2>
+      <p>Bamfield's draw is what surrounds it. Within a short drive, walk, or boat ride: empty Pacific beaches, world-class fishing, an island archipelago that draws kayakers from around the world, and a small village of charters, resorts, and restaurants.</p>
+    </div>
+
+    <div class="nearby-grid">
+      <div class="nearby-item reveal">
+        <div class="distance">~5–7 km south</div>
+        <h3>Pachena Bay</h3>
+        <p>A 1.2-kilometre crescent of fine sand facing the open Pacific, on Huu-ay-aht First Nation territory. The northern terminus of the West Coast Trail and one of the most striking beaches on Vancouver Island.</p>
+      </div>
+      <div class="nearby-item reveal">
+        <div class="distance">~25 min on foot</div>
+        <h3>Brady's Beach</h3>
+        <p>A short walk from the West Bamfield government dock through old-growth forest, opening onto dramatic sandstone sea stacks and tide pools. Often empty. Locally beloved.</p>
+      </div>
+      <div class="nearby-item reveal">
+        <div class="distance">Day-hike</div>
+        <h3>Keeha &amp; Tapaltos Beaches</h3>
+        <p>Two of the wildest beaches on the south island, reached by rugged trail through coastal rainforest. Rarely visited, frequently spectacular. The Tapaltos route also leads to Cape Beale Lighthouse.</p>
+      </div>
+      <div class="nearby-item reveal">
+        <div class="distance">~12 km west by boat</div>
+        <h3>Broken Group Islands</h3>
+        <p>Over a hundred islands scattered across Barkley Sound — a marine kayaker's mecca, designated as part of Pacific Rim National Park Reserve. Sea lions, orcas, eagles, and uninhabited beaches.</p>
+      </div>
+      <div class="nearby-item reveal">
+        <div class="distance">In village</div>
+        <h3>The Boardwalk</h3>
+        <p>A historic 1940s wooden boardwalk along West Bamfield's waterfront, connecting homes, docks, and the West Government Dock. Reached by a five-minute water taxi from East Bamfield.</p>
+      </div>
+      <div class="nearby-item reveal">
+        <div class="distance">In village</div>
+        <h3>Bamfield Marine Sciences Centre</h3>
+        <p>One of Canada's leading ocean research stations, anchoring the community with year-round scientific presence and seasonal public tours of the labs and aquarium.</p>
+      </div>
+    </div>
+
+    <div class="nearby-categories">
+      <div class="category reveal">
+        <h4>On the water</h4>
+        <ul>
+          <li>Sport fishing charters</li>
+          <li>Chinook salmon &amp; halibut</li>
+          <li>Lingcod &amp; rockfish</li>
+          <li>Sea kayaking</li>
+          <li>Stand-up paddleboarding</li>
+          <li>Cold-water diving</li>
+          <li>Whale watching</li>
+        </ul>
+      </div>
+      <div class="category reveal">
+        <h4>On foot</h4>
+        <ul>
+          <li>West Coast Trail (77 km)</li>
+          <li>Cape Beale Lighthouse</li>
+          <li>Bamfield Blowhole walk</li>
+          <li>Tide-pool exploration</li>
+          <li>Old-growth forest hikes</li>
+          <li>Beachcombing</li>
+          <li>Wildlife photography</li>
+        </ul>
+      </div>
+      <div class="category reveal">
+        <h4>Wildlife</h4>
+        <ul>
+          <li>Gray whale migration</li>
+          <li>Resident humpbacks</li>
+          <li>Orca pods (transient)</li>
+          <li>Bald eagles</li>
+          <li>Steller sea lions</li>
+          <li>River &amp; sea otters</li>
+          <li>Black bears</li>
+        </ul>
+      </div>
+      <div class="category reveal">
+        <h4>Stay &amp; eat</h4>
+        <ul>
+          <li>Bamfield Point Resort</li>
+          <li>Pachena Bay Campground</li>
+          <li>Local lodges &amp; B&amp;Bs</li>
+          <li>The pub at Tides Tavern</li>
+          <li>Boardwalk Bistro &amp; cafés</li>
+          <li>General store &amp; market</li>
+          <li>Marina &amp; fuel</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -1126,6 +1322,7 @@
       <h5>Explore</h5>
       <ul>
         <li><a href="#why">Why Bamfield</a></li>
+        <li><a href="#nearby">Nearby</a></li>
         <li><a href="#access">Getting Here</a></li>
         <li><a href="#lots">The Lots</a></li>
         <li><a href="#contact">Inquire</a></li>
