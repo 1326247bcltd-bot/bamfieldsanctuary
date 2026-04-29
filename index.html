@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>The Bamfield Coast Lots — Pacific Acreage on Vancouver Island</title>
-<meta name="description" content="Thirteen fee-simple acreage lots on South Bamfield Road. Old-growth forest, Barkley Sound, the West Coast Trail. From $268,000 CAD." />
+<meta name="description" content="Thirteen fee-simple acreage lots on South Bamfield Road. Old-growth forest, Barkley Sound, the West Coast Trail. From $428,000 CAD." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -463,8 +463,8 @@
   .gallery {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-auto-rows: 120px;
-    gap: 16px;
+    grid-auto-rows: 90px;
+    gap: 14px;
   }
   .gallery-item {
     position: relative;
@@ -478,25 +478,47 @@
   .gallery-item:hover img { transform: scale(1.04); }
   .gallery-item .caption {
     position: absolute;
-    bottom: 20px; left: 20px; right: 20px;
+    bottom: 18px; left: 20px; right: 20px;
     color: var(--paper);
     font-family: 'Fraunces', serif;
     font-style: italic;
-    font-size: 18px;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+    font-size: 17px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.7);
     z-index: 2;
   }
   .gallery-item::after {
     content: '';
     position: absolute; inset: 0;
-    background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.4) 100%);
+    background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.55) 100%);
     z-index: 1;
   }
-  .g1 { grid-column: span 7; grid-row: span 4; }
-  .g2 { grid-column: span 5; grid-row: span 4; }
-  .g3 { grid-column: span 4; grid-row: span 3; background: var(--moss); display: flex; align-items: center; justify-content: center; padding: 32px; }
-  .g3 p { font-family: 'Fraunces', serif; font-style: italic; font-size: 20px; line-height: 1.4; color: var(--sand-light); }
-  .g4 { grid-column: span 8; grid-row: span 3; }
+  .gallery-quote {
+    background: var(--moss);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 36px;
+    border-radius: 2px;
+  }
+  .gallery-quote::after { display: none; }
+  .gallery-quote p {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--sand-light);
+    text-align: center;
+  }
+  /* Tile sizing: hero sunset + tide-pool macro pair / vista row / detail row */
+  .g-hero  { grid-column: span 7; grid-row: span 5; }
+  .g-macro { grid-column: span 5; grid-row: span 5; }
+  .g-vista1 { grid-column: span 4; grid-row: span 4; }
+  .g-quote  { grid-column: span 4; grid-row: span 4; }
+  .g-vista2 { grid-column: span 4; grid-row: span 4; }
+  .g-detail1 { grid-column: span 3; grid-row: span 4; }
+  .g-detail2 { grid-column: span 3; grid-row: span 4; }
+  .g-detail3 { grid-column: span 3; grid-row: span 4; }
+  .g-detail4 { grid-column: span 3; grid-row: span 4; }
 
   /* ============ THE LOTS ============ */
   .lots {
@@ -586,14 +608,7 @@
     font-weight: 500;
     text-align: right;
   }
-  .lot-table tfoot td {
-    padding: 28px 20px;
-    border-top: 2px solid var(--ink);
-    font-family: 'Fraunces', serif;
-    font-size: 22px;
-    font-weight: 500;
-  }
-  .lot-table tfoot .lot-price { font-size: 26px; }
+  .lot-table tbody tr:last-child td { border-bottom: 2px solid var(--ink); }
 
   /* ============ INVESTMENT ============ */
   .investment {
@@ -799,11 +814,13 @@
     .why-grid { grid-template-columns: 1fr; }
     .why-item:nth-child(odd) { border-right: none; }
     .why-item { padding: 40px 24px; }
-    .gallery { grid-template-columns: repeat(6, 1fr); }
-    .g1 { grid-column: span 6; }
-    .g2 { grid-column: span 6; }
-    .g3 { grid-column: span 6; grid-row: span 2; }
-    .g4 { grid-column: span 6; }
+    .gallery { grid-template-columns: repeat(6, 1fr); grid-auto-rows: 110px; }
+    .g-hero, .g-macro, .g-vista1, .g-quote, .g-vista2,
+    .g-detail1, .g-detail2, .g-detail3, .g-detail4 {
+      grid-column: span 6;
+      grid-row: span 3;
+    }
+    .g-quote { grid-row: span 2; }
     .lifestyle-inner { padding: 80px 24px; }
     .stats { grid-template-columns: 1fr; }
     .lot-table { font-size: 13px; }
@@ -853,7 +870,7 @@
       </div>
       <div>
         <small>From</small>
-        <p>$268,000 CAD</p>
+        <p>$428,000 CAD</p>
       </div>
     </div>
   </div>
@@ -972,20 +989,42 @@
       <h2>Quiet mornings.<br/>Tide tables. <em>Cedar smoke.</em></h2>
     </div>
     <div class="gallery">
-      <div class="gallery-item g1 reveal">
-        <img src="assets/water.jpg" alt="Bamfield inlet at golden hour" />
-        <div class="caption">The Inlet, summer evening</div>
+      <div class="gallery-item g-hero reveal">
+        <img src="assets/sunset_boat.jpg" alt="Sunset over Bamfield Inlet with a boat heading home" />
+        <div class="caption">A boat home, last light over the inlet</div>
       </div>
-      <div class="gallery-item g2 reveal">
-        <img src="assets/stock_photo_1.jpg" alt="Pacific coastline at sunset" />
-        <div class="caption">Pacific edge, sunset</div>
+      <div class="gallery-item g-macro reveal">
+        <img src="assets/tidepool_seastars.jpg" alt="Purple and orange sea stars in a Bamfield tide pool" />
+        <div class="caption">Sea stars at low tide</div>
       </div>
-      <div class="gallery-item g3 reveal">
-        <p>"The west coast of Vancouver Island has a way of slowing the clock. Bamfield is where it stops altogether."</p>
+
+      <div class="gallery-item g-vista1 reveal">
+        <img src="assets/sunset_red.jpg" alt="Fiery red sunset over Bamfield village" />
+        <div class="caption">Wildfire skies, March</div>
       </div>
-      <div class="gallery-item g4 reveal">
-        <img src="assets/water.jpg" alt="Forest meets ocean" />
-        <div class="caption">Where forest meets sound</div>
+      <div class="gallery-item gallery-quote g-quote reveal">
+        <p>"There are sunsets in Bamfield<br/>that don't repeat anywhere else<br/>on the coast."</p>
+      </div>
+      <div class="gallery-item g-vista2 reveal">
+        <img src="assets/sunset_orange.jpg" alt="Orange sunset reflecting on the inlet at Bamfield" />
+        <div class="caption">Reflection, west harbour</div>
+      </div>
+
+      <div class="gallery-item g-detail1 reveal">
+        <img src="assets/tidepool_anemone.jpg" alt="Pink-tipped anemone in a Bamfield tide pool" />
+        <div class="caption">Anemone, low tide</div>
+      </div>
+      <div class="gallery-item g-detail2 reveal">
+        <img src="assets/sunset_pastel.jpg" alt="Pastel sunset over Barkley Sound from Bamfield" />
+        <div class="caption">Pastel evening, Barkley Sound</div>
+      </div>
+      <div class="gallery-item g-detail3 reveal">
+        <img src="assets/tidepool_aggregating.jpg" alt="Aggregating green anemones in a Bamfield tide pool" />
+        <div class="caption">Aggregating anemones</div>
+      </div>
+      <div class="gallery-item g-detail4 reveal">
+        <img src="assets/inlet_dusk.jpg" alt="Dusk over Bamfield Inlet, view of the village across the water" />
+        <div class="caption">Dusk across the inlet</div>
       </div>
     </div>
   </div>
@@ -995,8 +1034,8 @@
 <section class="lots" id="lots">
   <div class="container">
     <div class="lots-header reveal">
-      <h2>Thirteen lots.<br/><em>One subdivision.</em></h2>
-      <p>All thirteen parcels are titled, fee-simple, and registered under Plan EPP141779. Each is zoned RA1 / RA2 for single-family residential use, ranging from one to two acres. Available individually or as a complete portfolio.</p>
+      <h2>Thirteen lots.<br/><em>One rare opportunity.</em></h2>
+      <p>All thirteen parcels are titled, fee-simple, and registered under Plan EPP141779. Each is zoned RA1 / RA2 for single-family residential use, ranging from one to two acres. Available individually.</p>
     </div>
     <div class="map-wrap reveal">
       <div class="map-caption">Plan EPP141779 — South Bamfield Road</div>
@@ -1014,28 +1053,20 @@
         </tr>
       </thead>
       <tbody>
-        <tr><td class="lot-num">01</td><td>032-810-369</td><td class="lot-area">4,050 m²</td><td>1.001</td><td class="lot-price">$268,000</td></tr>
-        <tr><td class="lot-num">02</td><td>032-810-377</td><td class="lot-area">4,050 m²</td><td>1.001</td><td class="lot-price">$268,000</td></tr>
-        <tr><td class="lot-num">03</td><td>032-810-385</td><td class="lot-area">4,256 m²</td><td>1.052</td><td class="lot-price">$298,000</td></tr>
-        <tr><td class="lot-num">04</td><td>032-810-393</td><td class="lot-area">4,275 m²</td><td>1.056</td><td class="lot-price">$305,000</td></tr>
-        <tr><td class="lot-num">05</td><td>032-810-407</td><td class="lot-area">5,575 m²</td><td>1.378</td><td class="lot-price">$353,000</td></tr>
-        <tr><td class="lot-num">06</td><td>032-810-415</td><td class="lot-area">7,951 m²</td><td>1.965</td><td class="lot-price">$495,000</td></tr>
-        <tr><td class="lot-num">07</td><td>032-810-423</td><td class="lot-area">6,485 m²</td><td>1.602</td><td class="lot-price">$424,000</td></tr>
-        <tr><td class="lot-num">08</td><td>032-810-431</td><td class="lot-area">4,930 m²</td><td>1.218</td><td class="lot-price">$353,000</td></tr>
-        <tr><td class="lot-num">09</td><td>032-810-440</td><td class="lot-area">4,155 m²</td><td>1.027</td><td class="lot-price">$298,000</td></tr>
-        <tr><td class="lot-num">10</td><td>032-810-458</td><td class="lot-area">4,310 m²</td><td>1.065</td><td class="lot-price">$311,000</td></tr>
-        <tr><td class="lot-num">11</td><td>032-810-466</td><td class="lot-area">4,050 m²</td><td>1.001</td><td class="lot-price">$268,000</td></tr>
-        <tr><td class="lot-num">12</td><td>032-810-474</td><td class="lot-area">4,050 m²</td><td>1.001</td><td class="lot-price">$268,000</td></tr>
-        <tr><td class="lot-num">13</td><td>032-810-482</td><td class="lot-area">4,050 m²</td><td>1.001</td><td class="lot-price">$268,000</td></tr>
+        <tr><td class="lot-num">01</td><td>032-810-369</td><td class="lot-area">4,050 m²</td><td>1.001</td><td class="lot-price">$428,000</td></tr>
+        <tr><td class="lot-num">02</td><td>032-810-377</td><td class="lot-area">4,050 m²</td><td>1.001</td><td class="lot-price">$428,000</td></tr>
+        <tr><td class="lot-num">03</td><td>032-810-385</td><td class="lot-area">4,256 m²</td><td>1.052</td><td class="lot-price">$476,000</td></tr>
+        <tr><td class="lot-num">04</td><td>032-810-393</td><td class="lot-area">4,275 m²</td><td>1.056</td><td class="lot-price">$487,000</td></tr>
+        <tr><td class="lot-num">05</td><td>032-810-407</td><td class="lot-area">5,575 m²</td><td>1.378</td><td class="lot-price">$564,000</td></tr>
+        <tr><td class="lot-num">06</td><td>032-810-415</td><td class="lot-area">7,951 m²</td><td>1.965</td><td class="lot-price">$564,000</td></tr>
+        <tr><td class="lot-num">07</td><td>032-810-423</td><td class="lot-area">6,485 m²</td><td>1.602</td><td class="lot-price">$564,000</td></tr>
+        <tr><td class="lot-num">08</td><td>032-810-431</td><td class="lot-area">4,930 m²</td><td>1.218</td><td class="lot-price">$564,000</td></tr>
+        <tr><td class="lot-num">09</td><td>032-810-440</td><td class="lot-area">4,155 m²</td><td>1.027</td><td class="lot-price">$476,000</td></tr>
+        <tr><td class="lot-num">10</td><td>032-810-458</td><td class="lot-area">4,310 m²</td><td>1.065</td><td class="lot-price">$497,000</td></tr>
+        <tr><td class="lot-num">11</td><td>032-810-466</td><td class="lot-area">4,050 m²</td><td>1.001</td><td class="lot-price">$428,000</td></tr>
+        <tr><td class="lot-num">12</td><td>032-810-474</td><td class="lot-area">4,050 m²</td><td>1.001</td><td class="lot-price">$428,000</td></tr>
+        <tr><td class="lot-num">13</td><td>032-810-482</td><td class="lot-area">4,050 m²</td><td>1.001</td><td class="lot-price">$428,000</td></tr>
       </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="2">Full Portfolio</td>
-          <td>62,187 m²</td>
-          <td>15.365</td>
-          <td class="lot-price">$4,177,000</td>
-        </tr>
-      </tfoot>
     </table>
   </div>
 </section>
@@ -1059,7 +1090,7 @@
         <div class="label">Total Acreage<br/>Across Portfolio</div>
       </div>
       <div class="stat">
-        <div class="value">$268<sup>K</sup></div>
+        <div class="value">$428<sup>K</sup></div>
         <div class="label">Entry Price<br/>From, CAD</div>
       </div>
       <div class="stat">
