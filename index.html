@@ -845,19 +845,21 @@
   /* ============ THE LOTS ============ */
   .lots {
     background: var(--paper);
+    padding-top: 70px;
+    padding-bottom: 110px;
   }
   .lots-header {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 80px;
-    margin-bottom: 80px;
+    margin-bottom: 36px;
     align-items: end;
   }
   .lots-header h2 {
     font-family: 'Fraunces', serif;
     font-weight: 300;
-    font-size: clamp(40px, 5.5vw, 76px);
-    line-height: 1;
+    font-size: clamp(34px, 4.4vw, 60px);
+    line-height: 1.05;
     letter-spacing: -0.02em;
   }
   .lots-header h2 em { font-style: italic; color: var(--cedar); }
@@ -870,8 +872,8 @@
 
   .lots-display {
     display: grid;
-    grid-template-columns: 1.05fr 1fr;
-    gap: 56px;
+    grid-template-columns: 1.55fr 1fr;
+    gap: 48px;
     align-items: start;
   }
   .lots-display .map-col {
@@ -918,39 +920,39 @@
   .lot-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 14.5px;
+    font-size: 13.5px;
   }
   .lot-table thead th {
     text-align: left;
-    padding: 14px 14px;
-    font-size: 10px;
-    letter-spacing: 0.25em;
+    padding: 10px 10px;
+    font-size: 9px;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     font-weight: 500;
     color: var(--cedar);
     border-bottom: 2px solid var(--ink);
   }
   .lot-table tbody td {
-    padding: 16px 14px;
+    padding: 8px 10px;
     border-bottom: 1px solid var(--line);
     transition: background 0.2s ease;
   }
   .lot-table tbody tr:hover td { background: rgba(74,100,80,0.05); }
   .lot-table .lot-num {
     font-family: 'Fraunces', serif;
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 400;
     color: var(--cedar);
-    width: 56px;
+    width: 44px;
   }
   .lot-table .lot-area {
     font-family: 'Fraunces', serif;
     font-style: italic;
-    font-size: 15px;
+    font-size: 14px;
   }
   .lot-table .lot-price {
     font-family: 'Fraunces', serif;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 500;
     text-align: right;
     white-space: nowrap;
@@ -1547,25 +1549,24 @@
         <thead>
           <tr>
             <th>Lot</th>
-            <th>Area</th>
             <th>Acres</th>
             <th style="text-align:right;">Asking</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td class="lot-num">01</td><td class="lot-area">4,050 m²</td><td>1.001 acres</td><td class="lot-price">$428,000</td></tr>
-          <tr><td class="lot-num">02</td><td class="lot-area">4,050 m²</td><td>1.001 acres</td><td class="lot-price">$428,000</td></tr>
-          <tr><td class="lot-num">03</td><td class="lot-area">4,256 m²</td><td>1.052 acres</td><td class="lot-price">$476,000</td></tr>
-          <tr><td class="lot-num">04</td><td class="lot-area">4,275 m²</td><td>1.056 acres</td><td class="lot-price">$487,000</td></tr>
-          <tr><td class="lot-num">05</td><td class="lot-area">5,575 m²</td><td>1.378 acres</td><td class="lot-price">$564,000</td></tr>
-          <tr><td class="lot-num">06</td><td class="lot-area">7,951 m²</td><td>1.965 acres</td><td class="lot-price">$564,000</td></tr>
-          <tr><td class="lot-num">07</td><td class="lot-area">6,485 m²</td><td>1.602 acres</td><td class="lot-price">$564,000</td></tr>
-          <tr><td class="lot-num">08</td><td class="lot-area">4,930 m²</td><td>1.218 acres</td><td class="lot-price">$564,000</td></tr>
-          <tr><td class="lot-num">09</td><td class="lot-area">4,155 m²</td><td>1.027 acres</td><td class="lot-price">$476,000</td></tr>
-          <tr><td class="lot-num">10</td><td class="lot-area">4,310 m²</td><td>1.065 acres</td><td class="lot-price">$497,000</td></tr>
-          <tr><td class="lot-num">11</td><td class="lot-area">4,050 m²</td><td>1.001 acres</td><td class="lot-price">$428,000</td></tr>
-          <tr><td class="lot-num">12</td><td class="lot-area">4,050 m²</td><td>1.001 acres</td><td class="lot-price">$428,000</td></tr>
-          <tr><td class="lot-num">13</td><td class="lot-area">4,050 m²</td><td>1.001 acres</td><td class="lot-price">$428,000</td></tr>
+          <tr><td class="lot-num">01</td><td class="lot-area">1.001 acres</td><td class="lot-price">$428,000</td></tr>
+          <tr><td class="lot-num">02</td><td class="lot-area">1.001 acres</td><td class="lot-price">$428,000</td></tr>
+          <tr><td class="lot-num">03</td><td class="lot-area">1.052 acres</td><td class="lot-price">$476,000</td></tr>
+          <tr><td class="lot-num">04</td><td class="lot-area">1.056 acres</td><td class="lot-price">$487,000</td></tr>
+          <tr><td class="lot-num">05</td><td class="lot-area">1.378 acres</td><td class="lot-price">$564,000</td></tr>
+          <tr><td class="lot-num">06</td><td class="lot-area">1.965 acres</td><td class="lot-price">$564,000</td></tr>
+          <tr><td class="lot-num">07</td><td class="lot-area">1.602 acres</td><td class="lot-price">$564,000</td></tr>
+          <tr><td class="lot-num">08</td><td class="lot-area">1.218 acres</td><td class="lot-price">$564,000</td></tr>
+          <tr><td class="lot-num">09</td><td class="lot-area">1.027 acres</td><td class="lot-price">$476,000</td></tr>
+          <tr><td class="lot-num">10</td><td class="lot-area">1.065 acres</td><td class="lot-price">$497,000</td></tr>
+          <tr><td class="lot-num">11</td><td class="lot-area">1.001 acres</td><td class="lot-price">$428,000</td></tr>
+          <tr><td class="lot-num">12</td><td class="lot-area">1.001 acres</td><td class="lot-price">$428,000</td></tr>
+          <tr><td class="lot-num">13</td><td class="lot-area">1.001 acres</td><td class="lot-price">$428,000</td></tr>
         </tbody>
       </table>
     </div>
