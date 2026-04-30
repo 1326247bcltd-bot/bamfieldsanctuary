@@ -919,23 +919,26 @@
 
   .lot-table {
     width: 100%;
+    max-width: 400px;
     border-collapse: collapse;
     font-size: 13.5px;
   }
   .lot-table thead th {
     text-align: left;
-    padding: 10px 10px;
+    padding: 10px 0;
     font-size: 9px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     font-weight: 500;
     color: var(--cedar);
     border-bottom: 2px solid var(--ink);
+    white-space: nowrap;
   }
   .lot-table tbody td {
-    padding: 8px 10px;
+    padding: 8px 0;
     border-bottom: 1px solid var(--line);
     transition: background 0.2s ease;
+    white-space: nowrap;
   }
   .lot-table tbody tr:hover td { background: rgba(74,100,80,0.05); }
   .lot-table .lot-num {
@@ -943,20 +946,22 @@
     font-size: 17px;
     font-weight: 400;
     color: var(--cedar);
-    width: 44px;
+    width: 22%;
   }
   .lot-table .lot-area {
     font-family: 'Fraunces', serif;
     font-style: italic;
     font-size: 14px;
+    width: 38%;
   }
   .lot-table .lot-price {
     font-family: 'Fraunces', serif;
     font-size: 15px;
     font-weight: 500;
     text-align: right;
-    white-space: nowrap;
+    width: 40%;
   }
+  .lot-table thead th:last-child { text-align: right; }
   .lot-table tbody tr:last-child td { border-bottom: 2px solid var(--ink); }
 
   /* ============ INVESTMENT ============ */
@@ -1542,7 +1547,7 @@
           <div class="map-caption">Plan EPP141779 — South Bamfield Road</div>
           <img src="assets/site_map.jpg" alt="Subdivision site map showing all 13 lots along South Bamfield Road" />
         </div>
-        <div class="map-footnote">Lot dimensions in metres · north oriented up-right</div>
+        <div class="map-footnote">North oriented up-right</div>
       </div>
 
       <table class="lot-table reveal">
